@@ -3,6 +3,7 @@ from logging import basicConfig
 from logging import getLogger
 from time import time
 
+import matplotlib.pyplot as plt
 import pandas as pd
 
 if __name__ == '__main__':
@@ -24,4 +25,10 @@ if __name__ == '__main__':
     national_df = df[df.state.isnull()].copy(deep=True)
     logger.info(national_df.shape)
     bt_df = national_df[national_df.answer.isin(['Biden', 'Trump'])].drop_duplicates()
+    biden_df = bt_df[bt_df.answer.isin(['Biden'])][['end_date', 'pct']].rename(columns={'pct': 'Biden'})
+    trump_df = bt_df[bt_df.answer.isin(['Trump'])][['end_date', 'pct']].rename(columns={'pct': 'Trump'})
+    fig, ax = plt.subplots()
+    biden_df.plot(ax=ax, c='blue', label='Biden', style='.', )
+    trump_df.plot(ax=ax, c='red', label='Trump', style='.', )
+    plt.savefig('./biden_trump_scatter.png')
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
