@@ -36,6 +36,6 @@ if __name__ == '__main__':
 
     sns.regplot(ax=ax1, data=biden_df, x='days', y='Biden', )
     sns.regplot(ax=ax1, data=trump_df, x='days', y='Trump', )
-    plt.show()
+    plt.savefig('./biden_trump_regplot.png')
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
