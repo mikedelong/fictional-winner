@@ -14,10 +14,8 @@ if __name__ == '__main__':
 
     url = 'https://projects.fivethirtyeight.com/polls-page/president_polls.csv'
 
-    df = pd.read_csv(url)
+    df = pd.read_csv(url, parse_dates=['end_date'])
 
-    logger.info(df.shape)
-    df = df[df['cycle'].isin(['2020'])]
     logger.info(df.shape)
     logger.info('\n{}'.format(df.head(5)))
     logger.info(list(df))
@@ -28,7 +26,8 @@ if __name__ == '__main__':
     biden_df = bt_df[bt_df.answer.isin(['Biden'])][['end_date', 'pct']].rename(columns={'pct': 'Biden'})
     trump_df = bt_df[bt_df.answer.isin(['Trump'])][['end_date', 'pct']].rename(columns={'pct': 'Trump'})
     fig, ax = plt.subplots()
-    biden_df.plot(ax=ax, c='blue', label='Biden', style='.', )
-    trump_df.plot(ax=ax, c='red', label='Trump', style='.', )
+    biden_df.set_index('end_date').plot(ax=ax, c='blue', label='Biden', style='.', )
+    trump_df.set_index('end_date').plot(ax=ax, c='red', label='Trump', style='.', )
     plt.savefig('./biden_trump_scatter.png')
+
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
