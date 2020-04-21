@@ -5,6 +5,7 @@ from time import time
 
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 
 if __name__ == '__main__':
     time_start = time()
@@ -25,9 +26,16 @@ if __name__ == '__main__':
     bt_df = national_df[national_df.answer.isin(['Biden', 'Trump'])].drop_duplicates()
     biden_df = bt_df[bt_df.answer.isin(['Biden'])][['end_date', 'pct']].rename(columns={'pct': 'Biden'})
     trump_df = bt_df[bt_df.answer.isin(['Trump'])][['end_date', 'pct']].rename(columns={'pct': 'Trump'})
-    fig, ax = plt.subplots()
-    biden_df.set_index('end_date').plot(ax=ax, c='blue', label='Biden', style='.', )
-    trump_df.set_index('end_date').plot(ax=ax, c='red', label='Trump', style='.', )
+    fig0, ax0 = plt.subplots()
+    biden_df.set_index('end_date').plot(ax=ax0, c='blue', label='Biden', style='.', )
+    trump_df.set_index('end_date').plot(ax=ax0, c='red', label='Trump', style='.', )
     plt.savefig('./biden_trump_scatter.png')
+    biden_df['days'] = biden_df['end_date'].apply(lambda x: (x.to_pydatetime() - biden_df['end_date'].min()).days)
+    trump_df['days'] = trump_df['end_date'].apply(lambda x: (x.to_pydatetime() - trump_df['end_date'].min()).days)
+    fig1, ax1 = plt.subplots()
+
+    sns.regplot(ax=ax1, data=biden_df, x='days', y='Biden', )
+    sns.regplot(ax=ax1, data=trump_df, x='days', y='Trump', )
+    plt.show()
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
