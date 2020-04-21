@@ -23,5 +23,5 @@ if __name__ == '__main__':
 
     national_df = df[df.state.isnull()].copy(deep=True)
     logger.info(national_df.shape)
-    logger.info(national_df.answer.unique())
+    bt_df = national_df[national_df.answer.isin(['Biden', 'Trump'])].drop_duplicates()
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
