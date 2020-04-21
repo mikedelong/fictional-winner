@@ -16,6 +16,12 @@ if __name__ == '__main__':
     df = pd.read_csv(url)
 
     logger.info(df.shape)
+    df = df[df['cycle'].isin(['2020'])]
+    logger.info(df.shape)
     logger.info('\n{}'.format(df.head(5)))
+    logger.info(list(df))
 
+    national_df = df[df.state.isnull()].copy(deep=True)
+    logger.info(national_df.shape)
+    logger.info(national_df.answer.unique())
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
