@@ -29,13 +29,16 @@ if __name__ == '__main__':
     fig0, ax0 = plt.subplots()
     biden_df.set_index('end_date').plot(ax=ax0, c='blue', label='Biden', style='.', )
     trump_df.set_index('end_date').plot(ax=ax0, c='red', label='Trump', style='.', )
-    plt.savefig('./biden_trump_scatter.png')
+
+    scatter_png = './biden_trump_scatter.png'
+    plt.savefig(scatter_png)
     biden_df['days'] = biden_df['end_date'].apply(lambda x: (x.to_pydatetime() - biden_df['end_date'].min()).days)
     trump_df['days'] = trump_df['end_date'].apply(lambda x: (x.to_pydatetime() - trump_df['end_date'].min()).days)
     fig1, ax1 = plt.subplots()
 
     sns.regplot(ax=ax1, data=biden_df, x='days', y='Biden', )
     sns.regplot(ax=ax1, data=trump_df, x='days', y='Trump', )
-    plt.savefig('./biden_trump_regplot.png')
+    regplot_png = './biden_trump_regplot.png'
+    plt.savefig(regplot_png)
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
