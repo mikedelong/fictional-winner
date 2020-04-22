@@ -33,11 +33,10 @@ if __name__ == '__main__':
     bt_df['poll_id'] = bt_df['poll_id'].astype(int)
     bt_df['question_id'] = bt_df['question_id'].astype(int)
 
-
-    biden_df = bt_df[bt_df.answer.isin(['Biden'])][['end_date', 'pct', 'question_id', ]].rename(
-        columns={'pct': 'Biden', 'end_date': 'date'}, )
-    trump_df = bt_df[bt_df.answer.isin(['Trump'])][['end_date', 'pct', 'question_id', ]].rename(
-        columns={'pct': 'Trump', 'end_date': 'date'}, )
+    columns = {'pct': 'Biden', 'end_date': 'date', }
+    biden_df = bt_df[bt_df.answer.isin(['Biden'])][['end_date', 'pct', 'question_id', ]].rename(columns=columns, )
+    columns = {'pct': 'Trump', 'end_date': 'date', }
+    trump_df = bt_df[bt_df.answer.isin(['Trump'])][['end_date', 'pct', 'question_id', ]].rename(columns=columns, )
     for key, value in {'Biden': biden_df, 'Trump': trump_df}.items():
         logger.info('we have {} rows of {} data'.format(len(value), key))
 
@@ -53,15 +52,15 @@ if __name__ == '__main__':
     biden_df.set_index('date').plot(ax=ax0, c='blue', label='Biden', style='.', )
     # https://stackoverflow.com/questions/17638137/curve-fitting-to-a-time-series-in-the-format-datetime
     biden_date_numbers = mdates.date2num(biden_df.date.values)
-    for degree in range(1, 4):
+    for degree in range(1, 3):
         biden_fit = np.polyfit(x=biden_date_numbers, y=biden_df.Biden, deg=degree)
         biden_poly = np.poly1d(biden_fit)
         ax0.plot(mdates.num2date(biden_date_numbers), biden_poly(biden_date_numbers), 'b-')
 
     trump_df.set_index('date').plot(ax=ax0, c='red', label='Trump', style='.', )
     trump_date_numbers = mdates.date2num(trump_df.date.values)
-    for degree in range(1, 4):
-        trump_fit = np.polyfit(x=trump_date_numbers, y=trump_df.Trump, deg=1)
+    for degree in range(1, 3):
+        trump_fit = np.polyfit(x=trump_date_numbers, y=trump_df.Trump, deg=degree)
         trump_poly = np.poly1d(trump_fit)
         ax0.plot(mdates.num2date(trump_date_numbers), trump_poly(trump_date_numbers), 'r-')
 
