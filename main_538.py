@@ -37,6 +37,10 @@ if __name__ == '__main__':
     ax0.plot(mdates.num2date(biden_date_numbers), biden_poly(biden_date_numbers), 'b-')
 
     trump_df.set_index('end_date').plot(ax=ax0, c='red', label='Trump', style='.', )
+    trump_date_numbers = mdates.date2num(trump_df.end_date.values)
+    trump_fit = np.polyfit(x=trump_date_numbers, y=trump_df.Trump, deg=1)
+    trump_poly = np.poly1d(trump_fit)
+    ax0.plot(mdates.num2date(trump_date_numbers), trump_poly(trump_date_numbers), 'r-')
 
     scatter_png = './biden_trump_scatter.png'
     plt.savefig(scatter_png)
