@@ -3,7 +3,9 @@ from logging import basicConfig
 from logging import getLogger
 from time import time
 
+import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import seaborn as sns
 
@@ -28,14 +30,20 @@ if __name__ == '__main__':
     trump_df = bt_df[bt_df.answer.isin(['Trump'])][['end_date', 'pct']].rename(columns={'pct': 'Trump'})
     fig0, ax0 = plt.subplots()
     biden_df.set_index('end_date').plot(ax=ax0, c='blue', label='Biden', style='.', )
+    # https://stackoverflow.com/questions/17638137/curve-fitting-to-a-time-series-in-the-format-datetime
+    biden_date_numbers = mdates.date2num(biden_df.end_date.values)
+    biden_fit = np.polyfit(x=biden_date_numbers, y=biden_df.Biden, deg=1)
+    biden_poly = np.poly1d(biden_fit)
+    ax0.plot(mdates.num2date(biden_date_numbers), biden_poly(biden_date_numbers), 'b-')
+
     trump_df.set_index('end_date').plot(ax=ax0, c='red', label='Trump', style='.', )
 
     scatter_png = './biden_trump_scatter.png'
     plt.savefig(scatter_png)
-    biden_df['days'] = biden_df['end_date'].apply(lambda x: (x.to_pydatetime() - biden_df['end_date'].min()).days)
-    trump_df['days'] = trump_df['end_date'].apply(lambda x: (x.to_pydatetime() - trump_df['end_date'].min()).days)
     fig1, ax1 = plt.subplots()
 
+    biden_df['days'] = biden_df['end_date'].apply(lambda x: (x.to_pydatetime() - biden_df['end_date'].min()).days)
+    trump_df['days'] = trump_df['end_date'].apply(lambda x: (x.to_pydatetime() - trump_df['end_date'].min()).days)
     sns.regplot(ax=ax1, data=biden_df, x='days', y='Biden', )
     sns.regplot(ax=ax1, data=trump_df, x='days', y='Trump', )
     regplot_png = './biden_trump_regplot.png'
