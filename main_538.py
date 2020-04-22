@@ -28,13 +28,15 @@ if __name__ == '__main__':
     logger.info(national_df.shape)
     bt_df = national_df[national_df.answer.isin(['Biden', 'Trump'])].drop_duplicates()
 
-    # drop data that is more than a year old
-    bt_df = bt_df[bt_df['end_date'] > pd.Timestamp(datetime.date.today() - datetime.timedelta(weeks=52))]
+    # drop data older than some arbitrary threshold
+    bt_df = bt_df[bt_df['end_date'] > pd.Timestamp(datetime.date.today() - datetime.timedelta(weeks=20))]
 
     biden_df = bt_df[bt_df.answer.isin(['Biden'])][['end_date', 'pct']].rename(
         columns={'pct': 'Biden', 'end_date': 'date'}, )
     trump_df = bt_df[bt_df.answer.isin(['Trump'])][['end_date', 'pct']].rename(
         columns={'pct': 'Trump', 'end_date': 'date'}, )
+    for key, value in {'Biden': biden_df, 'Trump': trump_df}.items():
+        logger.info('we have {} rows of {} data'.format(len(value), key))
 
     fig0, ax0 = plt.subplots()
     biden_df.set_index('date').plot(ax=ax0, c='blue', label='Biden', style='.', )
