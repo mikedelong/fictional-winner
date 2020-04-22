@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import datetime
 
 if __name__ == '__main__':
     time_start = time()
@@ -26,10 +27,15 @@ if __name__ == '__main__':
     national_df = df[df.state.isnull()].copy(deep=True)
     logger.info(national_df.shape)
     bt_df = national_df[national_df.answer.isin(['Biden', 'Trump'])].drop_duplicates()
+
+    # drop data that is more than a year old
+    bt_df = bt_df[bt_df['end_date'] > pd.Timestamp(datetime.date.today() - datetime.timedelta(days=366))]
+
     biden_df = bt_df[bt_df.answer.isin(['Biden'])][['end_date', 'pct']].rename(
         columns={'pct': 'Biden', 'end_date': 'date'}, )
     trump_df = bt_df[bt_df.answer.isin(['Trump'])][['end_date', 'pct']].rename(
         columns={'pct': 'Trump', 'end_date': 'date'}, )
+
     fig0, ax0 = plt.subplots()
     biden_df.set_index('date').plot(ax=ax0, c='blue', label='Biden', style='.', )
     # https://stackoverflow.com/questions/17638137/curve-fitting-to-a-time-series-in-the-format-datetime
