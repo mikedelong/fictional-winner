@@ -1,3 +1,4 @@
+import datetime
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
@@ -8,7 +9,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import datetime
 
 if __name__ == '__main__':
     time_start = time()
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     bt_df = national_df[national_df.answer.isin(['Biden', 'Trump'])].drop_duplicates()
 
     # drop data that is more than a year old
-    bt_df = bt_df[bt_df['end_date'] > pd.Timestamp(datetime.date.today() - datetime.timedelta(days=366))]
+    bt_df = bt_df[bt_df['end_date'] > pd.Timestamp(datetime.date.today() - datetime.timedelta(weeks=52))]
 
     biden_df = bt_df[bt_df.answer.isin(['Biden'])][['end_date', 'pct']].rename(
         columns={'pct': 'Biden', 'end_date': 'date'}, )
