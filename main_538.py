@@ -32,15 +32,17 @@ if __name__ == '__main__':
     biden_df.set_index('end_date').plot(ax=ax0, c='blue', label='Biden', style='.', )
     # https://stackoverflow.com/questions/17638137/curve-fitting-to-a-time-series-in-the-format-datetime
     biden_date_numbers = mdates.date2num(biden_df.end_date.values)
-    biden_fit = np.polyfit(x=biden_date_numbers, y=biden_df.Biden, deg=1)
-    biden_poly = np.poly1d(biden_fit)
-    ax0.plot(mdates.num2date(biden_date_numbers), biden_poly(biden_date_numbers), 'b-')
+    for degree in range(1, 4):
+        biden_fit = np.polyfit(x=biden_date_numbers, y=biden_df.Biden, deg=degree)
+        biden_poly = np.poly1d(biden_fit)
+        ax0.plot(mdates.num2date(biden_date_numbers), biden_poly(biden_date_numbers), 'b-')
 
     trump_df.set_index('end_date').plot(ax=ax0, c='red', label='Trump', style='.', )
     trump_date_numbers = mdates.date2num(trump_df.end_date.values)
-    trump_fit = np.polyfit(x=trump_date_numbers, y=trump_df.Trump, deg=1)
-    trump_poly = np.poly1d(trump_fit)
-    ax0.plot(mdates.num2date(trump_date_numbers), trump_poly(trump_date_numbers), 'r-')
+    for degree in range(1, 4):
+        trump_fit = np.polyfit(x=trump_date_numbers, y=trump_df.Trump, deg=1)
+        trump_poly = np.poly1d(trump_fit)
+        ax0.plot(mdates.num2date(trump_date_numbers), trump_poly(trump_date_numbers), 'r-')
 
     scatter_png = './biden_trump_scatter.png'
     plt.savefig(scatter_png)
