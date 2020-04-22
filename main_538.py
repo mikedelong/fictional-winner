@@ -30,11 +30,22 @@ if __name__ == '__main__':
 
     # drop data older than some arbitrary threshold
     bt_df = bt_df[bt_df['end_date'] > pd.Timestamp(datetime.date.today() - datetime.timedelta(weeks=20))]
+    bt_df['poll_id'] = bt_df['poll_id'].astype(int)
+    bt_df['question_id'] = bt_df['question_id'].astype(int)
 
-    biden_df = bt_df[bt_df.answer.isin(['Biden'])][['end_date', 'pct']].rename(
+
+    biden_df = bt_df[bt_df.answer.isin(['Biden'])][['end_date', 'pct', 'question_id', ]].rename(
         columns={'pct': 'Biden', 'end_date': 'date'}, )
-    trump_df = bt_df[bt_df.answer.isin(['Trump'])][['end_date', 'pct']].rename(
+    trump_df = bt_df[bt_df.answer.isin(['Trump'])][['end_date', 'pct', 'question_id', ]].rename(
         columns={'pct': 'Trump', 'end_date': 'date'}, )
+    for key, value in {'Biden': biden_df, 'Trump': trump_df}.items():
+        logger.info('we have {} rows of {} data'.format(len(value), key))
+
+    # use the common question IDs to filter
+    question_ids = sorted(list({item for item in biden_df.question_id.values if item in trump_df.question_id.values}))
+    logger.info('we have {} common question IDs'.format(len(question_ids)))
+    biden_df = biden_df[biden_df.question_id.isin(question_ids)][['date', 'Biden', ]]
+    trump_df = trump_df[trump_df.question_id.isin(question_ids)][['date', 'Trump', ]]
     for key, value in {'Biden': biden_df, 'Trump': trump_df}.items():
         logger.info('we have {} rows of {} data'.format(len(value), key))
 
