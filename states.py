@@ -5,6 +5,7 @@ from time import time
 
 import pandas as pd
 import json
+import numpy as np
 
 if __name__ == '__main__':
     time_start = time()
@@ -14,6 +15,14 @@ if __name__ == '__main__':
 
     with open(file='./electoral_college.json', mode='r', ) as electoral_college_fp:
         electoral_college = json.load(fp=electoral_college_fp)
+
+    electoral_college_df = pd.DataFrame.from_dict({'state': list(electoral_college.keys()),
+                                                   'votes': list(electoral_college.values())})
+
+    with open(file='./state_abbreviations.json', mode='r') as abbreviations_fp:
+        abbreviations = json.load(fp=abbreviations_fp)
+
+    electoral_college_df['state_abbreviation'] = electoral_college_df['state'].map(abbreviations)
 
     url = 'https://projects.fivethirtyeight.com/polls-page/president_polls.csv'
 
@@ -36,6 +45,12 @@ if __name__ == '__main__':
     state_data_url = 'https://raw.githubusercontent.com/john-guerra/US_Elections_Results/master/US%20presidential%20' \
                      'election%20results%20by%20county.csv'
     results_2016_df = pd.read_csv(state_data_url, usecols=['state_abbr', 'votes_dem', 'votes_gop'])
-    logger.info(results_2016_df.shape)
+
+    state_2016_df = results_2016_df.groupby(by=['state_abbr']).sum().reset_index()
+    state_2016_df['winner'] = np.where((state_2016_df['votes_dem'] > state_2016_df['votes_gop']), 'DEM', 'GOP')
+    logger.info(sorted(state_2016_df['state_abbr'].unique()))
+
+
+
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
