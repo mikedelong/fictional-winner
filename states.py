@@ -31,4 +31,11 @@ if __name__ == '__main__':
         for item in electoral_college_no_polls:
             logger.warning('no polls for {}'.format(item))
 
+    # todo get 2016 data to fill in data for states with no polls
+    # todo build a simple model that uses the most recent poll for each state
+    state_data_url = 'https://raw.githubusercontent.com/john-guerra/US_Elections_Results/master/US%20presidential%20' \
+                     'election%20results%20by%20county.csv'
+    results_2016_df = pd.read_csv(state_data_url, usecols=['state_abbr', 'votes_dem', 'votes_gop'])
+    logger.info(results_2016_df.shape)
+
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
