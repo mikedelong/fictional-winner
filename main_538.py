@@ -68,6 +68,7 @@ if __name__ == '__main__':
     plt.savefig(scatter_png)
     fig1, ax1 = plt.subplots()
 
+    # todo use mdates to turn this back into a date vs data graph
     biden_df['days'] = biden_df['date'].apply(lambda x: (x.to_pydatetime() - biden_df['date'].min()).days)
     trump_df['days'] = trump_df['date'].apply(lambda x: (x.to_pydatetime() - trump_df['date'].min()).days)
     sns.regplot(ax=ax1, data=biden_df, x='days', y='Biden', )
