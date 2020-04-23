@@ -49,8 +49,11 @@ if __name__ == '__main__':
     state_2016_df = results_2016_df.groupby(by=['state_abbr']).sum().reset_index()
     state_2016_df['winner'] = np.where((state_2016_df['votes_dem'] > state_2016_df['votes_gop']), 'DEM', 'GOP')
     logger.info(sorted(state_2016_df['state_abbr'].unique()))
-
-
-
+    abbreviation_votes = {row['state_abbreviation']: row['votes'] for index, row in electoral_college_df.iterrows()}
+    state_2016_df['DEMECV'] = state_2016_df.apply(
+        lambda row: abbreviation_votes[row['state_abbr']] if row['winner'] == 'DEM' else 0, axis=1)
+    state_2016_df['GOPECV'] = state_2016_df.apply(
+        lambda row: abbreviation_votes[row['state_abbr']] if row['winner'] == 'GOP' else 0, axis=1)
+    logger.info('2016 result: DEM: {} GOP: {}'.format(state_2016_df['DEMECV'].sum(), state_2016_df['GOPECV'].sum()))
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
