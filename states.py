@@ -19,11 +19,6 @@ if __name__ == '__main__':
     electoral_college_df = pd.DataFrame.from_dict({'state': list(electoral_college.keys()),
                                                    'votes': list(electoral_college.values())})
 
-    with open(file='./state_abbreviations.json', mode='r') as abbreviations_fp:
-        abbreviations = json.load(fp=abbreviations_fp)
-
-    electoral_college_df['state_abbreviation'] = electoral_college_df['state'].map(abbreviations)
-
     url = 'https://projects.fivethirtyeight.com/polls-page/president_polls.csv'
 
     df = pd.read_csv(url, parse_dates=['end_date'])
