@@ -80,8 +80,13 @@ if __name__ == '__main__':
             trump_votes += review_2016_df[review_2016_df.State == state].electoralRep.values[0]
         else:
             logger.warning('missing state: {}'.format(state))
+
         logger.info('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format(state, biden_votes, trump_votes,
                                                                                    biden_votes + trump_votes,
                                                                                    538 - biden_votes - trump_votes))
+    trump_votes += 4  # ME-02, NE-01, NE-02, NE-03
+    logger.info('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format('all', biden_votes, trump_votes,
+                                                                               biden_votes + trump_votes,
+                                                                               538 - biden_votes - trump_votes))
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
