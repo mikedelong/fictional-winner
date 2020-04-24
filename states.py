@@ -56,4 +56,43 @@ if __name__ == '__main__':
         lambda row: abbreviation_votes[row['state_abbr']] if row['winner'] == 'GOP' else 0, axis=1)
     logger.info('2016 result: DEM: {} GOP: {}'.format(state_2016_df['DEMECV'].sum(), state_2016_df['GOPECV'].sum()))
 
+    # todo note this isn't right either
+    review_2016_df = pd.read_csv('./world-population-review.csv')
+    logger.info(list(review_2016_df))
+    logger.info('2016 result: DEM: {} GOP: {}'.format(review_2016_df['electoralDem'].sum(),
+                                                      review_2016_df['electoralRep'].sum()))
+
+    # first cut down the data to just the columns we want
+    df = df[['question_id', 'state', 'end_date', 'answer', 'pct']]
+    df = df[df.answer.isin({'Biden', 'Trump'})]
+    df['question_id'] = df['question_id'].astype(int)
+
+    a2_df = df[df.answer.isin({'Biden', 'Trump'})].groupby('question_id').filter(lambda x: len(x) == 2)
+    polling = {}
+    for state in sorted(a2_df.state.unique()):
+        polling[state] = {}
+        this_df = a2_df[a2_df.state == state]
+        this_df = this_df[this_df.end_date == this_df.end_date.max()]
+        for candidate in ['Biden', 'Trump']:
+            polling[state][candidate] = this_df[this_df.answer.isin({candidate})].groupby('pct').mean().index[0]
+
+    biden_votes, trump_votes = 0, 0
+    for state in electoral_college_df.state.unique():
+        if state in polling.keys():
+            poll = polling[state]
+            votes = electoral_college_df[electoral_college_df.state == state].votes.values[0]
+            if poll['Biden'] > poll['Trump']:
+                biden_votes += votes
+            elif poll['Biden'] < poll['Trump']:
+                trump_votes += votes
+            logger.info('state: {} polling margin: {:5.1f} pct'.format(state, abs(poll['Biden'] - poll['Trump'])))
+        elif state in review_2016_df.State.unique():
+            biden_votes += review_2016_df[review_2016_df.State == state].electoralDem.values[0]
+            trump_votes += review_2016_df[review_2016_df.State == state].electoralRep.values[0]
+        else:
+            logger.warning('missing state: {}'.format(state))
+        logger.info('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format(state, biden_votes, trump_votes,
+                                                                                   biden_votes + trump_votes,
+                                                                                   538 - biden_votes - trump_votes))
+
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
