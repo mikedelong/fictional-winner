@@ -59,8 +59,10 @@ if __name__ == '__main__':
     # todo note this isn't right either
     review_2016_df = pd.read_csv('./world-population-review.csv')
     logger.info(list(review_2016_df))
-    logger.info('2016 result: DEM: {} GOP: {}'.format(review_2016_df['electoralDem'].sum(),
-                                                      review_2016_df['electoralRep'].sum()))
+    logger.info('2016 result (WPR) : DEM: {} GOP: {}'.format(review_2016_df['electoralDem'].sum(),
+                                                             review_2016_df['electoralRep'].sum()))
+    # patch up what DC is called here
+    review_2016_df['State'] = review_2016_df['State'].replace(to_replace='Washington DC', value='District of Columbia',)
 
     # first cut down the data to just the columns we want
     df = df[['question_id', 'state', 'end_date', 'answer', 'pct']]
@@ -89,8 +91,6 @@ if __name__ == '__main__':
         elif state in review_2016_df.State.unique():
             biden_votes += review_2016_df[review_2016_df.State == state].electoralDem.values[0]
             trump_votes += review_2016_df[review_2016_df.State == state].electoralRep.values[0]
-        elif state == 'District of Columbia':
-            biden_votes += 3
         else:
             logger.warning('missing state: {}'.format(state))
         logger.info('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format(state, biden_votes, trump_votes,
