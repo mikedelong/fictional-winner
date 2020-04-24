@@ -89,6 +89,8 @@ if __name__ == '__main__':
         elif state in review_2016_df.State.unique():
             biden_votes += review_2016_df[review_2016_df.State == state].electoralDem.values[0]
             trump_votes += review_2016_df[review_2016_df.State == state].electoralRep.values[0]
+        elif state == 'District of Columbia':
+            biden_votes += 3
         else:
             logger.warning('missing state: {}'.format(state))
         logger.info('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format(state, biden_votes, trump_votes,
