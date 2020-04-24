@@ -42,19 +42,6 @@ if __name__ == '__main__':
 
     # todo get 2016 data to fill in data for states with no polls
     # todo build a simple model that uses the most recent poll for each state
-    state_data_url = 'https://raw.githubusercontent.com/john-guerra/US_Elections_Results/master/US%20presidential%20' \
-                     'election%20results%20by%20county.csv'
-    results_2016_df = pd.read_csv(state_data_url, usecols=['state_abbr', 'votes_dem', 'votes_gop'])
-
-    state_2016_df = results_2016_df.groupby(by=['state_abbr']).sum().reset_index()
-    state_2016_df['winner'] = np.where((state_2016_df['votes_dem'] > state_2016_df['votes_gop']), 'DEM', 'GOP')
-    logger.info(sorted(state_2016_df['state_abbr'].unique()))
-    abbreviation_votes = {row['state_abbreviation']: row['votes'] for index, row in electoral_college_df.iterrows()}
-    state_2016_df['DEMECV'] = state_2016_df.apply(
-        lambda row: abbreviation_votes[row['state_abbr']] if row['winner'] == 'DEM' else 0, axis=1)
-    state_2016_df['GOPECV'] = state_2016_df.apply(
-        lambda row: abbreviation_votes[row['state_abbr']] if row['winner'] == 'GOP' else 0, axis=1)
-    logger.info('2016 result: DEM: {} GOP: {}'.format(state_2016_df['DEMECV'].sum(), state_2016_df['GOPECV'].sum()))
 
     # todo note this isn't right either
     review_2016_df = pd.read_csv('./world-population-review.csv')
