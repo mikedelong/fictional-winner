@@ -62,8 +62,13 @@ if __name__ == '__main__':
     logger.info('2016 result (WPR) : DEM: {} GOP: {}'.format(review_2016_df['electoralDem'].sum(),
                                                              review_2016_df['electoralRep'].sum()))
     # patch up what DC is called here
-    review_2016_df['State'] = review_2016_df['State'].replace(to_replace='Washington DC', value='District of Columbia',)
+    review_2016_df['State'] = review_2016_df['State'].replace(to_replace='Washington DC',
+                                                              value='District of Columbia', )
 
+    # patch up 2016 Main Congressional District votes
+    review_2016_df = review_2016_df.append(
+        {'State': 'Maine CD-1', 'votesDem': 212774, 'percD': 53.96, 'votesRep': 154384, 'percR': 39.15,
+         'electoralDem': 1, 'electoralRep': 0, 'Pop': 0, }, ignore_index=True)
     # first cut down the data to just the columns we want
     df = df[['question_id', 'state', 'end_date', 'answer', 'pct']]
     df = df[df.answer.isin({'Biden', 'Trump'})]
