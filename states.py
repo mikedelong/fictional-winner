@@ -56,6 +56,9 @@ if __name__ == '__main__':
     review_2016_df = review_2016_df.append(
         {'State': 'Nebraska CD-1', 'votesDem': 100126, 'percD': 35.46, 'votesRep': 158626, 'percR': 56.18,
          'electoralDem': 0, 'electoralRep': 1, 'Pop': 0, }, ignore_index=True)
+    review_2016_df = review_2016_df.append(
+        {'State': 'Nebraska CD-2', 'votesDem': 131030, 'percD': 44.92, 'votesRep': 137564, 'percR': 47.16,
+         'electoralDem': 0, 'electoralRep': 1, 'Pop': 0, }, ignore_index=True)
 
     # first cut down the data to just the columns we want
     df = df[['question_id', 'state', 'end_date', 'answer', 'pct']]
