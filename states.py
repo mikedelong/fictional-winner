@@ -1,11 +1,10 @@
+import json
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
 from time import time
 
 import pandas as pd
-import json
-import numpy as np
 
 if __name__ == '__main__':
     time_start = time()
@@ -81,9 +80,9 @@ if __name__ == '__main__':
         else:
             logger.warning('missing state: {}'.format(state))
 
-        logger.info('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format(state, biden_votes, trump_votes,
-                                                                                   biden_votes + trump_votes,
-                                                                                   538 - biden_votes - trump_votes))
+        logger.debug('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format(state, biden_votes, trump_votes,
+                                                                                    biden_votes + trump_votes,
+                                                                                    538 - biden_votes - trump_votes))
     trump_votes += 4  # ME-02, NE-01, NE-02, NE-03
     logger.info('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format('all', biden_votes, trump_votes,
                                                                                biden_votes + trump_votes,
