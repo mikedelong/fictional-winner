@@ -50,6 +50,9 @@ if __name__ == '__main__':
     review_2016_df = review_2016_df.append(
         {'State': 'Maine CD-1', 'votesDem': 212774, 'percD': 53.96, 'votesRep': 154384, 'percR': 39.15,
          'electoralDem': 1, 'electoralRep': 0, 'Pop': 0, }, ignore_index=True)
+    review_2016_df = review_2016_df.append(
+        {'State': 'Maine CD-2', 'votesDem': 144817, 'percD': 40.98, 'votesRep': 181177, 'percR': 51.26,
+         'electoralDem': 0, 'electoralRep': 1, 'Pop': 0, }, ignore_index=True)
     # first cut down the data to just the columns we want
     df = df[['question_id', 'state', 'end_date', 'answer', 'pct']]
     df = df[df.answer.isin({'Biden', 'Trump'})]
