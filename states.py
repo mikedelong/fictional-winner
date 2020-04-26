@@ -68,6 +68,12 @@ if __name__ == '__main__':
     logger.info('2016 result (WPR) : DEM: {} GOP: {}: total: {} missing: {}'.format(dem_2016_total, rep_2016_total,
                                                                                     total_2016, 538 - total_2016))
 
+    review_2016_df['electoralTotal'] = review_2016_df['electoralDem'] + review_2016_df['electoralRep']
+    check_df = review_2016_df[['State', 'electoralTotal']].copy(deep=True).merge(how='inner', left_on = 'State',
+                                                                                 right=electoral_college_df,
+                                                                                 right_on='state',)
+    check_df = check_df.drop(['state'],axis=1,)
+
     # first cut down the data to just the columns we want
     df = df[['question_id', 'state', 'end_date', 'answer', 'pct']]
     df = df[df.answer.isin({'Biden', 'Trump'})]
