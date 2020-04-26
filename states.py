@@ -41,11 +41,6 @@ if __name__ == '__main__':
     # todo note this isn't right either
     review_2016_df = pd.read_csv('./world-population-review.csv')
     logger.info(list(review_2016_df))
-    dem_2016_total = review_2016_df['electoralDem'].sum()
-    rep_2016_total = review_2016_df['electoralRep'].sum()
-    total_2016 = dem_2016_total + rep_2016_total
-    logger.info('2016 result (WPR) : DEM: {} GOP: {}: total: {} missing: {}'.format(dem_2016_total, rep_2016_total,
-                                                                                    total_2016, 538 - total_2016))
     # patch up what DC is called here
     review_2016_df['State'] = review_2016_df['State'].replace(to_replace='Washington DC',
                                                               value='District of Columbia', )
@@ -66,6 +61,12 @@ if __name__ == '__main__':
     review_2016_df = review_2016_df.append(
         {'State': 'Nebraska CD-3', 'votesDem': 53290, 'percD': 19.73, 'votesRep': 199657, 'percR': 73.92,
          'electoralDem': 0, 'electoralRep': 1, 'Pop': 270109, }, ignore_index=True)
+
+    dem_2016_total = review_2016_df['electoralDem'].sum()
+    rep_2016_total = review_2016_df['electoralRep'].sum()
+    total_2016 = dem_2016_total + rep_2016_total
+    logger.info('2016 result (WPR) : DEM: {} GOP: {}: total: {} missing: {}'.format(dem_2016_total, rep_2016_total,
+                                                                                    total_2016, 538 - total_2016))
 
     # first cut down the data to just the columns we want
     df = df[['question_id', 'state', 'end_date', 'answer', 'pct']]
