@@ -49,19 +49,19 @@ if __name__ == '__main__':
     # patch up 2016 Main Congressional District votes
     review_2016_df = review_2016_df.append(
         {'State': 'Maine CD-1', 'votesDem': 212774, 'percD': 53.96, 'votesRep': 154384, 'percR': 39.15,
-         'electoralDem': 1, 'electoralRep': 0, 'Pop': 0, }, ignore_index=True)
+         'electoralDem': 1, 'electoralRep': 0, 'Pop': 394329, }, ignore_index=True)
     review_2016_df = review_2016_df.append(
         {'State': 'Maine CD-2', 'votesDem': 144817, 'percD': 40.98, 'votesRep': 181177, 'percR': 51.26,
-         'electoralDem': 0, 'electoralRep': 1, 'Pop': 0, }, ignore_index=True)
+         'electoralDem': 0, 'electoralRep': 1, 'Pop': 353416, }, ignore_index=True)
     review_2016_df = review_2016_df.append(
         {'State': 'Nebraska CD-1', 'votesDem': 100126, 'percD': 35.46, 'votesRep': 158626, 'percR': 56.18,
-         'electoralDem': 0, 'electoralRep': 1, 'Pop': 0, }, ignore_index=True)
+         'electoralDem': 0, 'electoralRep': 1, 'Pop': 282338, }, ignore_index=True)
     review_2016_df = review_2016_df.append(
         {'State': 'Nebraska CD-2', 'votesDem': 131030, 'percD': 44.92, 'votesRep': 137564, 'percR': 47.16,
-         'electoralDem': 0, 'electoralRep': 1, 'Pop': 0, }, ignore_index=True)
+         'electoralDem': 0, 'electoralRep': 1, 'Pop': 291680, }, ignore_index=True)
     review_2016_df = review_2016_df.append(
         {'State': 'Nebraska CD-3', 'votesDem': 53290, 'percD': 19.73, 'votesRep': 199657, 'percR': 73.92,
-         'electoralDem': 0, 'electoralRep': 1, 'Pop': 0, }, ignore_index=True)
+         'electoralDem': 0, 'electoralRep': 1, 'Pop': 270109, }, ignore_index=True)
 
     # first cut down the data to just the columns we want
     df = df[['question_id', 'state', 'end_date', 'answer', 'pct']]
