@@ -61,6 +61,10 @@ if __name__ == '__main__':
     review_2016_df = review_2016_df.append(
         {'State': 'Nebraska CD-3', 'votesDem': 53290, 'percD': 19.73, 'votesRep': 199657, 'percR': 73.92,
          'electoralDem': 0, 'electoralRep': 1, 'Pop': 270109, }, ignore_index=True)
+    review_2016_df.loc[review_2016_df.State == 'Hawaii', 'electoralDem'] = 4
+    review_2016_df.loc[review_2016_df.State == 'Nebraska', 'electoralRep'] = 2
+    review_2016_df.loc[review_2016_df.State == 'Texas', 'electoralRep'] = 38
+    review_2016_df.loc[review_2016_df.State == 'Washington', 'electoralDem'] = 12
 
     dem_2016_total = review_2016_df['electoralDem'].sum()
     rep_2016_total = review_2016_df['electoralRep'].sum()
@@ -69,10 +73,11 @@ if __name__ == '__main__':
                                                                                     total_2016, 538 - total_2016))
 
     review_2016_df['electoralTotal'] = review_2016_df['electoralDem'] + review_2016_df['electoralRep']
-    check_df = review_2016_df[['State', 'electoralTotal']].copy(deep=True).merge(how='inner', left_on = 'State',
+    check_df = review_2016_df[['State', 'electoralTotal']].copy(deep=True).merge(how='inner', left_on='State',
                                                                                  right=electoral_college_df,
-                                                                                 right_on='state',)
-    check_df = check_df.drop(['state'],axis=1,)
+                                                                                 right_on='state', ).drop(['state'],
+                                                                                                          axis=1, )
+    check_df = check_df[check_df.votes != check_df.electoralTotal]
 
     # first cut down the data to just the columns we want
     df = df[['question_id', 'state', 'end_date', 'answer', 'pct']]
