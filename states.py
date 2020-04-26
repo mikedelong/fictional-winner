@@ -18,6 +18,7 @@ if __name__ == '__main__':
     electoral_college_df = pd.DataFrame.from_dict({'state': list(electoral_college.keys()),
                                                    'votes': list(electoral_college.values())})
 
+    logger.info('Electoral College: {} total votes.'.format(electoral_college_df['votes'].sum()))
     url = 'https://projects.fivethirtyeight.com/polls-page/president_polls.csv'
 
     df = pd.read_csv(url, parse_dates=['end_date'])
@@ -40,8 +41,11 @@ if __name__ == '__main__':
     # todo note this isn't right either
     review_2016_df = pd.read_csv('./world-population-review.csv')
     logger.info(list(review_2016_df))
-    logger.info('2016 result (WPR) : DEM: {} GOP: {}'.format(review_2016_df['electoralDem'].sum(),
-                                                             review_2016_df['electoralRep'].sum()))
+    dem_2016_total = review_2016_df['electoralDem'].sum()
+    rep_2016_total = review_2016_df['electoralRep'].sum()
+    total_2016 = dem_2016_total + rep_2016_total
+    logger.info('2016 result (WPR) : DEM: {} GOP: {}: total: {} missing: {}'.format(dem_2016_total, rep_2016_total,
+                                                                                    total_2016, 538 - rep_2016_total))
     # patch up what DC is called here
     review_2016_df['State'] = review_2016_df['State'].replace(to_replace='Washington DC',
                                                               value='District of Columbia', )
