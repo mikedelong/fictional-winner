@@ -45,7 +45,7 @@ if __name__ == '__main__':
     rep_2016_total = review_2016_df['electoralRep'].sum()
     total_2016 = dem_2016_total + rep_2016_total
     logger.info('2016 result (WPR) : DEM: {} GOP: {}: total: {} missing: {}'.format(dem_2016_total, rep_2016_total,
-                                                                                    total_2016, 538 - rep_2016_total))
+                                                                                    total_2016, 538 - total_2016))
     # patch up what DC is called here
     review_2016_df['State'] = review_2016_df['State'].replace(to_replace='Washington DC',
                                                               value='District of Columbia', )
