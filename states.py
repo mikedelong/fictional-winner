@@ -35,10 +35,6 @@ if __name__ == '__main__':
         for item in electoral_college_no_polls:
             logger.warning('no polls for {}'.format(item))
 
-    # todo get 2016 data to fill in data for states with no polls
-    # todo build a simple model that uses the most recent poll for each state
-
-    # todo note this isn't right either
     review_2016_df = pd.read_csv('./world-population-review.csv')
     logger.info(list(review_2016_df))
     # patch up what DC is called here
