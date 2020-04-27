@@ -112,12 +112,11 @@ if __name__ == '__main__':
         else:
             logger.warning('missing state: {}'.format(state))
 
-        ranked = sorted(ranked, key=lambda x: x[1], reverse=True)
-
         logger.debug('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format(state, biden_votes, trump_votes,
                                                                                     biden_votes + trump_votes,
                                                                                     538 - biden_votes - trump_votes))
 
+    ranked = sorted(ranked, key=lambda x: x[1], reverse=True)
     for rank in ranked:
         if rank[1] > 0:
             logger.info('state: {} margin: D+{:3.1f}'.format(rank[0], abs(rank[1])))
