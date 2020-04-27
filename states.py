@@ -136,8 +136,11 @@ if __name__ == '__main__':
     for limit in range(10, 0, -1):
         logger.info('there are {} states with margin {} percent or less'.format(
             sum([1 for rank in ranked if abs(rank[2]) <= limit]), limit))
-    logger.info('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format('all', biden_votes, trump_votes,
-                                                                               biden_votes + trump_votes,
-                                                                               538 - biden_votes - trump_votes))
+    if 538 - biden_votes - trump_votes:
+        logger.info('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format('all', biden_votes, trump_votes,
+                                                                                   biden_votes + trump_votes,
+                                                                                   538 - biden_votes - trump_votes, ))
+    else:
+        logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
