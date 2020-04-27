@@ -98,7 +98,12 @@ if __name__ == '__main__':
                 biden_votes += votes
             elif poll['Biden'] < poll['Trump']:
                 trump_votes += votes
-            logger.info('state: {} polling margin: {:5.1f} pct'.format(state, abs(poll['Biden'] - poll['Trump'])))
+            if poll['Biden'] - poll['Trump'] > 0:
+                logger.info('state: {} polling margin: D+{:3.1f} pct'.format(state, abs(poll['Biden'] - poll['Trump'])))
+            elif poll['Biden'] - poll['Trump'] < 0:
+                logger.info('state: {} polling margin: R+{:3.1f} pct'.format(state, abs(poll['Biden'] - poll['Trump'])))
+            else:
+                logger.info('state: {} tied.'.format(state))
         elif state in review_2016_df.State.unique():
             biden_votes += review_2016_df[review_2016_df.State == state].electoralDem.values[0]
             trump_votes += review_2016_df[review_2016_df.State == state].electoralRep.values[0]
