@@ -90,6 +90,7 @@ if __name__ == '__main__':
             polling[state][candidate] = this_df[this_df.answer.isin({candidate})].groupby('pct').mean().index[0]
 
     biden_votes, trump_votes = 0, 0
+    ranked = list()
     for state in electoral_college_df.state.unique():
         if state in polling.keys():
             poll = polling[state]
@@ -104,15 +105,26 @@ if __name__ == '__main__':
                 logger.info('state: {} polling margin: R+{:3.1f} pct'.format(state, abs(poll['Biden'] - poll['Trump'])))
             else:
                 logger.info('state: {} tied.'.format(state))
+            ranked.append((state, poll['Biden'] - poll['Trump']))
         elif state in review_2016_df.State.unique():
             biden_votes += review_2016_df[review_2016_df.State == state].electoralDem.values[0]
             trump_votes += review_2016_df[review_2016_df.State == state].electoralRep.values[0]
         else:
             logger.warning('missing state: {}'.format(state))
 
+        ranked = sorted(ranked, key=lambda x: x[1], reverse=True)
+
         logger.debug('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format(state, biden_votes, trump_votes,
                                                                                     biden_votes + trump_votes,
                                                                                     538 - biden_votes - trump_votes))
+
+    for rank in ranked:
+        if rank[1] > 0:
+            logger.info('state: {} margin: D+{:3.1f}'.format(rank[0], abs(rank[1])))
+        elif rank[1] < 0:
+            logger.info('state: {} margin: R+{:3.1f}'.format(rank[0], abs(rank[1])))
+        else:
+            logger.info('state: {} margin: 0.0'.format(rank[0]))
     logger.info('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format('all', biden_votes, trump_votes,
                                                                                biden_votes + trump_votes,
                                                                                538 - biden_votes - trump_votes))
