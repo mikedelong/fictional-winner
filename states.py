@@ -21,6 +21,9 @@ if __name__ == '__main__':
     logger.info('Electoral College: {} total votes.'.format(electoral_college_df['votes'].sum()))
     url = 'https://projects.fivethirtyeight.com/polls-page/president_polls.csv'
 
+    with open(file='./state_abbreviations.json', mode='r') as abbreviation_fp:
+        state_abbreviations = json.load(fp=abbreviation_fp)
+
     df = pd.read_csv(url, parse_dates=['end_date'])
     logger.info(list(df))
     df = df[~df.state.isnull()]
