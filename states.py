@@ -120,11 +120,12 @@ if __name__ == '__main__':
                                                                                     538 - biden_votes - trump_votes))
 
     ranked = sorted(ranked, key=lambda x: x[1], reverse=True)
+    ranked = [(rank[0], state_abbreviations[rank[0]], rank[1]) for rank in ranked]
     for rank in ranked:
-        if rank[1] > 0:
-            logger.info('state: {} margin: D+{:3.1f}'.format(rank[0], abs(rank[1])))
-        elif rank[1] < 0:
-            logger.info('state: {} margin: R+{:3.1f}'.format(rank[0], abs(rank[1])))
+        if rank[2] > 0:
+            logger.info('state: {} margin: D+{:3.1f}'.format(rank[0], abs(rank[2])))
+        elif rank[2] < 0:
+            logger.info('state: {} margin: R+{:3.1f}'.format(rank[0], abs(rank[2])))
         else:
             logger.info('state: {} margin: 0.0'.format(rank[0]))
     logger.info('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format('all', biden_votes, trump_votes,
