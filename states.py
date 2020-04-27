@@ -119,7 +119,7 @@ if __name__ == '__main__':
                                                                                     biden_votes + trump_votes,
                                                                                     538 - biden_votes - trump_votes))
 
-    ranked = sorted(ranked, key=lambda x: x[1], reverse=True)
+    ranked = sorted(ranked, key=lambda x: abs(x[1]), reverse=True)
     ranked = [(rank[0], state_abbreviations[rank[0]], rank[1]) for rank in ranked]
     for rank in ranked:
         if rank[2] > 0:
