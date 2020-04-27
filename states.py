@@ -6,6 +6,8 @@ from time import time
 
 import pandas as pd
 
+from math import trunc
+
 if __name__ == '__main__':
     time_start = time()
     logger = getLogger(__name__)
@@ -128,6 +130,12 @@ if __name__ == '__main__':
             logger.info('state: {} margin: R+{:3.1f}'.format(rank[0], abs(rank[2])))
         else:
             logger.info('state: {} margin: 0.0'.format(rank[0]))
+
+    logger.info([(rank[1], 'D' if rank[2] > 0 else 'R', abs(trunc(100.0 * rank[2]) / 100)) for rank in ranked if
+                 abs(rank[2]) < 10.1])
+    for limit in range(10, 0, -1):
+        logger.info('there are {} states with margin {} percent or less'.format(
+            sum([1 for rank in ranked if abs(rank[2]) <= limit]), limit))
     logger.info('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format('all', biden_votes, trump_votes,
                                                                                biden_votes + trump_votes,
                                                                                538 - biden_votes - trump_votes))
