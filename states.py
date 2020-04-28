@@ -9,7 +9,7 @@ import pandas as pd
 import datetime
 
 
-def get_results(arg_df, arg_cutoff_date):
+def get_results(arg_df, arg_cutoff_date, verbose):
     polling = {}
     for state in sorted(arg_df.state.unique()):
         polling[state] = {}
@@ -28,18 +28,20 @@ def get_results(arg_df, arg_cutoff_date):
                 result_biden_votes += votes
             elif poll['Biden'] < poll['Trump']:
                 result_trump_votes += votes
-            if poll['Biden'] - poll['Trump'] > 0:
+            if poll['Biden'] - poll['Trump'] > 0 and verbose:
                 logger.info('state: {} polling margin: D+{:3.1f} pct'.format(state, abs(poll['Biden'] - poll['Trump'])))
-            elif poll['Biden'] - poll['Trump'] < 0:
+            elif poll['Biden'] - poll['Trump'] < 0 and verbose:
                 logger.info('state: {} polling margin: R+{:3.1f} pct'.format(state, abs(poll['Biden'] - poll['Trump'])))
             else:
-                logger.info('state: {} tied.'.format(state))
+                if verbose:
+                    logger.info('state: {} tied.'.format(state))
             result_ranked.append((state, poll['Biden'] - poll['Trump']))
         elif state in review_2016_df.State.unique():
             result_biden_votes += review_2016_df[review_2016_df.State == state].electoralDem.values[0]
             result_trump_votes += review_2016_df[review_2016_df.State == state].electoralRep.values[0]
         else:
-            logger.warning('missing state: {}'.format(state))
+            if verbose:
+                logger.warning('missing state: {}'.format(state))
     return result_biden_votes, result_trump_votes, result_ranked
 
 
@@ -122,7 +124,7 @@ if __name__ == '__main__':
 
     a2_df = df[df.answer.isin({'Biden', 'Trump'})].groupby('question_id').filter(lambda x: len(x) == 2)
     cutoff_date = pd.Timestamp(datetime.datetime.today())
-    biden_votes, trump_votes, ranked = get_results(a2_df, cutoff_date)
+    biden_votes, trump_votes, ranked = get_results(arg_df=a2_df, arg_cutoff_date=cutoff_date, verbose=0)
 
     ranked = sorted(ranked, key=lambda x: abs(x[1]), reverse=True)
     ranked = [(rank[0], state_abbreviations[rank[0]], rank[1]) for rank in ranked]
