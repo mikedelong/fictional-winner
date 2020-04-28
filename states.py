@@ -2,11 +2,10 @@ import json
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
+from math import trunc
 from time import time
 
 import pandas as pd
-
-from math import trunc
 
 if __name__ == '__main__':
     time_start = time()
