@@ -6,8 +6,8 @@ from logging import getLogger
 from math import trunc
 from time import time
 
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 from pandas.plotting import register_matplotlib_converters
 
 
