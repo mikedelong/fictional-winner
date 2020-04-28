@@ -1,3 +1,4 @@
+import datetime
 import json
 from logging import INFO
 from logging import basicConfig
@@ -6,7 +7,6 @@ from math import trunc
 from time import time
 
 import pandas as pd
-import datetime
 
 
 def get_results(arg_df, arg_cutoff_date, verbose):
