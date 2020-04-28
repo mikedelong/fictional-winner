@@ -11,10 +11,10 @@ import datetime
 
 def get_results(arg_df, arg_cutoff_date, verbose):
     polling = {}
+    arg_df = arg_df[arg_df.end_date <= arg_cutoff_date]
     for state in sorted(arg_df.state.unique()):
         polling[state] = {}
         this_df = arg_df[arg_df.state == state]
-        this_df = this_df[this_df.end_date <= arg_cutoff_date]
         this_df = this_df[this_df.end_date == this_df.end_date.max()]
         for candidate in ['Biden', 'Trump']:
             polling[state][candidate] = this_df[this_df.answer.isin({candidate})].groupby('pct').mean().index[0]
@@ -124,7 +124,7 @@ if __name__ == '__main__':
 
     a2_df = df[df.answer.isin({'Biden', 'Trump'})].groupby('question_id').filter(lambda x: len(x) == 2)
     cutoff_date = pd.Timestamp(datetime.datetime.today())
-    biden_votes, trump_votes, ranked = get_results(arg_df=a2_df, arg_cutoff_date=cutoff_date, verbose=0)
+    biden_votes, trump_votes, ranked = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date, verbose=0)
 
     ranked = sorted(ranked, key=lambda x: abs(x[1]), reverse=True)
     ranked = [(rank[0], state_abbreviations[rank[0]], rank[1]) for rank in ranked]
@@ -148,4 +148,8 @@ if __name__ == '__main__':
     else:
         logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
+    for change in range(-120, 0, 1):
+        cutoff_date = pd.Timestamp(datetime.datetime.today() + datetime.timedelta(days=change))
+        biden_votes, trump_votes, _ = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date, verbose=0)
+        logger.info('date: {} Biden: {} Trump: {}'.format(cutoff_date.date(), biden_votes, trump_votes))
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
