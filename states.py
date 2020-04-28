@@ -8,6 +8,7 @@ from time import time
 
 import pandas as pd
 import matplotlib.pyplot as plt
+from pandas.plotting import register_matplotlib_converters
 
 
 def get_results(arg_df, arg_cutoff_date, verbose):
@@ -51,6 +52,7 @@ if __name__ == '__main__':
     logger = getLogger(__name__)
     basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=INFO)
     logger.info('started.')
+    register_matplotlib_converters()
 
     with open(file='./electoral_college.json', mode='r', ) as electoral_college_fp:
         electoral_college = json.load(fp=electoral_college_fp)
