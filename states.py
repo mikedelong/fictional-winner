@@ -7,6 +7,7 @@ from math import trunc
 from time import time
 
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def get_results(arg_df, arg_cutoff_date, verbose):
@@ -148,8 +149,12 @@ if __name__ == '__main__':
     else:
         logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
+    fig, ax = plt.subplots()
     for change in range(-120, 0, 1):
-        cutoff_date = pd.Timestamp(datetime.datetime.today() + datetime.timedelta(days=change))
-        biden_votes, trump_votes, _ = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date, verbose=0)
-        logger.info('date: {} Biden: {} Trump: {}'.format(cutoff_date.date(), biden_votes, trump_votes))
+        cutoff_date = pd.Timestamp(datetime.datetime.today() + datetime.timedelta(days=change, ))
+        biden_votes, trump_votes, _ = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date, verbose=0,)
+        logger.info('date: {} Biden: {} Trump: {}'.format(cutoff_date.date(), biden_votes, trump_votes, ))
+        plt.scatter(x=cutoff_date.date(), y=biden_votes, c='b')
+        plt.scatter(x=cutoff_date.date(), y=trump_votes, c='r')
+    plt.savefig('./states-daily.png')
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
