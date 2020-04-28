@@ -6,6 +6,42 @@ from math import trunc
 from time import time
 
 import pandas as pd
+import datetime
+
+
+def get_results(arg_df, arg_cutoff_date):
+    polling = {}
+    for state in sorted(arg_df.state.unique()):
+        polling[state] = {}
+        this_df = arg_df[arg_df.state == state]
+        this_df = this_df[this_df.end_date <= arg_cutoff_date]
+        this_df = this_df[this_df.end_date == this_df.end_date.max()]
+        for candidate in ['Biden', 'Trump']:
+            polling[state][candidate] = this_df[this_df.answer.isin({candidate})].groupby('pct').mean().index[0]
+    result_biden_votes, result_trump_votes = 0, 0
+    result_ranked = list()
+    for state in electoral_college_df.state.unique():
+        if state in polling.keys():
+            poll = polling[state]
+            votes = electoral_college_df[electoral_college_df.state == state].votes.values[0]
+            if poll['Biden'] > poll['Trump']:
+                result_biden_votes += votes
+            elif poll['Biden'] < poll['Trump']:
+                result_trump_votes += votes
+            if poll['Biden'] - poll['Trump'] > 0:
+                logger.info('state: {} polling margin: D+{:3.1f} pct'.format(state, abs(poll['Biden'] - poll['Trump'])))
+            elif poll['Biden'] - poll['Trump'] < 0:
+                logger.info('state: {} polling margin: R+{:3.1f} pct'.format(state, abs(poll['Biden'] - poll['Trump'])))
+            else:
+                logger.info('state: {} tied.'.format(state))
+            result_ranked.append((state, poll['Biden'] - poll['Trump']))
+        elif state in review_2016_df.State.unique():
+            result_biden_votes += review_2016_df[review_2016_df.State == state].electoralDem.values[0]
+            result_trump_votes += review_2016_df[review_2016_df.State == state].electoralRep.values[0]
+        else:
+            logger.warning('missing state: {}'.format(state))
+    return result_biden_votes, result_trump_votes, result_ranked
+
 
 if __name__ == '__main__':
     time_start = time()
@@ -85,42 +121,8 @@ if __name__ == '__main__':
     df['question_id'] = df['question_id'].astype(int)
 
     a2_df = df[df.answer.isin({'Biden', 'Trump'})].groupby('question_id').filter(lambda x: len(x) == 2)
-    polling = {}
-    cutoff_date = pd.Timestamp.today()
-    for state in sorted(a2_df.state.unique()):
-        polling[state] = {}
-        this_df = a2_df[a2_df.state == state]
-        this_df = this_df[this_df.end_date <= cutoff_date]
-        this_df = this_df[this_df.end_date == this_df.end_date.max()]
-        for candidate in ['Biden', 'Trump']:
-            polling[state][candidate] = this_df[this_df.answer.isin({candidate})].groupby('pct').mean().index[0]
-
-    biden_votes, trump_votes = 0, 0
-    ranked = list()
-    for state in electoral_college_df.state.unique():
-        if state in polling.keys():
-            poll = polling[state]
-            votes = electoral_college_df[electoral_college_df.state == state].votes.values[0]
-            if poll['Biden'] > poll['Trump']:
-                biden_votes += votes
-            elif poll['Biden'] < poll['Trump']:
-                trump_votes += votes
-            if poll['Biden'] - poll['Trump'] > 0:
-                logger.info('state: {} polling margin: D+{:3.1f} pct'.format(state, abs(poll['Biden'] - poll['Trump'])))
-            elif poll['Biden'] - poll['Trump'] < 0:
-                logger.info('state: {} polling margin: R+{:3.1f} pct'.format(state, abs(poll['Biden'] - poll['Trump'])))
-            else:
-                logger.info('state: {} tied.'.format(state))
-            ranked.append((state, poll['Biden'] - poll['Trump']))
-        elif state in review_2016_df.State.unique():
-            biden_votes += review_2016_df[review_2016_df.State == state].electoralDem.values[0]
-            trump_votes += review_2016_df[review_2016_df.State == state].electoralRep.values[0]
-        else:
-            logger.warning('missing state: {}'.format(state))
-
-        logger.debug('state: {} Biden: {} Trump: {} total: {} remaining: {}'.format(state, biden_votes, trump_votes,
-                                                                                    biden_votes + trump_votes,
-                                                                                    538 - biden_votes - trump_votes))
+    cutoff_date = pd.Timestamp(datetime.datetime.today())
+    biden_votes, trump_votes, ranked = get_results(a2_df, cutoff_date)
 
     ranked = sorted(ranked, key=lambda x: abs(x[1]), reverse=True)
     ranked = [(rank[0], state_abbreviations[rank[0]], rank[1]) for rank in ranked]
