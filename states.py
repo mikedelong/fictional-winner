@@ -86,9 +86,11 @@ if __name__ == '__main__':
 
     a2_df = df[df.answer.isin({'Biden', 'Trump'})].groupby('question_id').filter(lambda x: len(x) == 2)
     polling = {}
+    cutoff_date = pd.Timestamp.today()
     for state in sorted(a2_df.state.unique()):
         polling[state] = {}
         this_df = a2_df[a2_df.state == state]
+        this_df = this_df[this_df.end_date <= cutoff_date]
         this_df = this_df[this_df.end_date == this_df.end_date.max()]
         for candidate in ['Biden', 'Trump']:
             polling[state][candidate] = this_df[this_df.answer.isin({candidate})].groupby('pct').mean().index[0]
