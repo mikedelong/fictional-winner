@@ -169,8 +169,8 @@ if __name__ == '__main__':
         plt.savefig('./states-daily-matplotlib.png')
     else:
         graph_df['numbers'] = mdates.date2num(graph_df.date.values)
-        sns.regplot(ax=ax, data=graph_df, x='numbers', y='Biden', )
-        sns.regplot(ax=ax, data=graph_df, x='numbers', y='Trump', )
+        sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y='Biden', )
+        sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', )
         plt.savefig('./states-daily-regplot.png')
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
