@@ -151,13 +151,17 @@ if __name__ == '__main__':
     else:
         logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
-    fig, ax = plt.subplots(figsize=(15, 10))
-    # todo: collect data into a list or DataFrame and plot it with a trend line
+    graph_df = pd.DataFrame(columns=['date', 'Biden', 'Trump', ])
     for cutoff_date in sorted(a2_df.end_date.unique(), ):
         biden_votes, trump_votes, _ = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
                                                   verbose=0, )
         logger.info('date: {} Biden: {} Trump: {}'.format(cutoff_date, biden_votes, trump_votes, ))
-        plt.scatter(x=cutoff_date, y=biden_votes, c='b', )
-        plt.scatter(x=cutoff_date, y=trump_votes, c='r', )
+        graph_df = graph_df.append({'date': cutoff_date, 'Biden': biden_votes, 'Trump': trump_votes, },
+                                   ignore_index=True)
+
+    fig, ax = plt.subplots(figsize=(15, 10))
+    # todo: collect data into a list or DataFrame and plot it with a trend line
+    plt.scatter(x=graph_df.date, y=graph_df.Biden, c='b', )
+    plt.scatter(x=graph_df.date, y=graph_df.Trump, c='r', )
     plt.savefig('./states-daily.png')
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
