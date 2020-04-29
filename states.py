@@ -6,11 +6,11 @@ from logging import getLogger
 from math import trunc
 from time import time
 
+import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import pandas as pd
-from pandas.plotting import register_matplotlib_converters
 import seaborn as sns
-import matplotlib.dates as mdates
+from pandas.plotting import register_matplotlib_converters
 
 
 def get_results(arg_df, arg_cutoff_date, verbose):
