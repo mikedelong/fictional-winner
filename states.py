@@ -152,6 +152,7 @@ if __name__ == '__main__':
         logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
     fig, ax = plt.subplots(figsize=(15, 10))
+    # todo: collect data into a list or DataFrame and plot it with a trend line
     for cutoff_date in sorted(a2_df.end_date.unique(), ):
         biden_votes, trump_votes, _ = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
                                                   verbose=0, )
