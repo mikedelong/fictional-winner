@@ -160,7 +160,6 @@ if __name__ == '__main__':
                                    ignore_index=True)
 
     fig, ax = plt.subplots(figsize=(15, 10))
-    # todo: collect data into a list or DataFrame and plot it with a trend line
     plt.scatter(x=graph_df.date, y=graph_df.Biden, c='b', )
     plt.scatter(x=graph_df.date, y=graph_df.Trump, c='r', )
     plt.savefig('./states-daily.png')
