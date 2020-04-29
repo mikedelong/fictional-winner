@@ -9,6 +9,8 @@ from time import time
 import matplotlib.pyplot as plt
 import pandas as pd
 from pandas.plotting import register_matplotlib_converters
+import seaborn as sns
+import matplotlib.dates as mdates
 
 
 def get_results(arg_df, arg_cutoff_date, verbose):
@@ -160,7 +162,15 @@ if __name__ == '__main__':
                                    ignore_index=True)
 
     fig, ax = plt.subplots(figsize=(15, 10))
-    plt.scatter(x=graph_df.date, y=graph_df.Biden, c='b', )
-    plt.scatter(x=graph_df.date, y=graph_df.Trump, c='r', )
-    plt.savefig('./states-daily.png')
+    do_plot_matplotlib = False
+    if do_plot_matplotlib:
+        plt.scatter(x=graph_df.date, y=graph_df.Biden, c='b', )
+        plt.scatter(x=graph_df.date, y=graph_df.Trump, c='r', )
+        plt.savefig('./states-daily-matplotlib.png')
+    else:
+        graph_df['numbers'] = mdates.date2num(graph_df.date.values)
+        sns.regplot(ax=ax, data=graph_df, x='numbers', y='Biden', )
+        sns.regplot(ax=ax, data=graph_df, x='numbers', y='Trump', )
+        plt.savefig('./states-daily-regplot.png')
+
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
