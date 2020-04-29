@@ -170,7 +170,9 @@ if __name__ == '__main__':
     else:
         graph_df['numbers'] = mdates.date2num(graph_df.date.values)
         sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y='Biden', )
+        sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y='Biden', lowess=True, scatter=False, )
         sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', )
+        sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', lowess=True, scatter=False, )
         plt.savefig('./states-daily-regplot.png')
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
