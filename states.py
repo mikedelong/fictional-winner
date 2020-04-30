@@ -153,16 +153,21 @@ if __name__ == '__main__':
     else:
         logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
-    graph_df = pd.DataFrame(columns=['date', 'Biden', 'Trump', ])
+    graph_df = pd.DataFrame(columns=['date', 'Biden', 'Trump', ], )
+    lm_df = pd.DataFrame(columns=['date', 'votes', 'candidate', ], )
     for cutoff_date in sorted(a2_df.end_date.unique(), ):
         biden_votes, trump_votes, _ = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
                                                   verbose=0, )
         logger.info('date: {} Biden: {} Trump: {}'.format(cutoff_date, biden_votes, trump_votes, ))
-        graph_df = graph_df.append({'date': cutoff_date, 'Biden': biden_votes, 'Trump': trump_votes, },
-                                   ignore_index=True)
+        graph_df = graph_df.append(ignore_index=True,
+                                   other={'date': cutoff_date, 'Biden': biden_votes, 'Trump': trump_votes, }, )
+        lm_df = lm_df.append(ignore_index=True,
+                             other={'date': cutoff_date, 'votes': biden_votes, 'candidate': 'Biden', }, )
+        lm_df = lm_df.append(ignore_index=True,
+                             other={'date': cutoff_date, 'votes': trump_votes, 'candidate': 'Trump', }, )
 
     fig, ax = plt.subplots(figsize=(15, 10))
-    plot_styles = ['matplotlib', 'regplot', 'lmplot',]
+    plot_styles = ['matplotlib', 'regplot', 'lmplot', ]
     plot_style = plot_styles[1]
     if plot_style == plot_styles[0]:
         plt.scatter(x=graph_df.date, y=graph_df.Biden, c='b', )
@@ -181,7 +186,9 @@ if __name__ == '__main__':
         sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', logx=True, scatter=False, )
         plt.savefig('./states-daily-regplot.png')
     elif plot_style == plot_styles[2]:
-        raise NotImplementedError('Not implemented: plot style {}'.format(plot_styles[2], ))
+        graph_df['numbers'] = mdates.date2num(graph_df.date.values)
+        sns.lmplot(hue='candidate', data=lm_df, x='numbers', y='votes', )
+        plt.savefig('./states-daily-lmplot.png', )
     else:
         raise ValueError('plot style unknown.')
 
