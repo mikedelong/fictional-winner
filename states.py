@@ -168,7 +168,7 @@ if __name__ == '__main__':
 
     fig, ax = plt.subplots(figsize=(15, 10))
     plot_styles = ['matplotlib', 'regplot', 'lmplot', ]
-    plot_style = plot_styles[1]
+    plot_style = plot_styles[2]
     if plot_style == plot_styles[0]:
         plt.scatter(x=graph_df.date, y=graph_df.Biden, c='b', )
         plt.scatter(x=graph_df.date, y=graph_df.Trump, c='r', )
