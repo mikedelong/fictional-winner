@@ -186,7 +186,7 @@ if __name__ == '__main__':
         sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', logx=True, scatter=False, )
         plt.savefig('./states-daily-regplot.png')
     elif plot_style == plot_styles[2]:
-        graph_df['numbers'] = mdates.date2num(graph_df.date.values)
+        lm_df['numbers'] = mdates.date2num(lm_df.date.values)
         sns.lmplot(hue='candidate', data=lm_df, x='numbers', y='votes', )
         plt.savefig('./states-daily-lmplot.png', )
     else:
