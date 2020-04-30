@@ -188,7 +188,8 @@ if __name__ == '__main__':
         plt.savefig('./states-daily-regplot.png')
     elif plot_style == plot_styles[2]:
         lm_df['numbers'] = mdates.date2num(lm_df.date.values)
-        sns.lmplot(data=lm_df, hue='candidate', order=3, palette=dict(Biden='b', Trump='r'), x='numbers', y='votes', )
+        sns.lmplot(data=lm_df, hue='candidate', order=3, palette=dict(Biden='b', Trump='r'), x='numbers',
+                   y='votes', ).set(xlim=(lm_df.numbers.min() - 100, lm_df.numbers.max() + 100), ylim=(100, 450), )
         plt.savefig('./states-daily-lmplot.png', )
     else:
         raise ValueError('plot style unknown.')
