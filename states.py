@@ -166,6 +166,7 @@ if __name__ == '__main__':
         lm_df = lm_df.append(ignore_index=True,
                              other={'date': cutoff_date, 'votes': trump_votes, 'candidate': 'Trump', }, )
 
+    lm_df['votes'] = lm_df['votes'].astype(float)
     fig, ax = plt.subplots(figsize=(15, 10))
     plot_styles = ['matplotlib', 'regplot', 'lmplot', ]
     plot_style = plot_styles[2]
@@ -187,7 +188,7 @@ if __name__ == '__main__':
         plt.savefig('./states-daily-regplot.png')
     elif plot_style == plot_styles[2]:
         lm_df['numbers'] = mdates.date2num(lm_df.date.values)
-        sns.lmplot(data=lm_df, hue='candidate', palette=dict(Biden='b', Trump='r'), x='numbers', y='votes', )
+        sns.lmplot(data=lm_df, hue='candidate', order=3, palette=dict(Biden='b', Trump='r'), x='numbers', y='votes', )
         plt.savefig('./states-daily-lmplot.png', )
     else:
         raise ValueError('plot style unknown.')
