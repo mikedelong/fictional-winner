@@ -162,12 +162,13 @@ if __name__ == '__main__':
                                    ignore_index=True)
 
     fig, ax = plt.subplots(figsize=(15, 10))
-    do_plot_matplotlib = False
-    if do_plot_matplotlib:
+    plot_styles = ['matplotlib', 'regplot', 'lmplot',]
+    plot_style = plot_styles[1]
+    if plot_style == plot_styles[0]:
         plt.scatter(x=graph_df.date, y=graph_df.Biden, c='b', )
         plt.scatter(x=graph_df.date, y=graph_df.Trump, c='r', )
         plt.savefig('./states-daily-matplotlib.png')
-    else:
+    elif plot_style == plot_styles[1]:
         # todo fix dates on x axis
         # https://stackoverflow.com/questions/29308729/can-i-plot-a-linear-regression-with-datetimes-on-the-x-axis-with-seaborn
         # todo fix axis labels
@@ -179,5 +180,9 @@ if __name__ == '__main__':
         sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', lowess=True, scatter=False, )
         sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', logx=True, scatter=False, )
         plt.savefig('./states-daily-regplot.png')
+    elif plot_style == plot_styles[2]:
+        raise NotImplementedError('Not implemented: plot style {}'.format(plot_styles[2], ))
+    else:
+        raise ValueError('plot style unknown.')
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
