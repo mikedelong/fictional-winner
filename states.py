@@ -174,7 +174,7 @@ if __name__ == '__main__':
     lm_df['votes'] = lm_df['votes'].astype(float)
     sns.set_style('darkgrid')
     plt.style.use('fivethirtyeight')
-    plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', ]
+    plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', 'stategrid']
     for plot_style in plot_styles:
         fig, ax = plt.subplots(figsize=(15, 10))
         if plot_style == plot_styles[0]:
@@ -203,6 +203,11 @@ if __name__ == '__main__':
             sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', lowess=True, scatter=False, )
             sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', logx=True, scatter=False, )
             plt.savefig('./states-daily-regplot.png', )
+        elif plot_style == plot_styles[5]:
+            g = sns.FacetGrid(col='state', col_order=sorted(a2_df.state.unique()), col_wrap=6, data=a2_df,
+                              hue='answer', )
+            g = g.map(plt.scatter, 'end_date', 'pct')
+            plt.savefig('./states-daily-grid-state.png', )
         else:
             raise ValueError('plot style unknown.')
 
