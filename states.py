@@ -172,22 +172,28 @@ if __name__ == '__main__':
                              other={'date': cutoff_date, 'votes': trump_votes, 'candidate': 'Trump', }, )
 
     lm_df['votes'] = lm_df['votes'].astype(float)
+    sns.set_style('whitegrid')
     fig, ax = plt.subplots(figsize=(15, 10))
-    plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'regplot', ]
+    plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', ]
     plot_style = plot_styles[0]
     if plot_style == plot_styles[0]:
-        sns.lineplot(data=lm_df, x='date', y='votes', hue='candidate', )
+        sns.lineplot(ax=ax, ci='sd', dashes=False, data=lm_df, estimator='mean',
+                     hue='candidate', marker='.', n_boot=5,
+                     palette=dict(Biden='b', Trump='r'), sort=True,
+                     x='date', y='votes', )
         plt.savefig('./states-daily-lineplot.png', )
     elif plot_style == plot_styles[1]:
         lm_df['numbers'] = mdates.date2num(lm_df.date.values, )
-        sns.lmplot(data=lm_df, hue='candidate', order=3, palette=dict(Biden='b', Trump='r'), x='numbers',
-                   y='votes', ).set(xlim=(lm_df.numbers.min() - 100, lm_df.numbers.max() + 100), ylim=(100, 450), )
+        ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette=dict(Biden='b', Trump='r'), x='numbers',
+                        y='votes', ).set(xlim=(lm_df.numbers.min() - 100, lm_df.numbers.max() + 100), ylim=(100, 450), )
         plt.savefig('./states-daily-lmplot.png', )
     elif plot_style == plot_styles[2]:
-        plt.scatter(x=graph_df.date, y=graph_df.Biden, c='b', )
-        plt.scatter(x=graph_df.date, y=graph_df.Trump, c='r', )
+        plt.scatter(ax=ax, x=graph_df.date, y=graph_df.Biden, c='b', )
+        plt.scatter(ax=ax, x=graph_df.date, y=graph_df.Trump, c='r', )
         plt.savefig('./states-daily-matplotlib.png', )
     elif plot_style == plot_styles[3]:
+        raise NotImplementedError('point plot')
+    elif plot_style == plot_styles[4]:
         # todo fix dates on x axis
         # https://stackoverflow.com/questions/29308729/can-i-plot-a-linear-regression-with-datetimes-on-the-x-axis-with-seaborn
         # todo fix axis labels
