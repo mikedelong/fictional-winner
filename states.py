@@ -173,6 +173,7 @@ if __name__ == '__main__':
 
     lm_df['votes'] = lm_df['votes'].astype(float)
     sns.set_style('darkgrid')
+    plt.style.use('fivethirtyeight')
     plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', ]
     for plot_style in plot_styles:
         fig, ax = plt.subplots(figsize=(15, 10))
@@ -194,9 +195,6 @@ if __name__ == '__main__':
             ax = sns.pointplot(data=lm_df, hue='candidate', palette=dict(Biden='b', Trump='r'), x='date', y='votes', )
             plt.savefig('./states-daily-pointplot.png', )
         elif plot_style == plot_styles[4]:
-            # todo fix dates on x axis
-            # https://stackoverflow.com/questions/29308729/can-i-plot-a-linear-regression-with-datetimes-on-the-x-axis-with-seaborn
-            # todo fix axis labels
             graph_df['numbers'] = mdates.date2num(graph_df.date.values, )
             sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y='Biden', )
             sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y='Biden', lowess=True, scatter=False, )
