@@ -174,7 +174,7 @@ if __name__ == '__main__':
     lm_df['votes'] = lm_df['votes'].astype(float)
     sns.set_style('darkgrid')
     plt.style.use('fivethirtyeight')
-    plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', 'stategrid']
+    plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', 'stategrid', 'swingstategrid']
     for plot_style in plot_styles:
         fig, ax = plt.subplots(figsize=(15, 10))
         if plot_style == plot_styles[0]:
@@ -207,7 +207,17 @@ if __name__ == '__main__':
             g = sns.FacetGrid(col='state', col_order=sorted(a2_df.state.unique()), col_wrap=6, data=a2_df,
                               hue='answer', )
             g = g.map(plt.scatter, 'end_date', 'pct')
-            plt.savefig('./states-daily-grid-state.png', )
+            plt.savefig('./states-daily-state-grid.png', )
+        elif plot_style == plot_styles[6]:
+            states = [state for state in a2_df.state.unique() if a2_df.state.value_counts()[state] > 8]
+            a3_df = a2_df[a2_df.state.isin(states)].copy(deep=True)
+            a3_df['date'] = [datetime.datetime.date(item) for item in a3_df['end_date']]
+            plot = sns.FacetGrid(col='state', col_order=sorted(states), col_wrap=4, data=a3_df, hue='answer', )
+            plot_result = plot.map(plt.scatter, 'date', 'pct',)
+            for axes in plot.axes.flat:
+                _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=90, )
+            plt.tight_layout()
+            plt.savefig('./states-daily-swing-state-grid.png', )
         else:
             raise ValueError('plot style unknown.')
 
