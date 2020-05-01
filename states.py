@@ -173,38 +173,39 @@ if __name__ == '__main__':
 
     lm_df['votes'] = lm_df['votes'].astype(float)
     sns.set_style('darkgrid')
-    fig, ax = plt.subplots(figsize=(15, 10))
     plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', ]
-    plot_style = plot_styles[3]
-    if plot_style == plot_styles[0]:
-        sns.lineplot(ax=ax, data=lm_df, hue='candidate', palette=dict(Biden='b', Trump='r'), sort=True, x='date',
-                     y='votes', )
-        plt.savefig('./states-daily-lineplot.png', )
-    elif plot_style == plot_styles[1]:
-        lm_df['numbers'] = mdates.date2num(lm_df.date.values, )
-        ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette=dict(Biden='b', Trump='r'), x='numbers',
-                        y='votes', ).set(xlim=(lm_df.numbers.min() - 100, lm_df.numbers.max() + 100), ylim=(100, 450), )
-        plt.savefig('./states-daily-lmplot.png', )
-    elif plot_style == plot_styles[2]:
-        plt.scatter(ax=ax, x=graph_df.date, y=graph_df.Biden, c='b', )
-        plt.scatter(ax=ax, x=graph_df.date, y=graph_df.Trump, c='r', )
-        plt.savefig('./states-daily-matplotlib.png', )
-    elif plot_style == plot_styles[3]:
-        ax = sns.pointplot(data=lm_df, hue='candidate', palette=dict(Biden='b', Trump='r'), x='date', y='votes', )
-        plt.savefig('./states-daily-pointplot.png', )
-    elif plot_style == plot_styles[4]:
-        # todo fix dates on x axis
-        # https://stackoverflow.com/questions/29308729/can-i-plot-a-linear-regression-with-datetimes-on-the-x-axis-with-seaborn
-        # todo fix axis labels
-        graph_df['numbers'] = mdates.date2num(graph_df.date.values, )
-        sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y='Biden', )
-        sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y='Biden', lowess=True, scatter=False, )
-        sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y='Biden', logx=True, scatter=False, )
-        sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', )
-        sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', lowess=True, scatter=False, )
-        sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', logx=True, scatter=False, )
-        plt.savefig('./states-daily-regplot.png', )
-    else:
-        raise ValueError('plot style unknown.')
+    for plot_style in plot_styles:
+        fig, ax = plt.subplots(figsize=(15, 10))
+        if plot_style == plot_styles[0]:
+            sns.lineplot(ax=ax, data=lm_df, hue='candidate', palette=dict(Biden='b', Trump='r'), sort=True, x='date',
+                         y='votes', )
+            plt.savefig('./states-daily-lineplot.png', )
+        elif plot_style == plot_styles[1]:
+            lm_df['numbers'] = mdates.date2num(lm_df.date.values, )
+            ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette=dict(Biden='b', Trump='r'), x='numbers',
+                            y='votes', ).set(xlim=(lm_df.numbers.min() - 100, lm_df.numbers.max() + 100),
+                                             ylim=(100, 450), )
+            plt.savefig('./states-daily-lmplot.png', )
+        elif plot_style == plot_styles[2]:
+            ax.scatter(x=graph_df.date, y=graph_df.Biden, c='b', )
+            ax.scatter(x=graph_df.date, y=graph_df.Trump, c='r', )
+            plt.savefig('./states-daily-matplotlib.png', )
+        elif plot_style == plot_styles[3]:
+            ax = sns.pointplot(data=lm_df, hue='candidate', palette=dict(Biden='b', Trump='r'), x='date', y='votes', )
+            plt.savefig('./states-daily-pointplot.png', )
+        elif plot_style == plot_styles[4]:
+            # todo fix dates on x axis
+            # https://stackoverflow.com/questions/29308729/can-i-plot-a-linear-regression-with-datetimes-on-the-x-axis-with-seaborn
+            # todo fix axis labels
+            graph_df['numbers'] = mdates.date2num(graph_df.date.values, )
+            sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y='Biden', )
+            sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y='Biden', lowess=True, scatter=False, )
+            sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y='Biden', logx=True, scatter=False, )
+            sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', )
+            sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', lowess=True, scatter=False, )
+            sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', logx=True, scatter=False, )
+            plt.savefig('./states-daily-regplot.png', )
+        else:
+            raise ValueError('plot style unknown.')
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
