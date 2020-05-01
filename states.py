@@ -175,7 +175,7 @@ if __name__ == '__main__':
     sns.set_style('whitegrid')
     fig, ax = plt.subplots(figsize=(15, 10))
     plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', ]
-    plot_style = plot_styles[0]
+    plot_style = plot_styles[3]
     if plot_style == plot_styles[0]:
         sns.lineplot(ax=ax, ci='sd', dashes=False, data=lm_df, estimator='mean',
                      hue='candidate', marker='.', n_boot=5,
@@ -192,7 +192,8 @@ if __name__ == '__main__':
         plt.scatter(ax=ax, x=graph_df.date, y=graph_df.Trump, c='r', )
         plt.savefig('./states-daily-matplotlib.png', )
     elif plot_style == plot_styles[3]:
-        raise NotImplementedError('point plot')
+        ax = sns.pointplot(data=lm_df, hue='candidate', x='date', y='votes', )
+        plt.savefig('./states-daily-pointplot.png', )
     elif plot_style == plot_styles[4]:
         # todo fix dates on x axis
         # https://stackoverflow.com/questions/29308729/can-i-plot-a-linear-regression-with-datetimes-on-the-x-axis-with-seaborn
