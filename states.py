@@ -63,14 +63,17 @@ if __name__ == '__main__':
                                                    'votes': list(electoral_college.values())})
 
     logger.info('Electoral College: {} total votes.'.format(electoral_college_df['votes'].sum()))
-    url = 'https://projects.fivethirtyeight.com/polls-page/president_polls.csv'
 
     with open(file='./state_abbreviations.json', mode='r') as abbreviation_fp:
         state_abbreviations = json.load(fp=abbreviation_fp)
 
+    url = 'https://projects.fivethirtyeight.com/polls-page/president_polls.csv'
     df = pd.read_csv(url, parse_dates=['end_date'])
     logger.info(list(df))
+    # remove null states (these are nationwide)
     df = df[~df.state.isnull()]
+    # remove unrated pollsters
+    df = df[~df.fte_grade.isnull()]
     logger.info(sorted(df.state.unique()))
     logger.info(df.state.nunique())
     polls_no_electoral_college = [state for state in sorted(df.state.unique()) if state not in electoral_college.keys()]
@@ -123,11 +126,13 @@ if __name__ == '__main__':
     check_df = check_df[check_df.votes != check_df.electoralTotal]
 
     # first cut down the data to just the columns we want
-    df = df[['question_id', 'state', 'end_date', 'answer', 'pct']]
+    df = df[['question_id', 'state', 'end_date', 'answer', 'pct', 'fte_grade', ]]
     df = df[df.answer.isin({'Biden', 'Trump'})]
     df['question_id'] = df['question_id'].astype(int)
 
     a2_df = df[df.answer.isin({'Biden', 'Trump'})].groupby('question_id').filter(lambda x: len(x) == 2)
+    # filter out low-grade polls (?)
+    a2_df = a2_df[a2_df.fte_grade.isin(['A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', ])]
     cutoff_date = pd.Timestamp(datetime.datetime.today())
     biden_votes, trump_votes, ranked = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date, verbose=0)
 
