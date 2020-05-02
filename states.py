@@ -13,7 +13,7 @@ import seaborn as sns
 from pandas.plotting import register_matplotlib_converters
 
 
-def get_results(arg_df, arg_cutoff_date, verbose):
+def get_results(arg_df, arg_cutoff_date, electoral_df, verbose):
     polling = {}
     arg_df = arg_df[arg_df.end_date <= arg_cutoff_date]
     for state in sorted(arg_df.state.unique()):
@@ -24,10 +24,10 @@ def get_results(arg_df, arg_cutoff_date, verbose):
             polling[state][candidate] = this_df[this_df.answer.isin({candidate})].groupby('pct').mean().index[0]
     result_biden_votes, result_trump_votes = 0, 0
     result_ranked = list()
-    for state in electoral_college_df.state.unique():
+    for state in electoral_df.state.unique():
         if state in polling.keys():
             poll = polling[state]
-            votes = electoral_college_df[electoral_college_df.state == state].votes.values[0]
+            votes = electoral_df[electoral_df.state == state].votes.values[0]
             if poll['Biden'] > poll['Trump']:
                 result_biden_votes += votes
             elif poll['Biden'] < poll['Trump']:
@@ -140,7 +140,8 @@ if __name__ == '__main__':
     # filter out low-grade polls (?)
     a2_df = a2_df[a2_df.fte_grade.isin(['A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', ])]
     cutoff_date = pd.Timestamp(datetime.datetime.today())
-    biden_votes, trump_votes, ranked = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date, verbose=0)
+    biden_votes, trump_votes, ranked = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
+                                                   electoral_df=electoral_college_df, verbose=0,)
 
     ranked = sorted(ranked, key=lambda x: abs(x[1]), reverse=True)
     ranked = [(rank[0], state_abbreviations[rank[0]], rank[1]) for rank in ranked]
