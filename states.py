@@ -13,7 +13,7 @@ import seaborn as sns
 from pandas.plotting import register_matplotlib_converters
 
 
-def get_results(arg_df, arg_cutoff_date, electoral_df, verbose):
+def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose):
     polling = {}
     arg_df = arg_df[arg_df.end_date <= arg_cutoff_date]
     for state in sorted(arg_df.state.unique()):
@@ -41,8 +41,8 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, verbose):
                     logger.info('state: {} tied.'.format(state))
             result_ranked.append((state, poll['Biden'] - poll['Trump']))
         elif state in review_2016_df.State.unique():
-            result_biden_votes += review_2016_df[review_2016_df.State == state].electoralDem.values[0]
-            result_trump_votes += review_2016_df[review_2016_df.State == state].electoralRep.values[0]
+            result_biden_votes += historical_df[historical_df.State == state].electoralDem.values[0]
+            result_trump_votes += historical_df[historical_df.State == state].electoralRep.values[0]
         else:
             if verbose:
                 logger.warning('missing state: {}'.format(state))
@@ -141,7 +141,8 @@ if __name__ == '__main__':
     a2_df = a2_df[a2_df.fte_grade.isin(['A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', ])]
     cutoff_date = pd.Timestamp(datetime.datetime.today())
     biden_votes, trump_votes, ranked = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
-                                                   electoral_df=electoral_college_df, verbose=0,)
+                                                   electoral_df=electoral_college_df, historical_df = review_2016_df,
+                                                   verbose=0,)
 
     ranked = sorted(ranked, key=lambda x: abs(x[1]), reverse=True)
     ranked = [(rank[0], state_abbreviations[rank[0]], rank[1]) for rank in ranked]
@@ -169,6 +170,7 @@ if __name__ == '__main__':
     lm_df = pd.DataFrame(columns=['date', 'votes', 'candidate', ], )
     for cutoff_date in sorted(a2_df.end_date.unique(), ):
         biden_votes, trump_votes, _ = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
+                                                  electoral_df=electoral_college_df, historical_df=review_2016_df,
                                                   verbose=0, )
         logger.info('date: {} Biden: {} Trump: {}'.format(cutoff_date, biden_votes, trump_votes, ))
         graph_df = graph_df.append(ignore_index=True,
