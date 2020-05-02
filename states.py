@@ -83,30 +83,36 @@ if __name__ == '__main__':
             logger.warning('no Electoral College data for {}'.format(item))
     if len(electoral_college_no_polls):
         for item in electoral_college_no_polls:
-            logger.warning('no polls for {}'.format(item))
+            logger.warning('no polls for {}'.format(item),)
 
-    review_2016_df = pd.read_csv('./world-population-review.csv')
-    logger.info(list(review_2016_df))
+    review_2016_df = pd.read_csv('./world-population-review.csv',)
+    logger.info(list(review_2016_df),)
     # patch up what DC is called here
     review_2016_df['State'] = review_2016_df['State'].replace(to_replace='Washington DC',
                                                               value='District of Columbia', )
-
-    # patch up 2016 Main Congressional District votes
-    review_2016_df = review_2016_df.append(
-        {'State': 'Maine CD-1', 'votesDem': 212774, 'percD': 53.96, 'votesRep': 154384, 'percR': 39.15,
-         'electoralDem': 1, 'electoralRep': 0, 'Pop': 394329, }, ignore_index=True)
-    review_2016_df = review_2016_df.append(
-        {'State': 'Maine CD-2', 'votesDem': 144817, 'percD': 40.98, 'votesRep': 181177, 'percR': 51.26,
-         'electoralDem': 0, 'electoralRep': 1, 'Pop': 353416, }, ignore_index=True)
-    review_2016_df = review_2016_df.append(
-        {'State': 'Nebraska CD-1', 'votesDem': 100126, 'percD': 35.46, 'votesRep': 158626, 'percR': 56.18,
-         'electoralDem': 0, 'electoralRep': 1, 'Pop': 282338, }, ignore_index=True)
-    review_2016_df = review_2016_df.append(
-        {'State': 'Nebraska CD-2', 'votesDem': 131030, 'percD': 44.92, 'votesRep': 137564, 'percR': 47.16,
-         'electoralDem': 0, 'electoralRep': 1, 'Pop': 291680, }, ignore_index=True)
-    review_2016_df = review_2016_df.append(
-        {'State': 'Nebraska CD-3', 'votesDem': 53290, 'percD': 19.73, 'votesRep': 199657, 'percR': 73.92,
-         'electoralDem': 0, 'electoralRep': 1, 'Pop': 270109, }, ignore_index=True)
+    # patch up 2016 Maine Congressional District votes
+    review_2016_df = review_2016_df.append(ignore_index=True,
+                                           other={'State': 'Maine CD-1', 'votesDem': 212774, 'percD': 53.96,
+                                                  'votesRep': 154384, 'percR': 39.15, 'electoralDem': 1,
+                                                  'electoralRep': 0, 'Pop': 394329, }, )
+    review_2016_df = review_2016_df.append(ignore_index=True,
+                                           other={'State': 'Maine CD-2', 'votesDem': 144817, 'percD': 40.98,
+                                                  'votesRep': 181177, 'percR': 51.26, 'electoralDem': 0,
+                                                  'electoralRep': 1, 'Pop': 353416, }, )
+    # patch up 2016 Nebraska Congressional District votes
+    review_2016_df = review_2016_df.append(ignore_index=True,
+                                           other={'State': 'Nebraska CD-1', 'votesDem': 100126, 'percD': 35.46,
+                                                  'votesRep': 158626, 'percR': 56.18, 'electoralDem': 0,
+                                                  'electoralRep': 1, 'Pop': 282338, }, )
+    review_2016_df = review_2016_df.append(ignore_index=True,
+                                           other={'State': 'Nebraska CD-2', 'votesDem': 131030, 'percD': 44.92,
+                                                  'votesRep': 137564, 'percR': 47.16, 'electoralDem': 0,
+                                                  'electoralRep': 1, 'Pop': 291680, }, )
+    review_2016_df = review_2016_df.append(ignore_index=True,
+                                           other={'State': 'Nebraska CD-3', 'votesDem': 53290, 'percD': 19.73,
+                                                  'votesRep': 199657, 'percR': 73.92, 'electoralDem': 0,
+                                                  'electoralRep': 1, 'Pop': 270109, }, )
+    # fix some errors in our Electoral College data
     review_2016_df.loc[review_2016_df.State == 'Hawaii', 'electoralDem'] = 4
     review_2016_df.loc[review_2016_df.State == 'Nebraska', 'electoralRep'] = 2
     review_2016_df.loc[review_2016_df.State == 'Texas', 'electoralRep'] = 38
@@ -183,8 +189,8 @@ if __name__ == '__main__':
             plt.savefig('./states-daily-lineplot.png', )
         elif plot_style == plot_styles[1]:
             lm_df['numbers'] = mdates.date2num(lm_df.date.values, )
-            ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette=dict(Biden='b', Trump='r'), x='numbers',
-                            y='votes', ).set(xlim=(lm_df.numbers.min() - 100, lm_df.numbers.max() + 100),
+            ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette=dict(Biden='b', Trump='r', ), x='numbers',
+                            y='votes', ).set(xlim=(lm_df.numbers.min() - 100, lm_df.numbers.max() + 100,),
                                              ylim=(100, 450), )
             plt.savefig('./states-daily-lmplot.png', )
         elif plot_style == plot_styles[2]:
@@ -192,7 +198,7 @@ if __name__ == '__main__':
             ax.scatter(x=graph_df.date, y=graph_df.Trump, c='r', )
             plt.savefig('./states-daily-matplotlib.png', )
         elif plot_style == plot_styles[3]:
-            ax = sns.pointplot(data=lm_df, hue='candidate', palette=dict(Biden='b', Trump='r'), x='date', y='votes', )
+            ax = sns.pointplot(data=lm_df, hue='candidate', palette=dict(Biden='b', Trump='r', ), x='date', y='votes', )
             plt.savefig('./states-daily-pointplot.png', )
         elif plot_style == plot_styles[4]:
             graph_df['numbers'] = mdates.date2num(graph_df.date.values, )
@@ -206,7 +212,7 @@ if __name__ == '__main__':
         elif plot_style == plot_styles[5]:
             plot = sns.FacetGrid(col='state', col_order=sorted(a2_df.state.unique()), col_wrap=6, data=a2_df,
                                  hue='answer', )
-            plot_result = plot.map(plt.scatter, 'end_date', 'pct')
+            plot_result = plot.map(plt.scatter, 'end_date', 'pct', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=90, )
             plt.tight_layout()
