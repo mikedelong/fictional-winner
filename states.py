@@ -204,16 +204,19 @@ if __name__ == '__main__':
             sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y='Trump', logx=True, scatter=False, )
             plt.savefig('./states-daily-regplot.png', )
         elif plot_style == plot_styles[5]:
-            g = sns.FacetGrid(col='state', col_order=sorted(a2_df.state.unique()), col_wrap=6, data=a2_df,
-                              hue='answer', )
-            g = g.map(plt.scatter, 'end_date', 'pct')
+            plot = sns.FacetGrid(col='state', col_order=sorted(a2_df.state.unique()), col_wrap=6, data=a2_df,
+                                 hue='answer', )
+            plot_result = plot.map(plt.scatter, 'end_date', 'pct')
+            for axes in plot.axes.flat:
+                _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=90, )
+            plt.tight_layout()
             plt.savefig('./states-daily-state-grid.png', )
         elif plot_style == plot_styles[6]:
-            states = [state for state in a2_df.state.unique() if a2_df.state.value_counts()[state] > 8]
+            states = [state for state in a2_df.state.unique() if a2_df.state.value_counts()[state] > 7]
             a3_df = a2_df[a2_df.state.isin(states)].copy(deep=True)
             a3_df['date'] = [datetime.datetime.date(item) for item in a3_df['end_date']]
             plot = sns.FacetGrid(col='state', col_order=sorted(states), col_wrap=4, data=a3_df, hue='answer', )
-            plot_result = plot.map(plt.scatter, 'date', 'pct',)
+            plot_result = plot.map(plt.scatter, 'date', 'pct', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=90, )
             plt.tight_layout()
