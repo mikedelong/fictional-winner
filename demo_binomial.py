@@ -7,9 +7,7 @@ import numpy as np
 
 
 def get_result(arg_probability):
-    return np.random.binomial(
-        n=1,
-        p=arg_probability)
+    return np.random.binomial(n=1, p=arg_probability)
 
 
 if __name__ == '__main__':
