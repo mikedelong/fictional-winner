@@ -67,9 +67,9 @@ def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, ):
             votes = electoral_df[electoral_df.state == state].votes.values[0]
             biden_pct = poll['Biden']
             trump_pct = poll['Trump']
-            simulated_biden_result = binomial(n=1, p=biden_pct/(biden_pct + trump_pct))
+            simulated_biden_result = binomial(n=1, p=biden_pct / (biden_pct + trump_pct))
             result_biden_votes += votes * simulated_biden_result
-            result_trump_votes += votes * (1-simulated_biden_result)
+            result_trump_votes += votes * (1 - simulated_biden_result)
         elif state in review_2016_df.State.unique():
             result_biden_votes += historical_df[historical_df.State == state].electoralDem.values[0]
             result_trump_votes += historical_df[historical_df.State == state].electoralRep.values[0]
@@ -195,6 +195,10 @@ if __name__ == '__main__':
     else:
         logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
+    realization_biden, realization_trump = get_realization(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
+                                                           electoral_df=electoral_college_df,
+                                                           historical_df=review_2016_df, )
+    logger.info('realization: Biden: {} Trump: {}'.format(realization_biden, realization_trump, ))
     graph_df = pd.DataFrame(columns=['date', 'Biden', 'Trump', ], )
     lm_df = pd.DataFrame(columns=['date', 'votes', 'candidate', ], )
     for cutoff_date in sorted(a2_df.end_date.unique(), ):
