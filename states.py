@@ -50,6 +50,15 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose):
 
 
 def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose):
+    polling = {}
+    arg_df = arg_df[arg_df.end_date <= arg_cutoff_date]
+    for state in sorted(arg_df.state.unique()):
+        polling[state] = {}
+        this_df = arg_df[arg_df.state == state]
+        this_df = this_df[this_df.end_date == this_df.end_date.max()]
+        for candidate in ['Biden', 'Trump']:
+            polling[state][candidate] = this_df[this_df.answer.isin({candidate})].groupby('pct').mean().index[0]
+
     result_biden_votes = 0
     result_trump_votes = 0
     return result_biden_votes, result_trump_votes
