@@ -11,9 +11,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 from pandas.plotting import register_matplotlib_converters
+from numpy.random import binomial
 
 
-def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose):
+def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, ):
     polling = {}
     arg_df = arg_df[arg_df.end_date <= arg_cutoff_date]
     for state in sorted(arg_df.state.unique()):
@@ -49,7 +50,7 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose):
     return result_biden_votes, result_trump_votes, result_ranked
 
 
-def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose):
+def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, ):
     polling = {}
     arg_df = arg_df[arg_df.end_date <= arg_cutoff_date]
     for state in sorted(arg_df.state.unique()):
@@ -58,9 +59,22 @@ def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, verbos
         this_df = this_df[this_df.end_date == this_df.end_date.max()]
         for candidate in ['Biden', 'Trump']:
             polling[state][candidate] = this_df[this_df.answer.isin({candidate})].groupby('pct').mean().index[0]
-
     result_biden_votes = 0
     result_trump_votes = 0
+    for state in electoral_df.state.unique():
+        if state in polling.keys():
+            poll = polling[state]
+            votes = electoral_df[electoral_df.state == state].votes.values[0]
+            biden_pct = poll['Biden']
+            trump_pct = poll['Trump']
+            simulated_biden_result = binomial(n=1, p=biden_pct/(biden_pct + trump_pct))
+            result_biden_votes += votes * simulated_biden_result
+            result_trump_votes += votes * (1-simulated_biden_result)
+        elif state in review_2016_df.State.unique():
+            result_biden_votes += historical_df[historical_df.State == state].electoralDem.values[0]
+            result_trump_votes += historical_df[historical_df.State == state].electoralRep.values[0]
+        else:
+            logger.warning('missing state: {}'.format(state))
     return result_biden_votes, result_trump_votes
 
 
