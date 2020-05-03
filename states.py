@@ -195,10 +195,13 @@ if __name__ == '__main__':
     else:
         logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
-    realization_biden, realization_trump = get_realization(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
-                                                           electoral_df=electoral_college_df,
-                                                           historical_df=review_2016_df, )
-    logger.info('realization: Biden: {} Trump: {}'.format(realization_biden, realization_trump, ))
+    realizations = list()
+    for realization in range(100):
+        realization_biden, realization_trump = get_realization(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
+                                                               electoral_df=electoral_college_df,
+                                                               historical_df=review_2016_df, )
+        logger.info('realization: Biden: {} Trump: {}'.format(realization_biden, realization_trump, ))
+        realizations.append((realization_biden, realization_trump,))
     graph_df = pd.DataFrame(columns=['date', 'Biden', 'Trump', ], )
     lm_df = pd.DataFrame(columns=['date', 'votes', 'candidate', ], )
     for cutoff_date in sorted(a2_df.end_date.unique(), ):
