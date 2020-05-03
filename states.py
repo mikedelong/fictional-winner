@@ -12,6 +12,7 @@ import pandas as pd
 import seaborn as sns
 from pandas.plotting import register_matplotlib_converters
 from numpy.random import binomial
+from collections import Counter
 
 
 def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, ):
@@ -197,11 +198,19 @@ if __name__ == '__main__':
 
     realizations = list()
     for realization in range(100):
-        realization_biden, realization_trump = get_realization(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
+        realization_biden, realization_trump = get_realization(arg_df=a2_df.copy(deep=True),
+                                                               arg_cutoff_date=cutoff_date,
                                                                electoral_df=electoral_college_df,
                                                                historical_df=review_2016_df, )
         logger.info('realization: Biden: {} Trump: {}'.format(realization_biden, realization_trump, ))
         realizations.append((realization_biden, realization_trump,))
+    # realizations = Counter(realizations)
+    biden_realizations = [item[0] for item in realizations]
+    bin_count = max(biden_realizations) - min(biden_realizations) + 1
+    plt.hist(x=biden_realizations, bins=bin_count, )
+    logger.info('Biden simulated wins: {} out of {} realizations'.format(
+        sum([1 if item >= 270 else 0 for item in biden_realizations]), len(biden_realizations)))
+    plt.savefig('./biden-histogram.png', )
     graph_df = pd.DataFrame(columns=['date', 'Biden', 'Trump', ], )
     lm_df = pd.DataFrame(columns=['date', 'votes', 'candidate', ], )
     for cutoff_date in sorted(a2_df.end_date.unique(), ):
