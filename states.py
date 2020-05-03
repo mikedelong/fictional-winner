@@ -49,6 +49,12 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose):
     return result_biden_votes, result_trump_votes, result_ranked
 
 
+def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose):
+    result_biden_votes = 0
+    result_trump_votes = 0
+    return result_biden_votes, result_trump_votes
+
+
 if __name__ == '__main__':
     time_start = time()
     logger = getLogger(__name__)
@@ -83,10 +89,10 @@ if __name__ == '__main__':
             logger.warning('no Electoral College data for {}'.format(item))
     if len(electoral_college_no_polls):
         for item in electoral_college_no_polls:
-            logger.warning('no polls for {}'.format(item),)
+            logger.warning('no polls for {}'.format(item), )
 
-    review_2016_df = pd.read_csv('./world-population-review.csv',)
-    logger.info(list(review_2016_df),)
+    review_2016_df = pd.read_csv('./world-population-review.csv', )
+    logger.info(list(review_2016_df), )
     # patch up what DC is called here
     review_2016_df['State'] = review_2016_df['State'].replace(to_replace='Washington DC',
                                                               value='District of Columbia', )
@@ -141,8 +147,8 @@ if __name__ == '__main__':
     a2_df = a2_df[a2_df.fte_grade.isin(['A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', ])]
     cutoff_date = pd.Timestamp(datetime.datetime.today())
     biden_votes, trump_votes, ranked = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
-                                                   electoral_df=electoral_college_df, historical_df = review_2016_df,
-                                                   verbose=0,)
+                                                   electoral_df=electoral_college_df, historical_df=review_2016_df,
+                                                   verbose=0, )
 
     ranked = sorted(ranked, key=lambda x: abs(x[1]), reverse=True)
     ranked = [(rank[0], state_abbreviations[rank[0]], rank[1]) for rank in ranked]
