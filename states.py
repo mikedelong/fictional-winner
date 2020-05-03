@@ -197,7 +197,7 @@ if __name__ == '__main__':
         logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
     realizations = list()
-    for realization in range(100):
+    for realization in range(1000):
         realization_biden, realization_trump = get_realization(arg_df=a2_df.copy(deep=True),
                                                                arg_cutoff_date=cutoff_date,
                                                                electoral_df=electoral_college_df,
