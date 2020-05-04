@@ -196,18 +196,28 @@ if __name__ == '__main__':
         logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
     realizations = list()
-    for index, realization in enumerate(range(1000)):
+    realization_count = 200
+    count_biden = 0
+    count_trump = 0
+    for index, realization in enumerate(range(realization_count)):
         realization_biden, realization_trump = get_realization(arg_df=a2_df.copy(deep=True),
                                                                arg_cutoff_date=cutoff_date,
                                                                electoral_df=electoral_college_df,
                                                                historical_df=review_2016_df, )
-        logger.info('realization: {} Biden: {} Trump: {}'.format(index, realization_biden, realization_trump, ))
+        count_biden += 1 if realization_biden > realization_trump else 0
+        count_trump += 1 if realization_biden < realization_trump else 0
+        format_string = 'realization: {} Biden: {} Trump: {} total Biden: {} total Trump: {} Biden ratio: {}'
+        logger.info(format_string.format(index, realization_biden, realization_trump, count_biden, count_trump,
+                                         count_biden/(count_biden + count_trump)))
         realizations.append((realization_biden, realization_trump,))
     biden_realizations = [item[0] for item in realizations]
     bin_count = max(biden_realizations) - min(biden_realizations) + 1
-    plt.hist(x=biden_realizations, bins=bin_count, )
+    # todo report percentage
     logger.info('Biden simulated wins: {} out of {} realizations'.format(
         sum([1 if item >= 270 else 0 for item in biden_realizations]), len(biden_realizations)))
+    # todo plot win-lose sections in different colors
+    plt.hist(x=biden_realizations, bins=bin_count, )
+    # todo estimate most likely outcome
     plt.savefig('./biden-histogram.png', )
     graph_df = pd.DataFrame(columns=['date', 'Biden', 'Trump', ], )
     lm_df = pd.DataFrame(columns=['date', 'votes', 'candidate', ], )
