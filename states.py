@@ -221,7 +221,6 @@ if __name__ == '__main__':
                                                                         np.median(np.array(biden_realizations))), )
     plt.hist(x=biden_win_realizations, bins=bin_count, color='blue', )
     plt.hist(x=biden_lose_realizations, bins=bin_count, color='red', )
-    # todo estimate most likely outcome
     plt.savefig('./biden-histogram.png', )
     graph_df = pd.DataFrame(columns=['date', 'Biden', 'Trump', ], )
     lm_df = pd.DataFrame(columns=['date', 'votes', 'candidate', ], )
