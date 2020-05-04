@@ -12,6 +12,7 @@ import pandas as pd
 import seaborn as sns
 from numpy.random import binomial
 from pandas.plotting import register_matplotlib_converters
+import numpy as np
 
 
 def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, ):
@@ -216,6 +217,8 @@ if __name__ == '__main__':
     biden_lose_realizations = [item for item in biden_realizations if item < 270]
     logger.info('Biden simulated wins: {} out of {} realizations'.format(
         len(biden_win_realizations), len(biden_realizations), len(biden_win_realizations) / len(biden_realizations), ))
+    logger.info('Biden mean outcome: {:5.2f} median outcome: {}'.format(np.array(biden_realizations).mean(),
+                                                                        np.median(np.array(biden_realizations))), )
     plt.hist(x=biden_win_realizations, bins=bin_count, color='blue', )
     plt.hist(x=biden_lose_realizations, bins=bin_count, color='red', )
     # todo estimate most likely outcome
