@@ -196,7 +196,7 @@ if __name__ == '__main__':
         logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
     realizations = list()
-    realization_count = 200
+    realization_count = 1000
     count_biden = 0
     count_trump = 0
     for index, realization in enumerate(range(realization_count)):
@@ -216,7 +216,10 @@ if __name__ == '__main__':
     logger.info('Biden simulated wins: {} out of {} realizations'.format(
         sum([1 if item >= 270 else 0 for item in biden_realizations]), len(biden_realizations)))
     # todo plot win-lose sections in different colors
-    plt.hist(x=biden_realizations, bins=bin_count, )
+    biden_win_realizations = [item for item in biden_realizations if item >= 270]
+    biden_lose_realizations = [item for item in biden_realizations if item < 270]
+    plt.hist(x=biden_win_realizations, bins=bin_count, color='blue', )
+    plt.hist( x=biden_lose_realizations, bins=bin_count, color='red', )
     # todo estimate most likely outcome
     plt.savefig('./biden-histogram.png', )
     graph_df = pd.DataFrame(columns=['date', 'Biden', 'Trump', ], )
