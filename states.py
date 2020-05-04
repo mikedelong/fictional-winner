@@ -212,7 +212,6 @@ if __name__ == '__main__':
         realizations.append((realization_biden, realization_trump,))
     biden_realizations = [item[0] for item in realizations]
     bin_count = max(biden_realizations) - min(biden_realizations) + 1
-    # todo report percentage
     biden_win_realizations = [item for item in biden_realizations if item >= 270]
     biden_lose_realizations = [item for item in biden_realizations if item < 270]
     logger.info('Biden simulated wins: {} out of {} realizations'.format(
