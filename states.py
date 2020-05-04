@@ -206,7 +206,7 @@ if __name__ == '__main__':
                                                                historical_df=review_2016_df, )
         count_biden += 1 if realization_biden > realization_trump else 0
         count_trump += 1 if realization_biden < realization_trump else 0
-        format_string = 'realization: {} Biden: {} Trump: {} total Biden: {} total Trump: {} Biden ratio: {}'
+        format_string = 'realization: {} Biden: {} Trump: {} total Biden: {} total Trump: {} Biden ratio: {:5.4f}'
         logger.info(format_string.format(index, realization_biden, realization_trump, count_biden, count_trump,
                                          count_biden/(count_biden + count_trump)))
         realizations.append((realization_biden, realization_trump,))
