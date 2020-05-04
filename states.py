@@ -208,17 +208,17 @@ if __name__ == '__main__':
         count_trump += 1 if realization_biden < realization_trump else 0
         format_string = 'realization: {} Biden: {} Trump: {} total Biden: {} total Trump: {} Biden ratio: {:5.4f}'
         logger.info(format_string.format(index, realization_biden, realization_trump, count_biden, count_trump,
-                                         count_biden/(count_biden + count_trump)))
+                                         count_biden / (count_biden + count_trump)))
         realizations.append((realization_biden, realization_trump,))
     biden_realizations = [item[0] for item in realizations]
     bin_count = max(biden_realizations) - min(biden_realizations) + 1
     # todo report percentage
-    logger.info('Biden simulated wins: {} out of {} realizations'.format(
-        sum([1 if item >= 270 else 0 for item in biden_realizations]), len(biden_realizations)))
     biden_win_realizations = [item for item in biden_realizations if item >= 270]
     biden_lose_realizations = [item for item in biden_realizations if item < 270]
+    logger.info('Biden simulated wins: {} out of {} realizations'.format(
+        len(biden_win_realizations), len(biden_realizations), len(biden_win_realizations) / len(biden_realizations), ))
     plt.hist(x=biden_win_realizations, bins=bin_count, color='blue', )
-    plt.hist( x=biden_lose_realizations, bins=bin_count, color='red', )
+    plt.hist(x=biden_lose_realizations, bins=bin_count, color='red', )
     # todo estimate most likely outcome
     plt.savefig('./biden-histogram.png', )
     graph_df = pd.DataFrame(columns=['date', 'Biden', 'Trump', ], )
