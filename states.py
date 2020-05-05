@@ -54,7 +54,7 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, )
 def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, ):
     polling = {}
     arg_df = arg_df[arg_df.end_date <= arg_cutoff_date]
-    for state in sorted(arg_df.state.unique()):
+    for state in arg_df.state.unique():
         polling[state] = {}
         this_df = arg_df[arg_df.state == state]
         this_df = this_df[this_df.end_date == this_df.end_date.max()]
