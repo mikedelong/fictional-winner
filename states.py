@@ -8,11 +8,11 @@ from time import time
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import seaborn as sns
 from numpy.random import binomial
 from pandas.plotting import register_matplotlib_converters
-import numpy as np
 
 
 def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, ):
@@ -197,9 +197,10 @@ if __name__ == '__main__':
         logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
     realizations = list()
-    realization_count = 1000
+    realization_count = 100
     count_biden = 0
     count_trump = 0
+    biden_realizations = list()
     for index, realization in enumerate(range(realization_count)):
         realization_biden, realization_trump = get_realization(arg_df=a2_df.copy(deep=True),
                                                                arg_cutoff_date=cutoff_date,
@@ -207,11 +208,14 @@ if __name__ == '__main__':
                                                                historical_df=review_2016_df, )
         count_biden += 1 if realization_biden > realization_trump else 0
         count_trump += 1 if realization_biden < realization_trump else 0
-        format_string = 'realization: {} Biden: {} Trump: {} total Biden: {} total Trump: {} Biden ratio: {:5.4f}'
-        logger.info(format_string.format(index, realization_biden, realization_trump, count_biden, count_trump,
-                                         count_biden / (count_biden + count_trump)))
+        format_string = '{} Biden: {} Trump: {} Biden: {} Trump: {} ratio: {:5.4f} mean: {:5.1f} median: {}'
+        biden_realizations = [item[0] for item in realizations]
+        if len(biden_realizations):
+            logger.info(format_string.format(index, realization_biden, realization_trump, count_biden, count_trump,
+                                             count_biden / (count_biden + count_trump),
+                                             np.array(biden_realizations).mean(),
+                                             int(np.median(np.array(biden_realizations)), ), ))
         realizations.append((realization_biden, realization_trump,))
-    biden_realizations = [item[0] for item in realizations]
     bin_count = max(biden_realizations) - min(biden_realizations) + 1
     biden_win_realizations = [item for item in biden_realizations if item >= 270]
     biden_lose_realizations = [item for item in biden_realizations if item < 270]
@@ -228,7 +232,8 @@ if __name__ == '__main__':
         biden_votes, trump_votes, _ = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
                                                   electoral_df=electoral_college_df, historical_df=review_2016_df,
                                                   verbose=0, )
-        logger.info('date: {} Biden: {} Trump: {}'.format(cutoff_date, biden_votes, trump_votes, ))
+        logger.info(
+            'date: {} Biden: {} Trump: {}'.format(pd.to_datetime(cutoff_date).date(), biden_votes, trump_votes, ))
         graph_df = graph_df.append(ignore_index=True,
                                    other={'date': cutoff_date, 'Biden': biden_votes, 'Trump': trump_votes, }, )
         lm_df = lm_df.append(ignore_index=True,
