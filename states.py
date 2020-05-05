@@ -68,8 +68,7 @@ def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, ):
             poll = polling[state]
             votes = electoral_df[electoral_df.state == state].votes.values[0]
             biden_pct = poll['Biden']
-            trump_pct = poll['Trump']
-            simulated_biden_result = binomial(n=1, p=biden_pct / (biden_pct + trump_pct))
+            simulated_biden_result = binomial(n=1, p=biden_pct / (biden_pct + poll['Trump']))
             result_biden_votes += votes * simulated_biden_result
             result_trump_votes += votes * (1 - simulated_biden_result)
         elif state in review_unique:
