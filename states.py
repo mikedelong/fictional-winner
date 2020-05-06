@@ -80,30 +80,30 @@ def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, ):
             result_biden_votes += historical_df[historical_df.State == state].electoralDem.values[0]
             result_trump_votes += historical_df[historical_df.State == state].electoralRep.values[0]
         else:
-            logger.warning('missing state: {}'.format(state))
+            logger.warning('missing state: {}'.format(state),)
     return result_biden_votes, result_trump_votes
 
 
 if __name__ == '__main__':
     time_start = time()
     logger = getLogger(__name__)
-    basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=INFO)
-    logger.info('started.')
+    basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=INFO, )
+    logger.info('started.', )
     register_matplotlib_converters()
 
     with open(file='./electoral_college.json', mode='r', ) as electoral_college_fp:
-        electoral_college = json.load(fp=electoral_college_fp)
+        electoral_college = json.load(fp=electoral_college_fp, )
 
     electoral_college_df = pd.DataFrame.from_dict({'state': list(electoral_college.keys()),
                                                    'votes': list(electoral_college.values())})
 
-    logger.info('Electoral College: {} total votes.'.format(electoral_college_df['votes'].sum()))
+    logger.info('Electoral College: {} total votes.'.format(electoral_college_df['votes'].sum()), )
 
-    with open(file='./state_abbreviations.json', mode='r') as abbreviation_fp:
-        state_abbreviations = json.load(fp=abbreviation_fp)
+    with open(file='./state_abbreviations.json', mode='r', ) as abbreviation_fp:
+        state_abbreviations = json.load(fp=abbreviation_fp, )
 
     url = 'https://projects.fivethirtyeight.com/polls-page/president_polls.csv'
-    df = pd.read_csv(url, parse_dates=['end_date'])
+    df = pd.read_csv(url, parse_dates=['end_date'], )
     logger.info(list(df))
     # remove null states (these are nationwide)
     df = df[~df.state.isnull()]
@@ -115,7 +115,7 @@ if __name__ == '__main__':
     electoral_college_no_polls = [state for state in sorted(electoral_college.keys()) if state not in df.state.values]
     if len(polls_no_electoral_college):
         for item in polls_no_electoral_college:
-            logger.warning('no Electoral College data for {}'.format(item))
+            logger.warning('no Electoral College data for {}'.format(item), )
     if len(electoral_college_no_polls):
         for item in electoral_college_no_polls:
             logger.warning('no polls for {}'.format(item), )
@@ -168,7 +168,7 @@ if __name__ == '__main__':
 
     # first cut down the data to just the columns we want
     df = df[['question_id', 'state', 'end_date', 'answer', 'pct', 'fte_grade', ]]
-    df = df[df.answer.isin({'Biden', 'Trump'})]
+    df = df[df.answer.isin({'Biden', 'Trump', })]
     df['question_id'] = df['question_id'].astype(int)
 
     a2_df = df[df.answer.isin({'Biden', 'Trump'})].groupby('question_id').filter(lambda x: len(x) == 2)
@@ -179,7 +179,7 @@ if __name__ == '__main__':
                                                    electoral_df=electoral_college_df, historical_df=review_2016_df,
                                                    verbose=0, )
 
-    ranked = sorted(ranked, key=lambda x: abs(x[1]), reverse=True)
+    ranked = sorted(ranked, key=lambda x: abs(x[1]), reverse=True, )
     ranked = [(rank[0], state_abbreviations[rank[0]], rank[1]) for rank in ranked]
     for rank in ranked:
         if rank[2] > 0:
@@ -202,7 +202,7 @@ if __name__ == '__main__':
         logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
     realizations = list()
-    realization_count = 10000
+    realization_count = 1000
     count_biden = 0
     count_trump = 0
     biden_realizations = list()
@@ -260,7 +260,7 @@ if __name__ == '__main__':
             lm_df['numbers'] = mdates.date2num(lm_df.date.values, )
             ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette=dict(Biden='b', Trump='r', ), x='numbers',
                             y='votes', ).set(xlim=(lm_df.numbers.min() - 100, lm_df.numbers.max() + 100,),
-                                             ylim=(100, 450), )
+                                             ylim=(100, 450,), )
             plt.savefig('./states-daily-lmplot.png', )
         elif plot_style == plot_styles[2]:
             ax.scatter(x=graph_df.date, y=graph_df.Biden, c='b', )
