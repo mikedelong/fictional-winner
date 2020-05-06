@@ -3,6 +3,7 @@ import json
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
+from math import copysign
 from math import trunc
 from time import time
 
@@ -12,9 +13,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from numpy.random import binomial
-from numpy.random import normal
 from pandas.plotting import register_matplotlib_converters
-from math import copysign
 
 
 def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, ):
@@ -65,17 +64,16 @@ def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, ):
     result_biden_votes = 0
     result_trump_votes = 0
     review_unique = review_2016_df.State.unique()
-    do_binomial = False
     for state in electoral_df.state.unique():
         if state in polling.keys():
             poll = polling[state]
             votes = electoral_df[electoral_df.state == state].votes.values[0]
             biden_pct = poll['Biden']
             trump_pct = poll['Trump']
-            if abs(biden_pct - trump_pct) < 12.1:
+            if abs(biden_pct - trump_pct) < 15.1:
                 simulated_biden_result = binomial(n=1, p=biden_pct / (biden_pct + trump_pct))
             else:
-                simulated_biden_result = int( (1 + copysign(1, biden_pct - trump_pct)) / 2)
+                simulated_biden_result = int((1 + copysign(1, biden_pct - trump_pct)) / 2)
             result_biden_votes += votes * simulated_biden_result
             result_trump_votes += votes * (1 - simulated_biden_result)
         elif state in review_unique:
@@ -204,7 +202,7 @@ if __name__ == '__main__':
         logger.info('total: Biden: {} Trump: {}'.format(biden_votes, trump_votes, ))
 
     realizations = list()
-    realization_count = 1000
+    realization_count = 10000
     count_biden = 0
     count_trump = 0
     biden_realizations = list()
