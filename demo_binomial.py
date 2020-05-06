@@ -19,5 +19,6 @@ if __name__ == '__main__':
     count = 10000
     result = [get_result(probability) for _ in range(count)]
     logger.info(sum(result)/count)
+    logger.info(np.random.binomial(n=count, p=probability))
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
