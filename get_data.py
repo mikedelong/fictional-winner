@@ -92,10 +92,10 @@ def get_data(democrat, republican):
 
     # first cut down the data to just the columns we want
     df = df[['question_id', 'state', 'end_date', 'answer', 'pct', 'fte_grade', ]]
-    df = df[df.answer.isin({'Biden', 'Trump', })]
+    df = df[df.answer.isin({democrat, republican, })]
     df['question_id'] = df['question_id'].astype(int)
 
-    a2_df = df[df.answer.isin({democrat, republican,})].groupby('question_id').filter(lambda x: len(x) == 2)
+    a2_df = df[df.answer.isin({democrat, republican, })].groupby('question_id').filter(lambda x: len(x) == 2)
     # filter out low-grade polls (?)
     a2_df = a2_df[a2_df.fte_grade.isin(['A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', ])]
 
