@@ -11,7 +11,7 @@ from pandas.plotting import register_matplotlib_converters
 def get_data():
     time_start = time()
     logger = getLogger(__name__)
-    basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=INFO, )
+    basicConfig(format='%(asctime)s : %(name)s : %(levelname)s : %(message)s', level=INFO, )
     logger.info('started.', )
     register_matplotlib_converters()
 
