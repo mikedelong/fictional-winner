@@ -88,7 +88,7 @@ def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, ):
 if __name__ == '__main__':
     time_start = time()
     logger = getLogger(__name__)
-    basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=INFO, )
+    basicConfig(format='%(asctime)s : %(name)s : %(levelname)s : %(message)s', level=INFO, )
     logger.info('started.', )
     register_matplotlib_converters()
 
