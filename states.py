@@ -72,7 +72,7 @@ def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, ):
             poll = polling[state]
             votes = electoral_df[electoral_df.state == state].votes.values[0]
             democrat_pct = poll[democrat]
-            republican_pct = poll[democrat]
+            republican_pct = poll[republican]
             if abs(democrat_pct - republican_pct) < 15.1:
                 simulated_democrat_result = binomial(n=1, p=democrat_pct / (democrat_pct + republican_pct))
             else:
