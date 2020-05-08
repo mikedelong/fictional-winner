@@ -127,7 +127,7 @@ if __name__ == '__main__':
         logger.info('total: {}: {} {}: {}'.format(democrat, democrat_votes, republican, republican_votes, ))
 
     realizations = list()
-    realization_count = 10000
+    realization_count = 100
     count_democrat = 0
     count_republican = 0
     democrat_realizations = list()
@@ -201,6 +201,8 @@ if __name__ == '__main__':
             # todo fix the dates on the X axis
             ax = sns.pointplot(data=lm_df, hue='candidate', palette={democrat: 'b', republican: 'r'}, x='date',
                                y='votes', )
+            ax.set_xticklabels(ax.get_xticklabels(), rotation=90, )
+
             plt.savefig('./states-daily-pointplot.png', )
         elif plot_style == plot_styles[4]:
             graph_df['numbers'] = mdates.date2num(graph_df.date.values, )
