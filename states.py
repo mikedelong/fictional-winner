@@ -178,6 +178,8 @@ if __name__ == '__main__':
                              other={'date': cutoff_date, 'votes': republican_votes, 'candidate': republican, }, )
 
     lm_df['votes'] = lm_df['votes'].astype(float)
+    lm_df['date'] = pd.to_datetime(lm_df['date'])
+    lm_df['date'] = lm_df['date'].dt.date
     sns.set_style('darkgrid')
     plt.style.use('fivethirtyeight')
     plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', 'stategrid', 'swingstategrid']
@@ -198,11 +200,9 @@ if __name__ == '__main__':
             ax.scatter(x=graph_df.date, y=graph_df[republican], c='r', )
             plt.savefig('./states-daily-matplotlib.png', )
         elif plot_style == plot_styles[3]:
-            # todo fix the dates on the X axis
             ax = sns.pointplot(data=lm_df, hue='candidate', palette={democrat: 'b', republican: 'r'}, x='date',
                                y='votes', )
             ax.set_xticklabels(ax.get_xticklabels(), rotation=90, )
-
             plt.savefig('./states-daily-pointplot.png', )
         elif plot_style == plot_styles[4]:
             graph_df['numbers'] = mdates.date2num(graph_df.date.values, )
