@@ -200,6 +200,7 @@ if __name__ == '__main__':
             ax.scatter(x=graph_df.date, y=graph_df[republican], c='r', )
             plt.savefig('./states-daily-matplotlib.png', )
         elif plot_style == plot_styles[3]:
+            # todo thin out the X axis so the ticks are readable
             ax = sns.pointplot(data=lm_df, hue='candidate', palette={democrat: 'b', republican: 'r'}, x='date',
                                y='votes', )
             ax.set_xticklabels(ax.get_xticklabels(), rotation=90, )
