@@ -158,7 +158,7 @@ if __name__ == '__main__':
                                                                      np.median(np.array(democrat_realizations))), )
     plt.hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
     plt.hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
-    plt.savefig('./democrat-histogram.png', )
+    plt.savefig('./{}-histogram.png'.format(democrat.lower(), ), )
     graph_df = pd.DataFrame(columns=['date', democrat, republican, ], )
     lm_df = pd.DataFrame(columns=['date', 'votes', 'candidate', ], )
     for cutoff_date in sorted(a2_df.end_date.unique(), ):
