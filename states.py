@@ -37,9 +37,11 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, )
             elif poll[democrat] < poll[republican]:
                 result_republican_votes += votes
             if poll[democrat] - poll[republican] > 0 and verbose:
-                logger.info('state: {} polling margin: D+{:3.1f} pct'.format(state, abs(poll[democrat] - poll[republican])))
+                logger.info(
+                    'state: {} polling margin: D+{:3.1f} pct'.format(state, abs(poll[democrat] - poll[republican])))
             elif poll[democrat] - poll[republican] < 0 and verbose:
-                logger.info('state: {} polling margin: R+{:3.1f} pct'.format(state, abs(poll[democrat] - poll[republican])))
+                logger.info(
+                    'state: {} polling margin: R+{:3.1f} pct'.format(state, abs(poll[democrat] - poll[republican])))
             else:
                 if verbose:
                     logger.info('state: {} tied.'.format(state))
