@@ -67,7 +67,7 @@ if __name__ == '__main__':
                                                                        electoral_df=electoral_college_df,
                                                                        historical_df=review_2016_df,
                                                                        arg_democrat=democrat,
-                                                                       arg_republican=republican,)
+                                                                       arg_republican=republican, )
         count_democrat += 1 if realization_democrat > realization_republican else 0
         count_republican += 1 if realization_democrat < realization_republican else 0
         format_string = '{} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {}'
@@ -86,8 +86,9 @@ if __name__ == '__main__':
                                                                       len(democrat_realizations),
                                                                       len(democrat_win_realizations) / len(
                                                                           democrat_realizations), ))
-    logger.info('{} mean outcome: {:5.2f} median outcome: {}'.format(democrat, np.array(democrat_realizations).mean(),
-                                                                     np.median(np.array(democrat_realizations))), )
+    logger.info(
+        '{} mean outcome: {:5.2f} median outcome: {:.0}'.format(democrat, np.array(democrat_realizations).mean(),
+                                                                np.median(np.array(democrat_realizations))), )
     plt.hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
     plt.hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
     plt.savefig('./{}-histogram.png'.format(democrat.lower(), ), )
