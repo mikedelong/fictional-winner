@@ -3,16 +3,12 @@ from logging import INFO
 from logging import basicConfig
 from logging import getLogger
 from math import copysign
-from math import trunc
 from time import time
 
-import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import seaborn as sns
 from numpy.random import binomial
-from pandas.plotting import register_matplotlib_converters
 
 from get_data import get_data
 
