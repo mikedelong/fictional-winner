@@ -87,7 +87,7 @@ if __name__ == '__main__':
                                                                       len(democrat_win_realizations) / len(
                                                                           democrat_realizations), ))
     logger.info(
-        '{} mean outcome: {:5.2f} median outcome: {:.0}'.format(democrat, np.array(democrat_realizations).mean(),
+        '{} mean outcome: {:5.2f} median outcome: {:.0f}'.format(democrat, np.array(democrat_realizations).mean(),
                                                                 np.median(np.array(democrat_realizations))), )
     plt.hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
     plt.hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
