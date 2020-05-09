@@ -17,8 +17,6 @@ from pandas.plotting import register_matplotlib_converters
 from get_data import get_data
 
 
-
-
 def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_democrat, arg_republican):
     polling = {}
     arg_df = arg_df[arg_df.end_date <= arg_cutoff_date]
@@ -56,5 +54,46 @@ if __name__ == '__main__':
     logger = getLogger(__name__)
     basicConfig(format='%(asctime)s : %(name)s : %(levelname)s : %(message)s', level=INFO, )
     logger.info('started.', )
+
+    democrat = 'Biden'
+    republican = 'Trump'
+    electoral_college_df, review_2016_df, a2_df, state_abbreviations = get_data(democrat=democrat,
+                                                                                republican=republican, )
+    cutoff_date = pd.Timestamp(datetime.datetime.today())
+    realizations = list()
+    realization_count = 100
+    count_democrat = 0
+    count_republican = 0
+    democrat_realizations = list()
+    for index, realization in enumerate(range(realization_count)):
+        realization_democrat, realization_republican = get_realization(arg_df=a2_df.copy(deep=True),
+                                                                       arg_cutoff_date=cutoff_date,
+                                                                       electoral_df=electoral_college_df,
+                                                                       historical_df=review_2016_df,
+                                                                       arg_democrat=democrat,
+                                                                       arg_republican=republican,)
+        count_democrat += 1 if realization_democrat > realization_republican else 0
+        count_republican += 1 if realization_democrat < realization_republican else 0
+        format_string = '{} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {}'
+        democrat_realizations = [item[0] for item in realizations]
+        if len(democrat_realizations):
+            logger.info(format_string.format(index, democrat, realization_democrat, republican, realization_republican,
+                                             democrat, count_democrat, republican, count_republican,
+                                             count_democrat / (count_democrat + count_republican),
+                                             np.array(democrat_realizations).mean(),
+                                             int(np.median(np.array(democrat_realizations)), ), ))
+        realizations.append((realization_democrat, realization_republican,))
+    bin_count = max(democrat_realizations) - min(democrat_realizations) + 1
+    democrat_win_realizations = [item for item in democrat_realizations if item >= 270]
+    democrat_lose_realizations = [item for item in democrat_realizations if item < 270]
+    logger.info('{} simulated wins: {} out of {} realizations'.format(democrat, len(democrat_win_realizations),
+                                                                      len(democrat_realizations),
+                                                                      len(democrat_win_realizations) / len(
+                                                                          democrat_realizations), ))
+    logger.info('{} mean outcome: {:5.2f} median outcome: {}'.format(democrat, np.array(democrat_realizations).mean(),
+                                                                     np.median(np.array(democrat_realizations))), )
+    plt.hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
+    plt.hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
+    plt.savefig('./{}-histogram.png'.format(democrat.lower(), ), )
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
