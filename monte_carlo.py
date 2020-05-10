@@ -21,8 +21,7 @@ def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_de
         this_df = arg_df[arg_df.state == state]
         this_df = this_df[this_df.end_date == this_df.end_date.max()]
         for candidate in [arg_democrat, arg_republican]:
-            polling[state][candidate] = \
-            this_df[this_df.answer.isin({candidate})].groupby('pct').realizations__mean().index[0]
+            polling[state][candidate] = this_df[this_df.answer.isin({candidate})].groupby('pct').mean().index[0]
     result_democrat_votes = 0
     result_republican_votes = 0
     review_unique = historical_df.State.unique()
@@ -83,14 +82,13 @@ if __name__ == '__main__':
     bin_count = max(democrat_realizations) - min(democrat_realizations) + 1
     democrat_win_realizations = [item for item in democrat_realizations if item >= 270]
     democrat_lose_realizations = [item for item in democrat_realizations if item < 270]
-
-    win_count = len(democrat_win_realizations)
-    format_string = '{} simulated wins: {} out of {} realizations'
-    realization_count = len(democrat_realizations)
-    logger.info(format_string.format(democrat, win_count, realization_count, win_count / realization_count, ))
+    logger.info('{} simulated wins: {} out of {} realizations'.format(democrat, len(democrat_win_realizations),
+                                                                      len(democrat_realizations),
+                                                                      len(democrat_win_realizations) / len(
+                                                                          democrat_realizations), ))
     format_string = '{} mean outcome: {:5.2f} median outcome: {:.0f}'
-    realizations__mean = np.array(democrat_realizations).mean()
-    logger.info(format_string.format(democrat, realizations__mean, np.median(np.array(democrat_realizations))), )
+    logger.info(format_string.format(democrat, np.array(democrat_realizations).mean(),
+                                     np.median(np.array(democrat_realizations))), )
     plt.hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
     plt.hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
     plt.savefig('./{}-histogram.png'.format(democrat.lower(), ), )
