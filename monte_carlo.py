@@ -53,8 +53,8 @@ if __name__ == '__main__':
 
     democrat = 'Biden'
     republican = 'Trump'
-    electoral_college_df, review_2016_df, a2_df, state_abbreviations = get_data(democrat=democrat,
-                                                                                republican=republican, )
+    electoral_college_df, review_2016_df, filtered_df, state_abbreviations = get_data(democrat=democrat,
+                                                                                      republican=republican, )
     cutoff_date = pd.Timestamp(datetime.datetime.today())
     realizations = list()
     realization_count = 10000
@@ -64,7 +64,7 @@ if __name__ == '__main__':
     for index, realization in enumerate(range(realization_count)):
         realization_democrat, realization_republican = get_realization(arg_cutoff_date=cutoff_date,
                                                                        arg_democrat=democrat,
-                                                                       arg_df=a2_df.copy(deep=True),
+                                                                       arg_df=filtered_df.copy(deep=True),
                                                                        arg_republican=republican,
                                                                        electoral_df=electoral_college_df,
                                                                        historical_df=review_2016_df, )
