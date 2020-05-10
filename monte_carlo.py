@@ -57,17 +57,17 @@ if __name__ == '__main__':
                                                                                 republican=republican, )
     cutoff_date = pd.Timestamp(datetime.datetime.today())
     realizations = list()
-    realization_count = 100
+    realization_count = 10000
     count_democrat = 0
     count_republican = 0
     democrat_realizations = list()
     for index, realization in enumerate(range(realization_count)):
-        realization_democrat, realization_republican = get_realization(arg_df=a2_df.copy(deep=True),
-                                                                       arg_cutoff_date=cutoff_date,
-                                                                       electoral_df=electoral_college_df,
-                                                                       historical_df=review_2016_df,
+        realization_democrat, realization_republican = get_realization(arg_cutoff_date=cutoff_date,
                                                                        arg_democrat=democrat,
-                                                                       arg_republican=republican, )
+                                                                       arg_df=a2_df.copy(deep=True),
+                                                                       arg_republican=republican,
+                                                                       electoral_df=electoral_college_df,
+                                                                       historical_df=review_2016_df, )
         count_democrat += 1 if realization_democrat > realization_republican else 0
         count_republican += 1 if realization_democrat < realization_republican else 0
         format_string = '{} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {}'
