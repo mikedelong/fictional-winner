@@ -115,16 +115,17 @@ if __name__ == '__main__':
     sns.set_style('darkgrid')
     plt.style.use('fivethirtyeight')
     plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', 'stategrid', 'swingstategrid']
+    palette = {democrat: 'b', republican: 'r'}
     for plot_style in plot_styles:
         fig, ax = plt.subplots(figsize=(15, 10))
         if plot_style == plot_styles[0]:
-            sns.lineplot(ax=ax, data=lm_df, hue='candidate', palette={democrat: 'b', republican: 'r'}, sort=True,
+            sns.lineplot(ax=ax, data=lm_df, hue='candidate', palette=palette, sort=True,
                          x='date', y='votes', )
             plt.savefig('./states-daily-lineplot.png', )
         elif plot_style == plot_styles[1]:
             lm_df['numbers'] = mdates.date2num(lm_df.date.values, )
             # todo put dates on the X axis (?)
-            ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette={democrat: 'b', republican: 'r'}, x='numbers',
+            ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='numbers',
                             y='votes', ).set(xlim=(lm_df.numbers.min() - 100, lm_df.numbers.max() + 100,),
                                              ylim=(100, 450,), )
             plt.savefig('./states-daily-lmplot.png', )
@@ -134,7 +135,7 @@ if __name__ == '__main__':
             plt.savefig('./states-daily-matplotlib.png', )
         elif plot_style == plot_styles[3]:
             # todo thin out the X axis so the ticks are readable
-            ax = sns.pointplot(data=lm_df, hue='candidate', palette={democrat: 'b', republican: 'r'}, x='date',
+            ax = sns.pointplot(data=lm_df, hue='candidate', palette=palette, x='date',
                                y='votes', )
             ax.set_xticklabels(ax.get_xticklabels(), rotation=90, )
             plt.savefig('./states-daily-pointplot.png', )
