@@ -139,13 +139,13 @@ if __name__ == '__main__':
             plt.savefig('./states-daily-pointplot.png', )
         elif plot_style == plot_styles[4]:
             # todo put dates on the X axis (?)
-            graph_df['numbers'] = mdates.date2num(graph_df.date.values, )
-            sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y=democrat, )
-            sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y=democrat, lowess=True, scatter=False, )
-            sns.regplot(ax=ax, color='b', data=graph_df, x='numbers', y=democrat, logx=True, scatter=False, )
-            sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y=republican, )
-            sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y=republican, lowess=True, scatter=False, )
-            sns.regplot(ax=ax, color='r', data=graph_df, x='numbers', y=republican, logx=True, scatter=False, )
+            graph_df['date'] = mdates.date2num(graph_df.date.values, )
+            sns.regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, )
+            sns.regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, lowess=True, scatter=False, )
+            sns.regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, logx=True, scatter=False, )
+            sns.regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, )
+            sns.regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, lowess=True, scatter=False, )
+            sns.regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, logx=True, scatter=False, )
             plt.savefig('./states-daily-regplot.png', )
         elif plot_style == plot_styles[5]:
             plot = sns.FacetGrid(col='state', col_order=sorted(a2_df.state.unique()), col_wrap=6, data=a2_df,
