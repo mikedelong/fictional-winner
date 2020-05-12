@@ -127,6 +127,7 @@ if __name__ == '__main__':
             # todo put dates on the X axis (?)
             ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='numbers', y='votes', ).set(
                 xlim=(lm_df.numbers.min() - 100, lm_df.numbers.max() + 100,), ylim=(100, 450,), )
+            ax.set_xticklabels(labels=lm_df.date.values, )
             plt.savefig('./states-daily-lmplot.png', )
         elif plot_style == plot_styles[2]:
             ax.scatter(x=graph_df.date, y=graph_df[democrat], c='b', )
