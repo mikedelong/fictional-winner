@@ -123,11 +123,11 @@ if __name__ == '__main__':
                          x='date', y='votes', )
             plt.savefig('./states-daily-lineplot.png', )
         elif plot_style == plot_styles[1]:
-            lm_df['numbers'] = mdates.date2num(lm_df.date.values, )
+            lm_df['date'] = mdates.date2num(lm_df.date.values, )
             # todo put dates on the X axis (?)
-            ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='numbers', y='votes', ).set(
-                xlim=(lm_df.numbers.min() - 100, lm_df.numbers.max() + 100,), ylim=(100, 450,), )
-            ax.set_xticklabels(labels=lm_df.date.values, )
+            ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='date', y='votes', ).set(
+                xlim=(lm_df.date.min() - 100, lm_df.date.max() + 100,), ylim=(100, 450,), )
+            ax.set_xticklabels(labels=[mdates.num2date(number, tz=None, ).date() for number in lm_df.date.values], )
             plt.savefig('./states-daily-lmplot.png', )
         elif plot_style == plot_styles[2]:
             ax.scatter(x=graph_df.date, y=graph_df[democrat], c='b', )
