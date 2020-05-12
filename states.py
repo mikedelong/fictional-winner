@@ -146,6 +146,7 @@ if __name__ == '__main__':
             sns.regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, )
             sns.regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, lowess=True, scatter=False, )
             sns.regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, logx=True, scatter=False, )
+            ax.set_xticklabels(labels=[mdates.num2date(number, tz=None, ).date() for number in lm_df.date.values], )
             plt.savefig('./states-daily-regplot.png', )
         elif plot_style == plot_styles[5]:
             plot = sns.FacetGrid(col='state', col_order=sorted(a2_df.state.unique()), col_wrap=6, data=a2_df,
