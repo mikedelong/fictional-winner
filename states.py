@@ -138,7 +138,6 @@ if __name__ == '__main__':
             ax.set_xticklabels(ax.get_xticklabels(), rotation=90, )
             plt.savefig('./states-daily-pointplot.png', )
         elif plot_style == plot_styles[4]:
-            # todo put dates on the X axis (?)
             graph_df['date'] = mdates.date2num(graph_df.date.values, )
             sns.regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, )
             sns.regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, lowess=True, scatter=False, )
