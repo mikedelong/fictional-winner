@@ -2,6 +2,7 @@ import datetime
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
+from math import sqrt
 from math import trunc
 from time import time
 
@@ -147,7 +148,7 @@ if __name__ == '__main__':
             ax.set_xticklabels(labels=[mdates.num2date(number, tz=None, ).date() for number in lm_df.date.values], )
             plt.savefig('./states-daily-regplot.png', )
         elif plot_style == plot_styles[5]:
-            col_wrap = 6
+            col_wrap = int(sqrt(a2_df.state.nunique()))
             plot = sns.FacetGrid(col='state', col_order=sorted(a2_df.state.unique()), col_wrap=col_wrap, data=a2_df,
                                  hue='answer', )
             plot_result = plot.map(plt.scatter, 'end_date', 'pct', )
