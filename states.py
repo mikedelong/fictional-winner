@@ -163,6 +163,8 @@ if __name__ == '__main__':
             plot_result = plot.map(plt.scatter, 'date', 'pct', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=90, )
+            for axes in plot.axes.flatten():
+                axes.set_title(axes.get_title().replace('state = ', '',))
             plt.tight_layout()
             plt.savefig('./states-daily-swing-state-grid.png', )
         else:
