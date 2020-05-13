@@ -158,7 +158,6 @@ if __name__ == '__main__':
             states = [state for state in a2_df.state.unique() if a2_df.state.value_counts()[state] > 7]
             a3_df = a2_df[a2_df.state.isin(states)].copy(deep=True)
             a3_df['date'] = [datetime.datetime.date(item) for item in a3_df['end_date']]
-            # todo remove "state = " (?)
             plot = sns.FacetGrid(col='state', col_order=sorted(states), col_wrap=4, data=a3_df, hue='answer', )
             plot_result = plot.map(plt.scatter, 'date', 'pct', )
             for axes in plot.axes.flat:
