@@ -66,8 +66,7 @@ if __name__ == '__main__':
     cutoff_date = pd.Timestamp(datetime.datetime.today())
     democrat_votes, republican_votes, ranked = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
                                                            electoral_df=electoral_college_df,
-                                                           historical_df=review_2016_df,
-                                                           verbose=0, )
+                                                           historical_df=review_2016_df, verbose=0, )
 
     ranked = sorted(ranked, key=lambda x: abs(x[1]), reverse=True, )
     ranked = [(rank[0], state_abbreviations[rank[0]], rank[1]) for rank in ranked]
