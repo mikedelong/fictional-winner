@@ -12,7 +12,6 @@ def get_data(democrat, republican):
     time_start = time()
     logger = getLogger(__name__)
     basicConfig(format='%(asctime)s : %(name)s : %(levelname)s : %(message)s', level=INFO, )
-    logger.info('started.', )
     register_matplotlib_converters()
 
     with open(file='./electoral_college.json', mode='r', ) as electoral_college_fp:
