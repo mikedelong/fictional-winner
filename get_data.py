@@ -95,7 +95,8 @@ def get_data(democrat, republican):
 
     a2_df = df[df.answer.isin({democrat, republican, })].groupby('question_id').filter(lambda x: len(x) == 2)
     # filter out low-grade polls (?)
-    a2_df = a2_df[a2_df.fte_grade.isin({'A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', })]
+    high_grade = {'A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', }
+    a2_df = a2_df[a2_df.fte_grade.isin(high_grade)]
 
     logger.info('total data load time: {:5.2f}s'.format(time() - time_start, ))
 
