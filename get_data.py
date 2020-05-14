@@ -84,16 +84,21 @@ def get_data(democrat, republican):
                                                                                     total_2016, 538 - total_2016, ))
 
     review_2016_df['electoralTotal'] = review_2016_df['electoralDem'] + review_2016_df['electoralRep']
-    check_df = review_2016_df[['State', 'electoralTotal']].copy(deep=True).merge(how='inner', left_on='State',
-                                                                                 right=electoral_college_df,
-                                                                                 right_on='state', ).drop(['state'],
-                                                                                                          axis=1, )
+    columns = ['State', 'electoralTotal', ]
+    check_df = review_2016_df[columns].copy(deep=True).merge(how='inner', left_on='State', right=electoral_college_df,
+                                                             right_on='state', ).drop(['state'], axis=1, )
+
+    mismatch_df = check_df[check_df.electoralTotal != check_df.votes]
+    for index, row in mismatch_df.iterrows():
+        logger.warning('electoral college vote data mismatch: {} {} {} {}'.format(index, row['State'],
+                                                                                  row['electoralTotal'],
+                                                                                  row['votes'], ))
     # first cut down the data to just the columns we want
     df = df[['question_id', 'state', 'end_date', 'answer', 'pct', 'fte_grade', ]]
     df = df[df.answer.isin({democrat, republican, })]
     df['question_id'] = df['question_id'].astype(int)
 
-    a2_df = df[df.answer.isin({democrat, republican, })].groupby('question_id').filter(lambda x: len(x) == 2)
+    a2_df = df[df.answer.isin({democrat, republican, })].groupby('question_id', ).filter(lambda x: len(x) == 2)
     # filter out low-grade polls (?)
     high_grade = {'A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', }
     a2_df = a2_df[a2_df.fte_grade.isin(high_grade)]
