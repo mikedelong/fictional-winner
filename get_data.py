@@ -97,6 +97,6 @@ def get_data(democrat, republican):
     # filter out low-grade polls (?)
     a2_df = a2_df[a2_df.fte_grade.isin(['A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', ])]
 
-    logger.info('total time: {:5.2f}s'.format(time() - time_start, ))
+    logger.info('total data load time: {:5.2f}s'.format(time() - time_start, ))
 
     return electoral_college_df, review_2016_df, a2_df, state_abbreviations
