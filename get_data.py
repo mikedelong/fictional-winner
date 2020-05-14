@@ -18,7 +18,7 @@ def get_data(democrat, republican):
         electoral_college = json.load(fp=electoral_college_fp, )
 
     electoral_college_df = pd.DataFrame.from_dict({'state': list(electoral_college.keys()),
-                                                   'votes': list(electoral_college.values())})
+                                                   'votes': list(electoral_college.values()), }, )
 
     logger.info('Electoral College: {} total votes.'.format(electoral_college_df['votes'].sum()), )
 
@@ -27,19 +27,20 @@ def get_data(democrat, republican):
 
     url = 'https://projects.fivethirtyeight.com/polls-page/president_polls.csv'
     df = pd.read_csv(url, parse_dates=['end_date'], )
-    logger.info(list(df))
+    logger.info(list(df), )
     # remove null states (these are nationwide)
     df = df[~df.state.isnull()]
     # remove unrated pollsters
     df = df[~df.fte_grade.isnull()]
-    logger.info(sorted(df.state.unique()))
-    logger.info(df.state.nunique())
-    polls_no_electoral_college = [state for state in sorted(df.state.unique()) if state not in electoral_college.keys()]
-    electoral_college_no_polls = [state for state in sorted(electoral_college.keys()) if state not in df.state.values]
-    if len(polls_no_electoral_college):
+    logger.info(sorted(df.state.unique(), ), )
+    logger.info(df.state.nunique(), )
+    polls_no_electoral_college = [state for state in sorted(df.state.unique(), ) if
+                                  state not in electoral_college.keys()]
+    electoral_college_no_polls = [state for state in sorted(electoral_college.keys(), ) if state not in df.state.values]
+    if len(polls_no_electoral_college, ):
         for item in polls_no_electoral_college:
             logger.warning('no Electoral College data for {}'.format(item), )
-    if len(electoral_college_no_polls):
+    if len(electoral_college_no_polls, ):
         for item in electoral_college_no_polls:
             logger.warning('no polls for {}'.format(item), )
 
@@ -71,24 +72,22 @@ def get_data(democrat, republican):
                                                   'votesRep': 199657, 'percR': 73.92, 'electoralDem': 0,
                                                   'electoralRep': 1, 'Pop': 270109, }, )
     # fix some errors in our Electoral College data
-    review_2016_df.loc[review_2016_df.State == 'Hawaii', 'electoralDem'] = 4
-    review_2016_df.loc[review_2016_df.State == 'Nebraska', 'electoralRep'] = 2
-    review_2016_df.loc[review_2016_df.State == 'Texas', 'electoralRep'] = 38
-    review_2016_df.loc[review_2016_df.State == 'Washington', 'electoralDem'] = 12
+    review_2016_df.loc[review_2016_df.State == 'Hawaii', 'electoralDem',] = 4
+    review_2016_df.loc[review_2016_df.State == 'Nebraska', 'electoralRep',] = 2
+    review_2016_df.loc[review_2016_df.State == 'Texas', 'electoralRep',] = 38
+    review_2016_df.loc[review_2016_df.State == 'Washington', 'electoralDem',] = 12
 
     dem_2016_total = review_2016_df['electoralDem'].sum()
     rep_2016_total = review_2016_df['electoralRep'].sum()
     total_2016 = dem_2016_total + rep_2016_total
     logger.info('2016 result (WPR) : DEM: {} GOP: {}: total: {} missing: {}'.format(dem_2016_total, rep_2016_total,
-                                                                                    total_2016, 538 - total_2016))
+                                                                                    total_2016, 538 - total_2016, ))
 
     review_2016_df['electoralTotal'] = review_2016_df['electoralDem'] + review_2016_df['electoralRep']
     check_df = review_2016_df[['State', 'electoralTotal']].copy(deep=True).merge(how='inner', left_on='State',
                                                                                  right=electoral_college_df,
                                                                                  right_on='state', ).drop(['state'],
                                                                                                           axis=1, )
-    check_df = check_df[check_df.votes != check_df.electoralTotal]
-
     # first cut down the data to just the columns we want
     df = df[['question_id', 'state', 'end_date', 'answer', 'pct', 'fte_grade', ]]
     df = df[df.answer.isin({democrat, republican, })]
