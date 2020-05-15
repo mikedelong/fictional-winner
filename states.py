@@ -160,10 +160,10 @@ if __name__ == '__main__':
             plt.savefig('./states-daily-state-grid.png', )
         elif plot_style == plot_styles[6]:
             # todo parameterize col_wrap like the full grid
-            col_wrap = 4
             states = [state for state in a2_df.state.unique() if a2_df.state.value_counts()[state] > 7]
             a3_df = a2_df[a2_df.state.isin(states)].copy(deep=True)
             a3_df['date'] = [datetime.datetime.date(item) for item in a3_df['end_date']]
+            col_wrap = int(sqrt(a3_df.state.nunique()))
             plot = sns.FacetGrid(col='state', col_order=sorted(states), col_wrap=col_wrap, data=a3_df, hue='answer', )
             plot_result = plot.map(plt.scatter, 'date', 'pct', )
             for axes in plot.axes.flat:
