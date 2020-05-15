@@ -98,11 +98,11 @@ def get_data(democrat, republican):
     df = df[df.answer.isin({democrat, republican, })]
     df['question_id'] = df['question_id'].astype(int)
 
-    a2_df = df[df.answer.isin({democrat, republican, })].groupby('question_id', ).filter(lambda x: len(x) == 2)
+    result_df = df[df.answer.isin({democrat, republican, })].groupby('question_id', ).filter(lambda x: len(x) == 2)
     # filter out low-grade polls (?)
     high_grade = {'A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', }
-    a2_df = a2_df[a2_df.fte_grade.isin(high_grade)]
+    result_df = result_df[result_df.fte_grade.isin(high_grade)]
 
     logger.info('total data load time: {:5.2f}s'.format(time() - time_start, ))
 
-    return electoral_college_df, review_2016_df, a2_df, state_abbreviations
+    return electoral_college_df, review_2016_df, result_df, state_abbreviations
