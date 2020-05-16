@@ -179,6 +179,7 @@ if __name__ == '__main__':
                 plt.scatter(x=index, y=rank[2] if rank[2] > 0 else -rank[2], c='r' if rank[2] < 0 else 'b',)
             logger.warning('plot {} not implemented.'.format(plot_style))
             plt.savefig('./state-rank.png', )
+            # todo turn this data into a DataFrame and use Seaborn Scatterplot
 
         else:
             raise ValueError('plot style unknown.')
