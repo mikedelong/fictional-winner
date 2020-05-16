@@ -174,6 +174,7 @@ if __name__ == '__main__':
             plt.tight_layout()
             plt.savefig('./states-daily-swing-state-grid.png', )
         elif plot_style == plot_styles[7]:
+            # todo add state abbreviations from rank[1] as labels
             for index, rank in enumerate(ranked):
                 logger.info(rank)
                 plt.scatter(x=index, y=rank[2] if rank[2] > 0 else -rank[2], c='r' if rank[2] < 0 else 'b',)
