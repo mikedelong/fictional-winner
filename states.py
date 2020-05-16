@@ -174,6 +174,8 @@ if __name__ == '__main__':
             plt.tight_layout()
             plt.savefig('./states-daily-swing-state-grid.png', )
         elif plot_style == plot_styles[7]:
+            for index, rank in enumerate(ranked):
+                logger.info(rank)
             logger.warning('plot {} not implemented.'.format(plot_style))
         else:
             raise ValueError('plot style unknown.')
