@@ -176,7 +176,10 @@ if __name__ == '__main__':
         elif plot_style == plot_styles[7]:
             for index, rank in enumerate(ranked):
                 logger.info(rank)
+                plt.scatter(x=index, y=rank[2] if rank[2] > 0 else -rank[2], c='r' if rank[2] < 0 else 'b',)
             logger.warning('plot {} not implemented.'.format(plot_style))
+            plt.savefig('./state-rank.png', )
+
         else:
             raise ValueError('plot style unknown.')
 
