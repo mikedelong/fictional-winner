@@ -114,7 +114,8 @@ if __name__ == '__main__':
     lm_df['date'] = lm_df['date'].dt.date
     sns.set_style('darkgrid')
     plt.style.use('fivethirtyeight')
-    plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', 'stategrid', 'swingstategrid']
+    plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', 'stategrid', 'swingstategrid',
+                   'staterank', ]
     palette = {democrat: 'b', republican: 'r'}
     for plot_style in plot_styles:
         fig, ax = plt.subplots(figsize=(15, 10))
@@ -172,6 +173,8 @@ if __name__ == '__main__':
                 axes.set_title(axes.get_title().replace('state = ', '', ))
             plt.tight_layout()
             plt.savefig('./states-daily-swing-state-grid.png', )
+        elif plot_style == plot_styles[7]:
+            logger.warning('plot {} not implemented.'.format(plot_style))
         else:
             raise ValueError('plot style unknown.')
 
