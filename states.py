@@ -62,10 +62,10 @@ if __name__ == '__main__':
 
     democrat = 'Biden'
     republican = 'Trump'
-    electoral_college_df, review_2016_df, a2_df, state_abbreviations = get_data(democrat=democrat,
-                                                                                republican=republican, )
+    electoral_college_df, review_2016_df, data_df, state_abbreviations = get_data(democrat=democrat,
+                                                                                  republican=republican, )
     cutoff_date = pd.Timestamp(datetime.datetime.today())
-    democrat_votes, republican_votes, ranked = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
+    democrat_votes, republican_votes, ranked = get_results(arg_df=data_df.copy(deep=True), arg_cutoff_date=cutoff_date,
                                                            electoral_df=electoral_college_df,
                                                            historical_df=review_2016_df, verbose=0, )
 
@@ -93,8 +93,8 @@ if __name__ == '__main__':
 
     graph_df = pd.DataFrame(columns=['date', democrat, republican, ], )
     lm_df = pd.DataFrame(columns=['date', 'votes', 'candidate', ], )
-    for cutoff_date in sorted(a2_df.end_date.unique(), ):
-        democrat_votes, republican_votes, _ = get_results(arg_df=a2_df.copy(deep=True), arg_cutoff_date=cutoff_date,
+    for cutoff_date in sorted(data_df.end_date.unique(), ):
+        democrat_votes, republican_votes, _ = get_results(arg_df=data_df.copy(deep=True), arg_cutoff_date=cutoff_date,
                                                           electoral_df=electoral_college_df,
                                                           historical_df=review_2016_df,
                                                           verbose=0, )
@@ -148,8 +148,8 @@ if __name__ == '__main__':
             ax.set_xticklabels(labels=[mdates.num2date(number, tz=None, ).date() for number in lm_df.date.values], )
             plt.savefig('./states-daily-regplot.png', )
         elif plot_style == plot_styles[5]:
-            col_wrap = int(sqrt(a2_df.state.nunique()))
-            plot = sns.FacetGrid(col='state', col_order=sorted(a2_df.state.unique()), col_wrap=col_wrap, data=a2_df,
+            col_wrap = int(sqrt(data_df.state.nunique()))
+            plot = sns.FacetGrid(col='state', col_order=sorted(data_df.state.unique()), col_wrap=col_wrap, data=data_df,
                                  hue='answer', )
             plot_result = plot.map(plt.scatter, 'end_date', 'pct', )
             for axes in plot.axes.flat:
@@ -159,11 +159,12 @@ if __name__ == '__main__':
             plt.tight_layout()
             plt.savefig('./states-daily-state-grid.png', )
         elif plot_style == plot_styles[6]:
-            states = [state for state in a2_df.state.unique() if a2_df.state.value_counts()[state] > 8]
-            swing_df = a2_df[a2_df.state.isin(states)].copy(deep=True)
+            states = [state for state in data_df.state.unique() if data_df.state.value_counts()[state] > 8]
+            swing_df = data_df[data_df.state.isin(states)].copy(deep=True)
             swing_df['date'] = [datetime.datetime.date(item) for item in swing_df['end_date']]
             col_wrap = int(sqrt(swing_df.state.nunique()))
-            plot = sns.FacetGrid(col='state', col_order=sorted(states), col_wrap=col_wrap, data=swing_df, hue='answer', )
+            plot = sns.FacetGrid(col='state', col_order=sorted(states), col_wrap=col_wrap, data=swing_df,
+                                 hue='answer', )
             plot_result = plot.map(plt.scatter, 'date', 'pct', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=90, )
