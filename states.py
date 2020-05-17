@@ -175,6 +175,7 @@ if __name__ == '__main__':
             plt.savefig('./states-daily-swing-state-grid.png', )
         elif plot_style == plot_styles[7]:
             rank_df = pd.DataFrame(ranked, columns=['state', 'state_abbreviation', 'margin'], )
+            rank_df['abs_margin'] = rank_df['margin'].abs()
             # todo add state abbreviations from rank[1] as labels
             # todo make this a vertical bar chart
             for index, rank in enumerate(ranked):
