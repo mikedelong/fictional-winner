@@ -176,11 +176,13 @@ if __name__ == '__main__':
         elif plot_style == plot_styles[7]:
             rank_df = pd.DataFrame(ranked, columns=['state', 'state_abbreviation', 'margin'], )
             rank_df['abs_margin'] = rank_df['margin'].abs()
+            rank_df['color'] = rank_df['margin'].apply(lambda x : 'r' if x <= 0 else 'b' )
             # todo add state abbreviations from rank[1] as labels
             # todo make this a vertical bar chart
             for index, rank in enumerate(ranked):
                 logger.info(rank)
-                plt.scatter(x=index, y=rank[2] if rank[2] > 0 else -rank[2], c='r' if rank[2] < 0 else 'b',)
+                plt.scatter(x=rank_df.index, y=rank_df.abs_margin, c=rank_df.color)
+                # plt.scatter(x=index, y=rank[2] if rank[2] > 0 else -rank[2], c='r' if rank[2] < 0 else 'b',)
             logger.warning('plot {} not implemented.'.format(plot_style))
             plt.savefig('./state-rank.png', )
             # todo turn this data into a DataFrame and use Seaborn Scatterplot
