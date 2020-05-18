@@ -181,12 +181,17 @@ if __name__ == '__main__':
             rank_df['index'] = list(range(len(rank_df)))
             # todo add state abbreviations from rank[1] as labels
             # todo make this a vertical bar chart
+            figure = plt.figure()
             for index, rank in enumerate(ranked):
                 logger.info(rank)
                 plt.scatter(x=rank_df.index, y=rank_df.abs_margin, c=rank_df.color)
             plt.savefig('./state-rank.png', )
-            ax_scatter = sns.scatterplot(data=rank_df, hue='candidate', x='index', y='abs_margin', )
+            del figure
+            figure = plt.figure()
+            ax_scatter = sns.scatterplot(data=rank_df, hue='candidate', x='state_abbreviation', y='abs_margin', )
             plt.savefig('./state-rank-scatterplot.png', )
+            del figure
+            figure = plt.figure()
             ax_bar = sns.barplot(data=rank_df, hue='candidate', x='state_abbreviation', y='abs_margin', )
             plt.savefig('./state-rank-barplot.png', )
         else:
