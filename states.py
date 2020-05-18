@@ -185,8 +185,10 @@ if __name__ == '__main__':
                 logger.info(rank)
                 plt.scatter(x=rank_df.index, y=rank_df.abs_margin, c=rank_df.color)
             plt.savefig('./state-rank.png', )
-            ax = sns.scatterplot(data=rank_df, x='index', y='abs_margin', hue='candidate', )
+            ax = sns.scatterplot(data=rank_df, hue='candidate', x='index', y='abs_margin', )
             plt.savefig('./state-rank-scatterplot.png', )
+            ax = sns.barplot(data=rank_df, hue='candidate', x='index', y='abs_margin', )
+            plt.savefig('./state-rank-barplot.png', )
             logger.warning('plot {} not implemented.'.format(plot_style))
         else:
             raise ValueError('plot style unknown.')
