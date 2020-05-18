@@ -189,7 +189,6 @@ if __name__ == '__main__':
             plt.savefig('./state-rank-scatterplot.png', )
             ax_bar = sns.barplot(data=rank_df, hue='candidate', x='state_abbreviation', y='abs_margin', )
             plt.savefig('./state-rank-barplot.png', )
-            logger.warning('plot {} not implemented.'.format(plot_style))
         else:
             raise ValueError('plot style unknown.')
 
