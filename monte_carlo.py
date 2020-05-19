@@ -53,11 +53,13 @@ if __name__ == '__main__':
 
     democrat = 'Biden'
     republican = 'Trump'
+    grade_filter = {}
     electoral_college_df, review_2016_df, filtered_df, state_abbreviations = get_data(democrat=democrat,
+                                                                                      grade_to_filter=grade_filter,
                                                                                       republican=republican, )
     cutoff_date = pd.Timestamp(datetime.datetime.today())
     realizations = list()
-    realization_count = 10000
+    realization_count = 1000
     count_democrat = 0
     count_republican = 0
     democrat_realizations = list()
