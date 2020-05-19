@@ -62,8 +62,12 @@ if __name__ == '__main__':
 
     democrat = 'Biden'
     republican = 'Trump'
+    grade_filter = {'A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', }
+
     electoral_college_df, review_2016_df, data_df, state_abbreviations = get_data(democrat=democrat,
-                                                                                  republican=republican, )
+                                                                                  republican=republican,
+                                                                                  grade_to_filter=grade_filter,
+                                                                                  )
     cutoff_date = pd.Timestamp(datetime.datetime.today())
     democrat_votes, republican_votes, ranked = get_results(arg_df=data_df.copy(deep=True), arg_cutoff_date=cutoff_date,
                                                            electoral_df=electoral_college_df,
@@ -116,9 +120,10 @@ if __name__ == '__main__':
     plt.style.use('fivethirtyeight')
     plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', 'stategrid', 'swingstategrid',
                    'staterank', ]
+    figsize = (15, 10)
     palette = {democrat: 'b', republican: 'r'}
     for plot_style in plot_styles:
-        fig, ax = plt.subplots(figsize=(15, 10))
+        fig, ax = plt.subplots(figsize=figsize)
         if plot_style == plot_styles[0]:
             sns.lineplot(ax=ax, data=lm_df, hue='candidate', palette=palette, sort=True,
                          x='date', y='votes', )
@@ -178,18 +183,18 @@ if __name__ == '__main__':
             rank_df['abs_margin'] = rank_df['margin'].abs()
             rank_df['color'] = rank_df['margin'].apply(lambda x: 'r' if x <= 0 else 'b')
             rank_df['candidate'] = rank_df['margin'].apply(lambda x: republican if x <= 0 else democrat)
-            rank_df['index'] = list(range(len(rank_df)))
-            figure = plt.figure()
+            # rank_df['index'] = list(range(len(rank_df)))
+            figure = plt.figure(figsize=figsize)
             for index, rank in enumerate(ranked):
                 logger.info(rank)
                 plt.scatter(x=rank_df.index, y=rank_df.abs_margin, c=rank_df.color, )
             plt.savefig('./state-rank.png', )
             del figure
-            figure = plt.figure()
+            figure = plt.figure(figsize=figsize)
             ax_scatter = sns.scatterplot(data=rank_df, hue='candidate', x='state_abbreviation', y='abs_margin', )
             plt.savefig('./state-rank-scatterplot.png', )
             del figure
-            figure = plt.figure()
+            figure = plt.figure(figsize=figsize)
             ax_bar = sns.barplot(data=rank_df, hue='candidate', x='state_abbreviation', y='abs_margin', )
             plt.savefig('./state-rank-barplot.png', )
         else:
