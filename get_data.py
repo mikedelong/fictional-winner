@@ -99,8 +99,7 @@ def get_data(democrat, republican, grade_to_filter):
     df['question_id'] = df['question_id'].astype(int)
 
     result_df = df[df.answer.isin({democrat, republican, })].groupby('question_id', ).filter(lambda x: len(x) == 2)
-    # filter out low-grade polls (?)
-    high_grade = {'A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', }
+    # filter out polls that are not in our grade filter
     if len(grade_to_filter):
         result_df = result_df[result_df.fte_grade.isin(grade_to_filter)]
 
