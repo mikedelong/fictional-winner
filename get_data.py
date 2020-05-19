@@ -8,7 +8,7 @@ import pandas as pd
 from pandas.plotting import register_matplotlib_converters
 
 
-def get_data(democrat, republican):
+def get_data(democrat, republican, grade_to_filter):
     time_start = time()
     logger = getLogger(__name__)
     basicConfig(format='%(asctime)s : %(name)s : %(levelname)s : %(message)s', level=INFO, )
@@ -101,7 +101,8 @@ def get_data(democrat, republican):
     result_df = df[df.answer.isin({democrat, republican, })].groupby('question_id', ).filter(lambda x: len(x) == 2)
     # filter out low-grade polls (?)
     high_grade = {'A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', }
-    result_df = result_df[result_df.fte_grade.isin(high_grade)]
+    if len(grade_to_filter):
+        result_df = result_df[result_df.fte_grade.isin(grade_to_filter)]
 
     logger.info('total data load time: {:5.2f}s'.format(time() - time_start, ))
 
