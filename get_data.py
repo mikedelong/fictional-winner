@@ -8,7 +8,7 @@ import pandas as pd
 from pandas.plotting import register_matplotlib_converters
 
 
-def get_data(democrat, republican, grade_to_filter):
+def get_data(democrat, republican, grade_to_filter=None):
     time_start = time()
     logger = getLogger(__name__)
     basicConfig(format='%(asctime)s : %(name)s : %(levelname)s : %(message)s', level=INFO, )
