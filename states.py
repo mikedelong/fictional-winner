@@ -134,7 +134,9 @@ if __name__ == '__main__':
             ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='date', y='votes', ).set(
                 xlim=(lm_df.date.min() - 100, lm_df.date.max() + 100,), ylim=(100, 450,), )
             ax.set_xticklabels(labels=[mdates.num2date(number, tz=None, ).date() for number in lm_df.date.values], )
-            plt.savefig('./states-daily-lmplot.png', )
+            lmplot_png = './states-daily-lmplot.png'
+            logger.info('saving {} to {}'.format(plot_style, lmplot_png, ), )
+            plt.savefig(lmplot_png, )
         elif plot_style == plot_styles[2]:
             ax.scatter(x=graph_df.date, y=graph_df[democrat], c='b', )
             ax.scatter(x=graph_df.date, y=graph_df[republican], c='r', )
