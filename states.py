@@ -178,7 +178,7 @@ if __name__ == '__main__':
             plt.tight_layout()
             plt.savefig('./states-daily-swing-state-grid.png', )
         elif plot_style == plot_styles[7]:
-            rank_df = pd.DataFrame(ranked, columns=['state_name', 'State', 'margin'], )
+            rank_df = pd.DataFrame([(rank[1], rank[2]) for rank in ranked], columns=['State', 'margin', ], )
             rank_df['abs_margin'] = rank_df['margin'].abs()
             rank_df['color'] = rank_df['margin'].apply(lambda x: 'r' if x <= 0 else 'b')
             rank_df['candidate'] = rank_df['margin'].apply(lambda x: republican if x <= 0 else democrat)
