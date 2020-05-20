@@ -126,7 +126,9 @@ if __name__ == '__main__':
         if plot_style == plot_styles[0]:
             sns.lineplot(ax=ax, data=lm_df, hue='candidate', palette=palette, sort=True,
                          x='date', y='votes', )
-            plt.savefig('./states-daily-lineplot.png', )
+            lineplot_png = './states-daily-lineplot.png'
+            logger.info('saving {} to {}'.format(plot_style, lineplot_png, ), )
+            plt.savefig(lineplot_png, )
         elif plot_style == plot_styles[1]:
             lm_df['date'] = mdates.date2num(lm_df.date.values, )
             ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='date', y='votes', ).set(
