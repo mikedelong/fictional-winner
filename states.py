@@ -182,7 +182,6 @@ if __name__ == '__main__':
             rank_df['abs_margin'] = rank_df['margin'].abs()
             rank_df['color'] = rank_df['margin'].apply(lambda x: 'r' if x <= 0 else 'b')
             rank_df['candidate'] = rank_df['margin'].apply(lambda x: republican if x <= 0 else democrat)
-            # rank_df['index'] = list(range(len(rank_df)))
             figure = plt.figure(figsize=figsize)
             for index, rank in enumerate(ranked):
                 logger.info(rank)
