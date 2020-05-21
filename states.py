@@ -172,7 +172,9 @@ if __name__ == '__main__':
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ))
             plt.tight_layout()
-            plt.savefig('./states-daily-state-grid.png', )
+            state_grid_png = './states-daily-state-grid.png'
+            logger.info('saving {} to {}'.format(plot_style, state_grid_png, ), )
+            plt.savefig(state_grid_png, )
         elif plot_style == plot_styles[6]:
             states = [state for state in data_df.state.unique() if data_df.state.value_counts()[state] > 8]
             swing_df = data_df[data_df.state.isin(states)].copy(deep=True)
