@@ -188,7 +188,9 @@ if __name__ == '__main__':
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ))
             plt.tight_layout()
-            plt.savefig('./states-daily-swing-state-grid.png', )
+            swing_state_grid_png = './states-daily-swing-state-grid.png'
+            logger.info('saving {} to {}'.format(plot_style, swing_state_grid_png, ), )
+            plt.savefig(swing_state_grid_png, )
         elif plot_style == plot_styles[7]:
             rank_df = pd.DataFrame([(rank[1], rank[2]) for rank in ranked], columns=['State', 'margin', ], )
             rank_df['abs_margin'] = rank_df['margin'].abs()
