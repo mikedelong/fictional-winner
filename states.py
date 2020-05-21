@@ -140,7 +140,9 @@ if __name__ == '__main__':
         elif plot_style == plot_styles[2]:
             ax.scatter(x=graph_df.date, y=graph_df[democrat], c='b', )
             ax.scatter(x=graph_df.date, y=graph_df[republican], c='r', )
-            plt.savefig('./states-daily-matplotlib.png', )
+            matplotlib_png = './states-daily-matplotlib.png'
+            logger.info('saving {} to {}'.format(plot_style, matplotlib_png, ), )
+            plt.savefig(matplotlib_png, )
         elif plot_style == plot_styles[3]:
             # todo thin out the X axis so the ticks are readable
             ax = sns.pointplot(data=lm_df, hue='candidate', palette=palette, x='date', y='votes', )
