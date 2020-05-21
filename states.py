@@ -147,7 +147,9 @@ if __name__ == '__main__':
             # todo thin out the X axis so the ticks are readable
             ax = sns.pointplot(data=lm_df, hue='candidate', palette=palette, x='date', y='votes', )
             ax.set_xticklabels(ax.get_xticklabels(), rotation=90, )
-            plt.savefig('./states-daily-pointplot.png', )
+            pointplot_png = './states-daily-pointplot.png'
+            logger.info('saving {} to {}'.format(plot_style, pointplot_png, ), )
+            plt.savefig(pointplot_png, )
         elif plot_style == plot_styles[4]:
             graph_df['date'] = mdates.date2num(graph_df.date.values, )
             sns.regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, )
