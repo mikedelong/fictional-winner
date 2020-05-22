@@ -175,6 +175,7 @@ if __name__ == '__main__':
             state_grid_png = './states-daily-state-grid.png'
             logger.info('saving {} to {}'.format(plot_style, state_grid_png, ), )
             plt.savefig(state_grid_png, )
+            # todo add a facet grid of the difference on a state basis from each candidate perspective
         elif plot_style == plot_styles[6]:
             states = [state for state in data_df.state.unique() if data_df.state.value_counts()[state] > 8]
             swing_df = data_df[data_df.state.isin(states)].copy(deep=True)
