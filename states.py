@@ -200,7 +200,8 @@ if __name__ == '__main__':
             for index, rank in enumerate(ranked):
                 logger.info(rank)
                 plt.scatter(x=rank_df.index, y=rank_df.abs_margin, c=rank_df.color, )
-            plt.savefig('./state-rank.png', )
+            rank_png = './state-rank.png'
+            plt.savefig(rank_png, )
             del figure
             figure = plt.figure(figsize=figsize)
             ax_scatter = sns.scatterplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
