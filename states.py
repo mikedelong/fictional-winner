@@ -201,6 +201,7 @@ if __name__ == '__main__':
                 logger.info(rank)
                 plt.scatter(x=rank_df.index, y=rank_df.abs_margin, c=rank_df.color, )
             rank_png = './state-rank.png'
+            logger.info('saving {} to {}'.format(plot_style, rank_png, ), )
             plt.savefig(rank_png, )
             del figure
             figure = plt.figure(figsize=figsize)
