@@ -191,6 +191,7 @@ if __name__ == '__main__':
             swing_state_grid_png = './states-daily-swing-state-grid.png'
             logger.info('saving {} to {}'.format(plot_style, swing_state_grid_png, ), )
             plt.savefig(swing_state_grid_png, )
+            # todo add a facet grid of the difference on a state basis from each candidate perspective
         elif plot_style == plot_styles[7]:
             rank_df = pd.DataFrame([(rank[1], rank[2]) for rank in ranked], columns=['State', 'margin', ], )
             rank_df['abs_margin'] = rank_df['margin'].abs()
