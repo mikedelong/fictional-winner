@@ -206,7 +206,9 @@ if __name__ == '__main__':
             del figure
             figure = plt.figure(figsize=figsize)
             ax_scatter = sns.scatterplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
-            plt.savefig('./state-rank-scatterplot.png', )
+            rank_scatterplot_png = './state-rank-scatterplot.png'
+            logger.info('saving {} to {}'.format(plot_style, rank_scatterplot_png, ), )
+            plt.savefig(rank_scatterplot_png, )
             del figure
             figure = plt.figure(figsize=figsize)
             ax_bar = sns.barplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
