@@ -121,6 +121,7 @@ if __name__ == '__main__':
                    'staterank', ]
     figsize = (15, 10)
     palette = {democrat: 'b', republican: 'r'}
+    rotation = 90
     for plot_style in plot_styles:
         fig, ax = plt.subplots(figsize=figsize)
         if plot_style == plot_styles[0]:
@@ -146,7 +147,7 @@ if __name__ == '__main__':
         elif plot_style == plot_styles[3]:
             # todo thin out the X axis so the ticks are readable
             ax = sns.pointplot(data=lm_df, hue='candidate', palette=palette, x='date', y='votes', )
-            ax.set_xticklabels(ax.get_xticklabels(), rotation=90, )
+            ax.set_xticklabels(ax.get_xticklabels(), rotation=rotation, )
             pointplot_png = './states-daily-pointplot.png'
             logger.info('saving {} to {}'.format(plot_style, pointplot_png, ), )
             plt.savefig(pointplot_png, )
@@ -169,7 +170,7 @@ if __name__ == '__main__':
                                  hue='answer', )
             plot_result = plot.map(plt.scatter, 'date', 'percent', )
             for axes in plot.axes.flat:
-                _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=90, )
+                _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ))
             plt.tight_layout()
@@ -187,7 +188,7 @@ if __name__ == '__main__':
                                  hue='answer', )
             plot_result = plot.map(plt.scatter, 'date', 'percent', )
             for axes in plot.axes.flat:
-                _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=90, )
+                _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ))
             plt.tight_layout()
