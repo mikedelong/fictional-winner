@@ -121,7 +121,7 @@ if __name__ == '__main__':
                    'staterank', ]
     figsize = (15, 10)
     palette = {democrat: 'b', republican: 'r'}
-    rotation = 90
+    rotation = 60
     for plot_style in plot_styles:
         fig, ax = plt.subplots(figsize=figsize)
         if plot_style == plot_styles[0]:
