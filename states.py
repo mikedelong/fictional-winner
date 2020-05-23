@@ -164,9 +164,10 @@ if __name__ == '__main__':
             plt.savefig(regplot_png, )
         elif plot_style == plot_styles[5]:
             col_wrap = int(sqrt(data_df.state.nunique()))
+            data_df = data_df.rename(columns={'pct': 'percent'})
             plot = sns.FacetGrid(col='state', col_order=sorted(data_df.state.unique()), col_wrap=col_wrap, data=data_df,
                                  hue='answer', )
-            plot_result = plot.map(plt.scatter, 'end_date', 'pct', )
+            plot_result = plot.map(plt.scatter, 'end_date', 'percent', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=90, )
             for axes in plot.axes.flatten():
