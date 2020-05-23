@@ -180,10 +180,11 @@ if __name__ == '__main__':
             states = [state for state in data_df.state.unique() if data_df.state.value_counts()[state] > 8]
             swing_df = data_df[data_df.state.isin(states)].copy(deep=True)
             swing_df['date'] = [datetime.datetime.date(item) for item in swing_df['end_date']]
+            swing_df = swing_df.rename(columns={'pct': 'percent'})
             col_wrap = int(sqrt(swing_df.state.nunique()))
             plot = sns.FacetGrid(col='state', col_order=sorted(states), col_wrap=col_wrap, data=swing_df,
                                  hue='answer', )
-            plot_result = plot.map(plt.scatter, 'date', 'pct', )
+            plot_result = plot.map(plt.scatter, 'date', 'percent', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=90, )
             for axes in plot.axes.flatten():
