@@ -139,8 +139,8 @@ if __name__ == '__main__':
             logger.info('saving {} to {}'.format(plot_style, lmplot_png, ), )
             plt.savefig(lmplot_png, )
         elif plot_style == plot_styles[2]:
-            ax.scatter(x=graph_df.date, y=graph_df[democrat], c='b', )
-            ax.scatter(x=graph_df.date, y=graph_df[republican], c='r', )
+            ax.scatter(c='b', x=graph_df.date, y=graph_df[democrat], )
+            ax.scatter(c='r', x=graph_df.date, y=graph_df[republican], )
             matplotlib_png = './states-daily-matplotlib.png'
             logger.info('saving {} to {}'.format(plot_style, matplotlib_png, ), )
             plt.savefig(matplotlib_png, )
