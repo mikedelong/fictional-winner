@@ -178,7 +178,6 @@ if __name__ == '__main__':
             logger.info('saving {} to {}'.format(plot_style, state_grid_png, ), )
             plt.savefig(state_grid_png, )
             # todo add a facet grid of the difference on a state basis from each candidate perspective
-            p_df = data_df.groupby(by=['percent']).diff()
             differences = dict()
             for question in data_df['question_id'].unique():
                 difference_df = data_df[data_df['question_id'] == question]
