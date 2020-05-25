@@ -178,6 +178,15 @@ if __name__ == '__main__':
             logger.info('saving {} to {}'.format(plot_style, state_grid_png, ), )
             plt.savefig(state_grid_png, )
             # todo add a facet grid of the difference on a state basis from each candidate perspective
+            p_df = data_df.groupby(by=['percent']).diff()
+            differences = dict()
+            for question in data_df['question_id'].unique():
+                difference_df = data_df[data_df['question_id'] == question]
+                difference = difference_df[difference_df['answer'] == democrat]['percent'].values[0] - \
+                                        difference_df[difference_df['answer'] == republican]['percent'].values[0]
+                differences[question] = difference
+            logger.info(list(data_df))
+
         elif plot_style == plot_styles[6]:
             states = [state for state in data_df.state.unique() if data_df.state.value_counts()[state] > 8]
             swing_df = data_df[data_df.state.isin(states)].copy(deep=True)
