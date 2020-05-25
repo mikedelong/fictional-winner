@@ -181,12 +181,14 @@ if __name__ == '__main__':
             for question in data_df['question_id'].unique():
                 difference_df = data_df[data_df['question_id'] == question]
                 difference = difference_df[difference_df['answer'] == democrat]['percent'].values[0] - \
-                                        difference_df[difference_df['answer'] == republican]['percent'].values[0]
+                             difference_df[difference_df['answer'] == republican]['percent'].values[0]
                 differences[question] = difference
             # now that we have the question-difference dict let's build a DataFrame we can use to make the FacetGrid
             grid_df = data_df[['question_id', 'date', 'state', ]].drop_duplicates()
             grid_df['difference'] = grid_df['question_id'].map(differences)
-            plot = sns.FacetGrid(col='state', col_order=sorted(grid_df.state.unique()), col_wrap=col_wrap, data=grid_df, )
+            # todo : remove low-count states
+            plot = sns.FacetGrid(col='state', col_order=sorted(grid_df.state.unique()), col_wrap=col_wrap,
+                                 data=grid_df, )
             plot_result = plot.map(plt.plot, 'date', 'difference', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
