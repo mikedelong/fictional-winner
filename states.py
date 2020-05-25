@@ -187,8 +187,12 @@ if __name__ == '__main__':
             # now that we have the question-difference dict let's build a DataFrame we can use to make the FacetGrid
             grid_df = data_df[['question_id', 'date', 'state', ]].drop_duplicates()
             grid_df['difference'] = grid_df['question_id'].map(differences)
-            logger.info(list(data_df))
-
+            plot = sns.FacetGrid(col='state', col_order=sorted(grid_df.state.unique()), col_wrap=col_wrap, data=grid_df, )
+            plot_result = plot.map(plt.plot, 'date', 'difference', )
+            plt.tight_layout()
+            state_plot_png = './states-daily-state-plot.png'
+            logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
+            plt.savefig(state_plot_png, )
         elif plot_style == plot_styles[6]:
             states = [state for state in data_df.state.unique() if data_df.state.value_counts()[state] > 8]
             swing_df = data_df[data_df.state.isin(states)].copy(deep=True)
