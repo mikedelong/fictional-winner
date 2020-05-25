@@ -184,6 +184,9 @@ if __name__ == '__main__':
                 difference = difference_df[difference_df['answer'] == democrat]['percent'].values[0] - \
                                         difference_df[difference_df['answer'] == republican]['percent'].values[0]
                 differences[question] = difference
+            # now that we have the question-difference dict let's build a DataFrame we can use to make the FacetGrid
+            grid_df = data_df[['question_id', 'date', 'state', ]].drop_duplicates()
+            grid_df['difference'] = grid_df['question_id'].map(differences)
             logger.info(list(data_df))
 
         elif plot_style == plot_styles[6]:
