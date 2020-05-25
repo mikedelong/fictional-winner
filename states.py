@@ -188,6 +188,10 @@ if __name__ == '__main__':
             grid_df['difference'] = grid_df['question_id'].map(differences)
             plot = sns.FacetGrid(col='state', col_order=sorted(grid_df.state.unique()), col_wrap=col_wrap, data=grid_df, )
             plot_result = plot.map(plt.plot, 'date', 'difference', )
+            for axes in plot.axes.flat:
+                _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
+            for axes in plot.axes.flatten():
+                axes.set_title(axes.get_title().replace('state = ', '', ))
             plt.tight_layout()
             state_plot_png = './states-daily-state-plot.png'
             logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
