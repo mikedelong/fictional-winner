@@ -224,7 +224,6 @@ if __name__ == '__main__':
             # now that we have the question-difference dict let's build a DataFrame we can use to make the FacetGrid
             grid_df = swing_df[['date', 'question_id', 'state', ]].drop_duplicates()
             grid_df['difference'] = grid_df['question_id'].map(differences)
-            # todo : remove low-count states
             plot = sns.FacetGrid(col='state', col_order=sorted(grid_df.state.unique()), col_wrap=col_wrap,
                                  data=grid_df, )
             plot_result = plot.map(plt.plot, 'date', 'difference', )
