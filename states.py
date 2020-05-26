@@ -216,6 +216,27 @@ if __name__ == '__main__':
             logger.info('saving {} to {}'.format(plot_style, swing_state_grid_png, ), )
             plt.savefig(swing_state_grid_png, )
             # todo add a facet grid of the difference on a state basis from each candidate perspective
+            differences = dict()
+            for question in swing_df['question_id'].unique():
+                difference_df = swing_df[data_df['question_id'] == question]
+                difference = difference_df[difference_df['answer'] == democrat]['percent'].values[0] - \
+                             difference_df[difference_df['answer'] == republican]['percent'].values[0]
+                differences[question] = difference
+            # now that we have the question-difference dict let's build a DataFrame we can use to make the FacetGrid
+            grid_df = swing_df[['question_id', 'date', 'state', ]].drop_duplicates()
+            grid_df['difference'] = grid_df['question_id'].map(differences)
+            # todo : remove low-count states
+            plot = sns.FacetGrid(col='state', col_order=sorted(grid_df.state.unique()), col_wrap=col_wrap,
+                                 data=grid_df, )
+            plot_result = plot.map(plt.plot, 'date', 'difference', )
+            for axes in plot.axes.flat:
+                _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
+            for axes in plot.axes.flatten():
+                axes.set_title(axes.get_title().replace('state = ', '', ))
+            plt.tight_layout()
+            state_plot_png = './states-daily-swing-plot.png'
+            logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
+            plt.savefig(state_plot_png, )
         elif plot_style == plot_styles[7]:
             rank_df = pd.DataFrame([(rank[1], rank[2]) for rank in ranked], columns=['State', 'margin', ], )
             rank_df['abs_margin'] = rank_df['margin'].abs()
