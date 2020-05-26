@@ -215,7 +215,6 @@ if __name__ == '__main__':
             swing_state_grid_png = './states-daily-swing-state-grid.png'
             logger.info('saving {} to {}'.format(plot_style, swing_state_grid_png, ), )
             plt.savefig(swing_state_grid_png, )
-            # todo add a facet grid of the difference on a state basis from each candidate perspective
             differences = dict()
             for question in swing_df['question_id'].unique():
                 difference_df = swing_df[data_df['question_id'] == question]
