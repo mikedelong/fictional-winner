@@ -222,7 +222,7 @@ if __name__ == '__main__':
                              difference_df[difference_df['answer'] == republican]['percent'].values[0]
                 differences[question] = difference
             # now that we have the question-difference dict let's build a DataFrame we can use to make the FacetGrid
-            grid_df = swing_df[['question_id', 'date', 'state', ]].drop_duplicates()
+            grid_df = swing_df[['date', 'question_id', 'state', ]].drop_duplicates()
             grid_df['difference'] = grid_df['question_id'].map(differences)
             # todo : remove low-count states
             plot = sns.FacetGrid(col='state', col_order=sorted(grid_df.state.unique()), col_wrap=col_wrap,
