@@ -217,7 +217,7 @@ if __name__ == '__main__':
             plt.savefig(swing_state_grid_png, )
             differences = dict()
             for question in swing_df['question_id'].unique():
-                difference_df = swing_df[data_df['question_id'] == question]
+                difference_df = swing_df[swing_df['question_id'].isin({question})]
                 differences[question] = difference_df[difference_df['answer'] == democrat]['percent'].values[0] - \
                              difference_df[difference_df['answer'] == republican]['percent'].values[0]
             # now that we have the question-difference dict let's build a DataFrame we can use to make the FacetGrid
