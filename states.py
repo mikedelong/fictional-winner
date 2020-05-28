@@ -11,6 +11,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 from seaborn import lineplot
+from seaborn import lmplot
+from seaborn import pointplot
 from seaborn import set_style
 from pandas.plotting import register_matplotlib_converters
 
@@ -134,7 +136,7 @@ if __name__ == '__main__':
             plt.savefig(lineplot_png, )
         elif plot_style == plot_styles[1]:
             lm_df['date'] = mdates.date2num(lm_df.date.values, )
-            ax = sns.lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='date', y='votes', ).set(
+            ax = lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='date', y='votes', ).set(
                 xlim=(lm_df.date.min() - 100, lm_df.date.max() + 100,), ylim=(100, 450,), )
             ax.set_xticklabels(labels=[mdates.num2date(number, tz=None, ).date() for number in lm_df.date.values], )
             lmplot_png = './states-daily-lmplot.png'
@@ -148,7 +150,7 @@ if __name__ == '__main__':
             plt.savefig(matplotlib_png, )
         elif plot_style == plot_styles[3]:
             # todo thin out the X axis so the ticks are readable
-            sns.pointplot(ax=ax, data=lm_df, hue='candidate', palette=palette, x='date', y='votes', )
+            pointplot(ax=ax, data=lm_df, hue='candidate', palette=palette, x='date', y='votes', )
             ax.set_xticklabels(ax.get_xticklabels(), rotation=rotation, )
             pointplot_png = './states-historical-pointplot.png'
             logger.info('saving {} to {}'.format(plot_style, pointplot_png, ), )
