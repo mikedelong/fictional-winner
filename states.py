@@ -146,7 +146,7 @@ if __name__ == '__main__':
             plt.savefig(matplotlib_png, )
         elif plot_style == plot_styles[3]:
             # todo thin out the X axis so the ticks are readable
-            ax = sns.pointplot(data=lm_df, hue='candidate', palette=palette, x='date', y='votes', )
+            sns.pointplot(ax=ax, data=lm_df, hue='candidate', palette=palette, x='date', y='votes', )
             ax.set_xticklabels(ax.get_xticklabels(), rotation=rotation, )
             pointplot_png = './states-daily-pointplot.png'
             logger.info('saving {} to {}'.format(plot_style, pointplot_png, ), )
