@@ -10,6 +10,8 @@ import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+from seaborn import lineplot
+from seaborn import set_style
 from pandas.plotting import register_matplotlib_converters
 
 from get_data import get_data
@@ -115,7 +117,7 @@ if __name__ == '__main__':
     lm_df['votes'] = lm_df['votes'].astype(float)
     lm_df['date'] = pd.to_datetime(lm_df['date'])
     lm_df['date'] = lm_df['date'].dt.date
-    sns.set_style('darkgrid')
+    set_style('darkgrid')
     plt.style.use('fivethirtyeight')
     plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', 'stategrid', 'swingstategrid',
                    'staterank', ]
@@ -125,7 +127,7 @@ if __name__ == '__main__':
     for plot_style in plot_styles:
         fig, ax = plt.subplots(figsize=figsize)
         if plot_style == plot_styles[0]:
-            sns.lineplot(ax=ax, data=lm_df, hue='candidate', palette=palette, sort=True,
+            lineplot(ax=ax, data=lm_df, hue='candidate', palette=palette, sort=True,
                          x='date', y='votes', )
             lineplot_png = './states-lineplot.png'
             logger.info('saving {} to {}'.format(plot_style, lineplot_png, ), )
