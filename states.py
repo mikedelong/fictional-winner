@@ -10,6 +10,7 @@ import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+from seaborn import barplot
 from seaborn import lineplot
 from seaborn import lmplot
 from seaborn import pointplot
@@ -130,7 +131,7 @@ if __name__ == '__main__':
         fig, ax = plt.subplots(figsize=figsize)
         if plot_style == plot_styles[0]:
             lineplot(ax=ax, data=lm_df, hue='candidate', palette=palette, sort=True,
-                         x='date', y='votes', )
+                     x='date', y='votes', )
             lineplot_png = './states-lineplot.png'
             logger.info('saving {} to {}'.format(plot_style, lineplot_png, ), )
             plt.savefig(lineplot_png, )
@@ -223,7 +224,7 @@ if __name__ == '__main__':
             for question in swing_df['question_id'].unique():
                 difference_df = swing_df[swing_df['question_id'].isin({question})]
                 differences[question] = difference_df[difference_df['answer'] == democrat]['percent'].values[0] - \
-                             difference_df[difference_df['answer'] == republican]['percent'].values[0]
+                                        difference_df[difference_df['answer'] == republican]['percent'].values[0]
             # now that we have the question-difference dict let's build a DataFrame we can use to make the FacetGrid
             grid_df = swing_df[['date', 'question_id', 'state', ]].drop_duplicates()
             grid_df['difference'] = grid_df['question_id'].map(differences)
@@ -258,7 +259,7 @@ if __name__ == '__main__':
             plt.savefig(rank_scatterplot_png, )
             del figure
             figure = plt.figure(figsize=figsize)
-            ax_bar = sns.barplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
+            ax_bar = barplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
             rank_barplot_png = './state-rank-barplot.png'
             logger.info('saving {} to {}'.format(plot_style, rank_barplot_png, ), )
             plt.savefig(rank_barplot_png, )
