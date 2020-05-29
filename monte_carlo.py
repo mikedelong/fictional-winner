@@ -59,31 +59,34 @@ if __name__ == '__main__':
                                                                                       republican=republican, )
     cutoff_date = pd.Timestamp(datetime.datetime.today())
     realizations = list()
-    realization_count = 100000
+    realization_count = 10000
     count_democrat = 0
     count_republican = 0
     democrat_realizations = list()
     median_results = list()
+    done = False
     for index, realization in enumerate(range(realization_count)):
-        realization_democrat, realization_republican = \
-            get_realization(arg_cutoff_date=cutoff_date, arg_democrat=democrat, arg_df=filtered_df.copy(deep=True, ),
-                            arg_republican=republican, electoral_df=electoral_college_df,
-                            historical_df=review_2016_df, )
-        count_democrat += 1 if realization_democrat > realization_republican else 0
-        count_republican += 1 if realization_democrat < realization_republican else 0
-        format_string = '{} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
-        democrat_realizations = [item[0] for item in realizations]
-        if len(democrat_realizations):
-            median_result = int(np.median(np.array(democrat_realizations)), )
-            if median_result not in median_results:
-                median_results = list()
-            median_results.append(median_result)
-            logger.info(format_string.format(index, democrat, realization_democrat, republican, realization_republican,
-                                             democrat, count_democrat, republican, count_republican,
-                                             count_democrat / (count_democrat + count_republican),
-                                             np.array(democrat_realizations).mean(), median_result,
-                                             len(median_results), ))
-        realizations.append((realization_democrat, realization_republican,))
+        if not done:
+            realization_democrat, realization_republican = \
+                get_realization(arg_cutoff_date=cutoff_date, arg_democrat=democrat, arg_df=filtered_df.copy(deep=True, ),
+                                arg_republican=republican, electoral_df=electoral_college_df,
+                                historical_df=review_2016_df, )
+            count_democrat += 1 if realization_democrat > realization_republican else 0
+            count_republican += 1 if realization_democrat < realization_republican else 0
+            format_string = '{} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
+            democrat_realizations = [item[0] for item in realizations]
+            if len(democrat_realizations):
+                median_result = int(np.median(np.array(democrat_realizations)), )
+                if median_result not in median_results:
+                    median_results = list()
+                median_results.append(median_result)
+                logger.info(format_string.format(index, democrat, realization_democrat, republican, realization_republican,
+                                                 democrat, count_democrat, republican, count_republican,
+                                                 count_democrat / (count_democrat + count_republican),
+                                                 np.array(democrat_realizations).mean(), median_result,
+                                                 len(median_results), ))
+            realizations.append((realization_democrat, realization_republican,))
+            done = len(median_results) > 100
     bin_count = max(democrat_realizations) - min(democrat_realizations) + 1
     democrat_win_realizations = [item for item in democrat_realizations if item >= 270]
     democrat_lose_realizations = [item for item in democrat_realizations if item < 270]
