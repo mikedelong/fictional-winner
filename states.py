@@ -9,13 +9,15 @@ from time import time
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import pandas as pd
-import seaborn as sns
+from pandas.plotting import register_matplotlib_converters
+from seaborn import FacetGrid
 from seaborn import barplot
 from seaborn import lineplot
 from seaborn import lmplot
 from seaborn import pointplot
+from seaborn import regplot
+from seaborn import scatterplot
 from seaborn import set_style
-from pandas.plotting import register_matplotlib_converters
 
 from get_data import get_data
 
@@ -158,12 +160,12 @@ if __name__ == '__main__':
             plt.savefig(pointplot_png, )
         elif plot_style == plot_styles[4]:
             graph_df['date'] = mdates.date2num(graph_df.date.values, )
-            sns.regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, )
-            sns.regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, lowess=True, scatter=False, )
-            sns.regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, logx=True, scatter=False, )
-            sns.regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, )
-            sns.regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, lowess=True, scatter=False, )
-            sns.regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, logx=True, scatter=False, )
+            regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, )
+            regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, lowess=True, scatter=False, )
+            regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, logx=True, scatter=False, )
+            regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, )
+            regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, lowess=True, scatter=False, )
+            regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, logx=True, scatter=False, )
             ax.set_xticklabels(labels=[mdates.num2date(number, tz=None, ).date() for number in lm_df.date.values], )
             regplot_png = './states-daily-regplot.png'
             logger.info('saving {} to {}'.format(plot_style, regplot_png, ), )
@@ -171,8 +173,8 @@ if __name__ == '__main__':
         elif plot_style == plot_styles[5]:
             col_wrap = int(sqrt(data_df.state.nunique()))
             data_df = data_df.rename(columns={'end_date': 'date', 'pct': 'percent', }, )
-            plot = sns.FacetGrid(col='state', col_order=sorted(data_df.state.unique()), col_wrap=col_wrap, data=data_df,
-                                 hue='answer', )
+            plot = FacetGrid(col='state', col_order=sorted(data_df.state.unique()), col_wrap=col_wrap, data=data_df,
+                             hue='answer', )
             plot_result = plot.map(plt.scatter, 'date', 'percent', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
@@ -192,8 +194,8 @@ if __name__ == '__main__':
             grid_df['difference'] = grid_df['question_id'].map(differences)
             states = [state for state in data_df.state.unique() if data_df.state.value_counts()[state] > 2]
             grid_df = grid_df[grid_df['state'].isin(states)]
-            plot = sns.FacetGrid(col='state', col_order=sorted(grid_df.state.unique()), col_wrap=col_wrap,
-                                 data=grid_df, )
+            plot = FacetGrid(col='state', col_order=sorted(grid_df.state.unique()), col_wrap=col_wrap,
+                             data=grid_df, )
             plot_result = plot.map(plt.plot, 'date', 'difference', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
@@ -209,8 +211,7 @@ if __name__ == '__main__':
             swing_df['date'] = [datetime.datetime.date(item) for item in swing_df['date']]
             swing_df = swing_df.rename(columns={'pct': 'percent', }, )
             col_wrap = int(sqrt(swing_df.state.nunique()))
-            plot = sns.FacetGrid(col='state', col_order=sorted(states), col_wrap=col_wrap, data=swing_df,
-                                 hue='answer', )
+            plot = FacetGrid(col='state', col_order=sorted(states), col_wrap=col_wrap, data=swing_df, hue='answer', )
             plot_result = plot.map(plt.scatter, 'date', 'percent', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
@@ -228,8 +229,7 @@ if __name__ == '__main__':
             # now that we have the question-difference dict let's build a DataFrame we can use to make the FacetGrid
             grid_df = swing_df[['date', 'question_id', 'state', ]].drop_duplicates()
             grid_df['difference'] = grid_df['question_id'].map(differences)
-            plot = sns.FacetGrid(col='state', col_order=sorted(grid_df.state.unique()), col_wrap=col_wrap,
-                                 data=grid_df, )
+            plot = FacetGrid(col='state', col_order=sorted(grid_df.state.unique()), col_wrap=col_wrap, data=grid_df, )
             plot_result = plot.map(plt.plot, 'date', 'difference', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
@@ -253,7 +253,7 @@ if __name__ == '__main__':
             plt.savefig(rank_png, )
             del figure
             figure = plt.figure(figsize=figsize)
-            ax_scatter = sns.scatterplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
+            ax_scatter = scatterplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
             rank_scatterplot_png = './state-rank-scatterplot.png'
             logger.info('saving {} to {}'.format(plot_style, rank_scatterplot_png, ), )
             plt.savefig(rank_scatterplot_png, )
