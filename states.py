@@ -8,7 +8,9 @@ from time import time
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
-import pandas as pd
+from pandas import DataFrame
+from pandas import Timestamp
+from pandas import to_datetime
 from pandas.plotting import register_matplotlib_converters
 from seaborn import FacetGrid
 from seaborn import barplot
@@ -74,7 +76,7 @@ if __name__ == '__main__':
     electoral_college_df, review_2016_df, data_df, state_abbreviations = get_data(democrat=democrat,
                                                                                   grade_to_filter=grade_filter,
                                                                                   republican=republican, )
-    cutoff_date = pd.Timestamp(datetime.datetime.today())
+    cutoff_date = Timestamp(datetime.datetime.today())
     democrat_votes, republican_votes, ranked = get_results(
         arg_df=data_df.copy(deep=True), arg_cutoff_date=cutoff_date, electoral_df=electoral_college_df,
         historical_df=review_2016_df, verbose=0, )
@@ -101,15 +103,15 @@ if __name__ == '__main__':
     else:
         logger.info('total: {}: {} {}: {}'.format(democrat, democrat_votes, republican, republican_votes, ))
 
-    graph_df = pd.DataFrame(columns=['date', democrat, republican, ], )
-    lm_df = pd.DataFrame(columns=['date', 'votes', 'candidate', ], )
+    graph_df = DataFrame(columns=['date', democrat, republican, ], )
+    lm_df = DataFrame(columns=['date', 'votes', 'candidate', ], )
     for cutoff_date in sorted(data_df.end_date.unique(), ):
         democrat_votes, republican_votes, _ = get_results(arg_df=data_df.copy(deep=True), arg_cutoff_date=cutoff_date,
                                                           electoral_df=electoral_college_df,
                                                           historical_df=review_2016_df,
                                                           verbose=0, )
         logger.info(
-            'date: {} {}: {} {}: {}'.format(pd.to_datetime(cutoff_date).date(), democrat, democrat_votes, republican,
+            'date: {} {}: {} {}: {}'.format(to_datetime(cutoff_date).date(), democrat, democrat_votes, republican,
                                             republican_votes, ))
         graph_df = graph_df.append(ignore_index=True,
                                    other={'date': cutoff_date, democrat: democrat_votes,
@@ -120,7 +122,7 @@ if __name__ == '__main__':
                              other={'date': cutoff_date, 'votes': republican_votes, 'candidate': republican, }, )
 
     lm_df['votes'] = lm_df['votes'].astype(float)
-    lm_df['date'] = pd.to_datetime(lm_df['date'])
+    lm_df['date'] = to_datetime(lm_df['date'])
     lm_df['date'] = lm_df['date'].dt.date
     set_style('darkgrid')
     plt.style.use('fivethirtyeight')
@@ -240,7 +242,7 @@ if __name__ == '__main__':
             logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
             plt.savefig(state_plot_png, )
         elif plot_style == plot_styles[7]:
-            rank_df = pd.DataFrame([(rank[1], rank[2]) for rank in ranked], columns=['State', 'margin', ], )
+            rank_df = DataFrame([(rank[1], rank[2]) for rank in ranked], columns=['State', 'margin', ], )
             rank_df['abs_margin'] = rank_df['margin'].abs()
             rank_df['color'] = rank_df['margin'].apply(lambda x: 'r' if x <= 0 else 'b')
             rank_df['candidate'] = rank_df['margin'].apply(lambda x: republican if x <= 0 else democrat)
