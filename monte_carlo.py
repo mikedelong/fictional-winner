@@ -86,7 +86,7 @@ if __name__ == '__main__':
                                                  np.array(democrat_realizations).mean(), median_result,
                                                  len(median_results), ))
             realizations.append((realization_democrat, realization_republican,))
-            done = len(median_results) > 100
+            done = len(median_results) > 200
     bin_count = max(democrat_realizations) - min(democrat_realizations) + 1
     democrat_win_realizations = [item for item in democrat_realizations if item >= 270]
     democrat_lose_realizations = [item for item in democrat_realizations if item < 270]
