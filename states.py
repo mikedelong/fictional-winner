@@ -34,7 +34,8 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, )
                           for candidate in [democrat, republican]}
     result_democrat_votes, result_republican_votes = 0, 0
     result_ranked = list()
-    for state in electoral_df.state.unique():
+    unique_states = electoral_df.state.unique()
+    for state in unique_states:
         if state in polling.keys():
             poll = polling[state]
             votes = electoral_df[electoral_df.state == state].votes.values[0]
