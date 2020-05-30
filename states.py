@@ -32,7 +32,7 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, )
         this_df = this_df[this_df.end_date == this_df.end_date.max()]
         polling[state] = {candidate: this_df[this_df.answer.isin({candidate})].groupby('pct').mean().index[0]
                           for candidate in [democrat, republican]}
-    result_democrat_votes, result_republican_votes = 0, 0
+    result_democrat, result_republican = 0, 0
     result_ranked = list()
     unique_states = electoral_df.state.unique()
     for state in unique_states:
@@ -40,9 +40,9 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, )
             poll = polling[state]
             votes = electoral_df[electoral_df.state == state].votes.values[0]
             if poll[democrat] > poll[republican]:
-                result_democrat_votes += votes
+                result_democrat += votes
             elif poll[democrat] < poll[republican]:
-                result_republican_votes += votes
+                result_republican += votes
             if poll[democrat] - poll[republican] > 0 and verbose:
                 logger.info(
                     'state: {} polling margin: D+{:3.1f} pct'.format(state, abs(poll[democrat] - poll[republican])))
@@ -54,12 +54,12 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, )
                     logger.info('state: {} tied.'.format(state))
             result_ranked.append((state, poll[democrat] - poll[republican]))
         elif state in review_2016_df.State.unique():
-            result_democrat_votes += historical_df[historical_df.State == state].electoralDem.values[0]
-            result_republican_votes += historical_df[historical_df.State == state].electoralRep.values[0]
+            result_democrat += historical_df[historical_df.State == state].electoralDem.values[0]
+            result_republican += historical_df[historical_df.State == state].electoralRep.values[0]
         else:
             if verbose:
                 logger.warning('missing state: {}'.format(state))
-    return result_democrat_votes, result_republican_votes, result_ranked
+    return result_democrat, result_republican, result_ranked
 
 
 if __name__ == '__main__':
