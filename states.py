@@ -35,8 +35,9 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, )
     result_democrat, result_republican = 0, 0
     result_ranked = list()
     unique_states = electoral_df.state.unique()
+    polling_keys = polling.keys()
     for state in unique_states:
-        if state in polling.keys():
+        if state in polling_keys:
             poll = polling[state]
             votes = electoral_df[electoral_df.state == state].votes.values[0]
             if poll[democrat] > poll[republican]:
