@@ -28,11 +28,10 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, )
     polling = {}
     arg_df = arg_df[arg_df.end_date <= arg_cutoff_date]
     for state in arg_df.state.unique():
-        polling[state] = {}
         this_df = arg_df[arg_df.state == state]
         this_df = this_df[this_df.end_date == this_df.end_date.max()]
-        for candidate in [democrat, republican]:
-            polling[state][candidate] = this_df[this_df.answer.isin({candidate})].groupby('pct').mean().index[0]
+        polling[state] = {candidate: this_df[this_df.answer.isin({candidate})].groupby('pct').mean().index[0]
+                          for candidate in [democrat, republican]}
     result_democrat_votes, result_republican_votes = 0, 0
     result_ranked = list()
     for state in electoral_df.state.unique():
