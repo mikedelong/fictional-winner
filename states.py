@@ -108,8 +108,7 @@ if __name__ == '__main__':
     for cutoff_date in sorted(data_df.end_date.unique(), ):
         democrat_votes, republican_votes, _ = get_results(arg_df=data_df.copy(deep=True), arg_cutoff_date=cutoff_date,
                                                           electoral_df=electoral_college_df,
-                                                          historical_df=review_2016_df,
-                                                          verbose=0, )
+                                                          historical_df=review_2016_df, verbose=0, )
         logger.info(
             'date: {} {}: {} {}: {}'.format(to_datetime(cutoff_date).date(), democrat, democrat_votes, republican,
                                             republican_votes, ))
