@@ -162,10 +162,10 @@ if __name__ == '__main__':
             graph_df['date'] = mdates.date2num(graph_df.date.values, )
             regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, )
             regplot(ax=ax, color='b', data=graph_df, lowess=True, x='date', y=democrat, scatter=False, )
-            regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, logx=True, scatter=False, )
+            regplot(ax=ax, color='b', data=graph_df, logx=True, x='date', y=democrat, scatter=False, )
             regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, )
-            regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, lowess=True, scatter=False, )
-            regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, logx=True, scatter=False, )
+            regplot(ax=ax, color='r', data=graph_df, lowess=True, x='date', y=republican, scatter=False, )
+            regplot(ax=ax, color='r', data=graph_df, logx=True, x='date', y=republican, scatter=False, )
             ax.set_xticklabels(labels=[mdates.num2date(number, tz=None, ).date() for number in lm_df.date.values], )
             regplot_png = './states-daily-regplot.png'
             logger.info('saving {} to {}'.format(plot_style, regplot_png, ), )
