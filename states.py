@@ -161,7 +161,7 @@ if __name__ == '__main__':
         elif plot_style == plot_styles[4]:
             graph_df['date'] = mdates.date2num(graph_df.date.values, )
             regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, )
-            regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, lowess=True, scatter=False, )
+            regplot(ax=ax, color='b', data=graph_df, lowess=True, x='date', y=democrat, scatter=False, )
             regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, logx=True, scatter=False, )
             regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, )
             regplot(ax=ax, color='r', data=graph_df, x='date', y=republican, lowess=True, scatter=False, )
