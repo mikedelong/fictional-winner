@@ -127,14 +127,13 @@ if __name__ == '__main__':
     plt.style.use('fivethirtyeight')
     plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', 'stategrid', 'swingstategrid',
                    'staterank', ]
-    figsize = (15, 10, )
+    figsize = (15, 10,)
     palette = {democrat: 'b', republican: 'r'}
     rotation = 60
     for plot_style in plot_styles:
         fig, ax = plt.subplots(figsize=figsize)
         if plot_style == plot_styles[0]:
-            lineplot(ax=ax, data=lm_df, hue='candidate', palette=palette, sort=True,
-                     x='date', y='votes', )
+            lineplot(ax=ax, data=lm_df, hue='candidate', palette=palette, sort=True, x='date', y='votes', )
             lineplot_png = './states-lineplot.png'
             logger.info('saving {} to {}'.format(plot_style, lineplot_png, ), )
             plt.savefig(lineplot_png, )
