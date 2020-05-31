@@ -154,7 +154,6 @@ if __name__ == '__main__':
             logger.info('saving {} to {}'.format(plot_style, matplotlib_png, ), )
             plt.savefig(matplotlib_png, )
         elif plot_style == plot_styles[3]:
-            # todo thin out the X axis so the ticks are readable
             pointplot(ax=ax, data=lm_df, hue='candidate', palette=palette, x='date', y='votes', )
             ax.set_xticklabels(ax.get_xticklabels(), rotation=rotation, )
             plt.locator_params(axis='x', nbins=10)
