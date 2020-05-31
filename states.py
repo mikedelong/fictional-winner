@@ -122,13 +122,12 @@ if __name__ == '__main__':
                              other={'date': cutoff_date, 'votes': republican_votes, 'candidate': republican, }, )
 
     lm_df['votes'] = lm_df['votes'].astype(float)
-    lm_df['date'] = to_datetime(lm_df['date'])
-    lm_df['date'] = lm_df['date'].dt.date
+    lm_df['date'] = to_datetime(lm_df['date']).dt.date
     set_style('darkgrid')
     plt.style.use('fivethirtyeight')
     plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', 'stategrid', 'swingstategrid',
                    'staterank', ]
-    figsize = (15, 10)
+    figsize = (15, 10, )
     palette = {democrat: 'b', republican: 'r'}
     rotation = 60
     for plot_style in plot_styles:
@@ -156,7 +155,7 @@ if __name__ == '__main__':
         elif plot_style == plot_styles[3]:
             pointplot(ax=ax, data=lm_df, hue='candidate', palette=palette, x='date', y='votes', )
             ax.set_xticklabels(ax.get_xticklabels(), rotation=rotation, )
-            plt.locator_params(axis='x', nbins=10)
+            plt.locator_params(axis='x', nbins=10, )
             pointplot_png = './states-historical-pointplot.png'
             logger.info('saving {} to {}'.format(plot_style, pointplot_png, ), )
             plt.savefig(pointplot_png, )
@@ -173,7 +172,7 @@ if __name__ == '__main__':
             logger.info('saving {} to {}'.format(plot_style, regplot_png, ), )
             plt.savefig(regplot_png, )
         elif plot_style == plot_styles[5]:
-            col_wrap = int(sqrt(data_df.state.nunique()))
+            col_wrap = int(sqrt(data_df.state.nunique(), ), )
             data_df = data_df.rename(columns={'end_date': 'date', 'pct': 'percent', }, )
             plot = FacetGrid(col='state', col_order=sorted(data_df.state.unique()), col_wrap=col_wrap, data=data_df,
                              hue='answer', )
