@@ -128,10 +128,10 @@ if __name__ == '__main__':
     plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', 'stategrid', 'swingstategrid',
                    'staterank', ]
     figsize = (15, 10,)
-    palette = {democrat: 'b', republican: 'r'}
+    palette = {democrat: 'b', republican: 'r', }
     rotation = 60
     for plot_style in plot_styles:
-        fig, ax = plt.subplots(figsize=figsize)
+        fig, ax = plt.subplots(figsize=figsize, )
         if plot_style == plot_styles[0]:
             lineplot(ax=ax, data=lm_df, hue='candidate', palette=palette, sort=True, x='date', y='votes', )
             lineplot_png = './states-lineplot.png'
@@ -179,7 +179,7 @@ if __name__ == '__main__':
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
             for axes in plot.axes.flatten():
-                axes.set_title(axes.get_title().replace('state = ', '', ))
+                axes.set_title(axes.get_title().replace('state = ', '', ), )
             plt.tight_layout()
             state_grid_png = './states-daily-state-grid.png'
             logger.info('saving {} to {}'.format(plot_style, state_grid_png, ), )
@@ -236,7 +236,7 @@ if __name__ == '__main__':
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
             for axes in plot.axes.flatten():
-                axes.set_title(axes.get_title().replace('state = ', '', ))
+                axes.set_title(axes.get_title().replace('state = ', '', ), )
             plt.tight_layout()
             state_plot_png = './states-daily-swing-plot.png'
             logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
