@@ -5,11 +5,11 @@ from logging import getLogger
 from math import copysign
 from time import time
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib.pyplot import hist
 from matplotlib.pyplot import savefig
+from matplotlib.pyplot import style
 from numpy.random import binomial
 
 from get_data import get_data
@@ -103,7 +103,7 @@ if __name__ == '__main__':
     realization_mean = np.array(democrat_realizations).mean()
     realization_median = np.median(np.array(democrat_realizations))
     logger.info(format_string.format(democrat, realization_mean, realization_median, ), )
-    plt.style.use('fivethirtyeight')
+    style.use('fivethirtyeight')
     hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
     hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
     savefig('./{}-histogram.png'.format(democrat.lower(), ), )
