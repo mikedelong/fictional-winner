@@ -10,6 +10,7 @@ import pandas as pd
 from matplotlib.pyplot import hist
 from matplotlib.pyplot import savefig
 from matplotlib.pyplot import style
+from numpy import array
 from numpy.random import binomial
 
 from get_data import get_data
@@ -80,7 +81,7 @@ if __name__ == '__main__':
             format_string = '{} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
             democrat_realizations = [item[0] for item in realizations]
             if len(democrat_realizations):
-                median_result = int(np.median(np.array(democrat_realizations)), )
+                median_result = int(np.median(array(democrat_realizations)), )
                 if median_result not in median_results:
                     median_results = list()
                 median_results.append(median_result)
@@ -88,7 +89,7 @@ if __name__ == '__main__':
                     format_string.format(index, democrat, realization_democrat, republican, realization_republican,
                                          democrat, count_democrat, republican, count_republican,
                                          count_democrat / (count_democrat + count_republican),
-                                         np.array(democrat_realizations).mean(), median_result,
+                                         array(democrat_realizations).mean(), median_result,
                                          len(median_results), ), )
             realizations.append((realization_democrat, realization_republican,))
             done = len(median_results) > early_exit_limit
@@ -100,8 +101,8 @@ if __name__ == '__main__':
                                                                       len(democrat_win_realizations) / len(
                                                                           democrat_realizations), ))
     format_string = '{} mean outcome: {:5.2f} median outcome: {:.0f}'
-    realization_mean = np.array(democrat_realizations).mean()
-    realization_median = np.median(np.array(democrat_realizations))
+    realization_mean = array(democrat_realizations).mean()
+    realization_median = np.median(array(democrat_realizations))
     logger.info(format_string.format(democrat, realization_mean, realization_median, ), )
     style.use('fivethirtyeight')
     hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
