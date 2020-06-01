@@ -98,6 +98,7 @@ if __name__ == '__main__':
     realization_mean = np.array(democrat_realizations).mean()
     realization_median = np.median(np.array(democrat_realizations))
     logger.info(format_string.format(democrat, realization_mean, realization_median, ), )
+    plt.style.use('fivethirtyeight')
     plt.hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
     plt.hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
     plt.savefig('./{}-histogram.png'.format(democrat.lower(), ), )
