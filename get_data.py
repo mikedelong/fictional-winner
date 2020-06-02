@@ -1,4 +1,3 @@
-import json
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
@@ -7,6 +6,7 @@ from time import time
 import pandas as pd
 from pandas.plotting import register_matplotlib_converters
 
+from json import load
 
 def get_data(democrat, republican, grade_to_filter=None):
     if not grade_to_filter:
@@ -17,7 +17,7 @@ def get_data(democrat, republican, grade_to_filter=None):
     register_matplotlib_converters()
 
     with open(file='./electoral_college.json', mode='r', ) as electoral_college_fp:
-        electoral_college = json.load(fp=electoral_college_fp, )
+        electoral_college = load(fp=electoral_college_fp, )
 
     electoral_college_df = pd.DataFrame.from_dict({'state': list(electoral_college.keys()),
                                                    'votes': list(electoral_college.values()), }, )
@@ -25,7 +25,7 @@ def get_data(democrat, republican, grade_to_filter=None):
     logger.info('Electoral College: {} total votes.'.format(electoral_college_df['votes'].sum()), )
 
     with open(file='./state_abbreviations.json', mode='r', ) as abbreviation_fp:
-        state_abbreviations = json.load(fp=abbreviation_fp, )
+        state_abbreviations = load(fp=abbreviation_fp, )
 
     url = 'https://projects.fivethirtyeight.com/polls-page/president_polls.csv'
     df = pd.read_csv(url, parse_dates=['end_date'], )
