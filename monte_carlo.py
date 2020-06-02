@@ -5,7 +5,7 @@ from logging import getLogger
 from math import copysign
 from time import time
 
-import pandas as pd
+from pandas import Timestamp
 from matplotlib.pyplot import hist
 from matplotlib.pyplot import savefig
 from matplotlib.pyplot import style
@@ -62,7 +62,7 @@ if __name__ == '__main__':
                                                                                       republican=republican, )
     count_democrat = 0
     count_republican = 0
-    cutoff_date = pd.Timestamp(datetime.datetime.today())
+    cutoff_date = Timestamp(datetime.datetime.today())
     democrat_realizations = list()
     done = False
     early_exit_limit = 200
