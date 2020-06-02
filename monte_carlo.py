@@ -1,20 +1,20 @@
+from datetime import datetime
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
 from math import copysign
 from time import time
 
-from pandas import Timestamp
 from matplotlib.pyplot import hist
 from matplotlib.pyplot import savefig
 from matplotlib.pyplot import style
 from numpy import array
 from numpy import median
 from numpy.random import binomial
+from pandas import Timestamp
 
 from get_data import get_data
 
-from datetime import datetime
 
 def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_democrat, arg_republican):
     polling = {}
