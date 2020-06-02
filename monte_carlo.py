@@ -1,4 +1,3 @@
-import datetime
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
@@ -15,6 +14,7 @@ from numpy.random import binomial
 
 from get_data import get_data
 
+from datetime import datetime
 
 def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_democrat, arg_republican):
     polling = {}
@@ -62,7 +62,7 @@ if __name__ == '__main__':
                                                                                       republican=republican, )
     count_democrat = 0
     count_republican = 0
-    cutoff_date = Timestamp(datetime.datetime.today())
+    cutoff_date = Timestamp(datetime.today())
     democrat_realizations = list()
     done = False
     early_exit_limit = 200
