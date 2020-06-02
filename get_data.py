@@ -4,9 +4,9 @@ from logging import basicConfig
 from logging import getLogger
 from time import time
 
-from pandas.plotting import register_matplotlib_converters
 from pandas import DataFrame
 from pandas import read_csv
+from pandas.plotting import register_matplotlib_converters
 
 
 def get_data(democrat, republican, grade_to_filter=None):
