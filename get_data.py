@@ -4,8 +4,9 @@ from logging import basicConfig
 from logging import getLogger
 from time import time
 
-import pandas as pd
 from pandas.plotting import register_matplotlib_converters
+from pandas import DataFrame
+from pandas import read_csv
 
 
 def get_data(democrat, republican, grade_to_filter=None):
@@ -19,8 +20,8 @@ def get_data(democrat, republican, grade_to_filter=None):
     with open(file='./electoral_college.json', mode='r', ) as electoral_college_fp:
         electoral_college = load(fp=electoral_college_fp, )
 
-    electoral_college_df = pd.DataFrame.from_dict({'state': list(electoral_college.keys()),
-                                                   'votes': list(electoral_college.values()), }, )
+    electoral_college_df = DataFrame.from_dict({'state': list(electoral_college.keys()),
+                                                'votes': list(electoral_college.values()), }, )
 
     logger.info('Electoral College: {} total votes.'.format(electoral_college_df['votes'].sum()), )
 
@@ -28,7 +29,7 @@ def get_data(democrat, republican, grade_to_filter=None):
         state_abbreviations = load(fp=abbreviation_fp, )
 
     url = 'https://projects.fivethirtyeight.com/polls-page/president_polls.csv'
-    df = pd.read_csv(url, parse_dates=['end_date'], )
+    df = read_csv(url, parse_dates=['end_date'], )
     logger.info(list(df), )
     # remove null states (these are nationwide)
     df = df[~df.state.isnull()]
@@ -46,7 +47,7 @@ def get_data(democrat, republican, grade_to_filter=None):
         for item in electoral_college_no_polls:
             logger.warning('no polls for {}'.format(item), )
 
-    review_2016_df = pd.read_csv('./world-population-review.csv', )
+    review_2016_df = read_csv('./world-population-review.csv', )
     logger.info(list(review_2016_df), )
     # patch up what DC is called here
     review_2016_df['State'] = review_2016_df['State'].replace(to_replace='Washington DC',
@@ -74,10 +75,10 @@ def get_data(democrat, republican, grade_to_filter=None):
                                                   'votesRep': 199657, 'percR': 73.92, 'electoralDem': 0,
                                                   'electoralRep': 1, 'Pop': 270109, }, )
     # fix some errors in our Electoral College data
-    review_2016_df.loc[review_2016_df.State == 'Hawaii', 'electoralDem',] = 4
-    review_2016_df.loc[review_2016_df.State == 'Nebraska', 'electoralRep',] = 2
-    review_2016_df.loc[review_2016_df.State == 'Texas', 'electoralRep',] = 38
-    review_2016_df.loc[review_2016_df.State == 'Washington', 'electoralDem',] = 12
+    review_2016_df.loc[review_2016_df.State == 'Hawaii', 'electoralDem'] = 4
+    review_2016_df.loc[review_2016_df.State == 'Nebraska', 'electoralRep'] = 2
+    review_2016_df.loc[review_2016_df.State == 'Texas', 'electoralRep'] = 38
+    review_2016_df.loc[review_2016_df.State == 'Washington', 'electoralDem'] = 12
 
     dem_2016_total = review_2016_df['electoralDem'].sum()
     rep_2016_total = review_2016_df['electoralRep'].sum()
