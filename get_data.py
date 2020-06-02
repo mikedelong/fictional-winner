@@ -1,3 +1,4 @@
+from json import load
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
@@ -6,7 +7,6 @@ from time import time
 import pandas as pd
 from pandas.plotting import register_matplotlib_converters
 
-from json import load
 
 def get_data(democrat, republican, grade_to_filter=None):
     if not grade_to_filter:
