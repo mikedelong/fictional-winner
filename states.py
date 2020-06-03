@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from matplotlib import dates as mdates
 from matplotlib.pyplot import locator_params
 from matplotlib.pyplot import savefig
+from matplotlib.pyplot import scatter
 from matplotlib.pyplot import style
 from matplotlib.pyplot import subplots
 from pandas import DataFrame
@@ -179,7 +180,7 @@ if __name__ == '__main__':
             data_df = data_df.rename(columns={'end_date': 'date', 'pct': 'percent', }, )
             plot = FacetGrid(col='state', col_order=sorted(data_df.state.unique()), col_wrap=col_wrap, data=data_df,
                              hue='answer', )
-            plot_result = plot.map(plt.scatter, 'date', 'percent', )
+            plot_result = plot.map(scatter, 'date', 'percent', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
             for axes in plot.axes.flatten():
@@ -217,7 +218,7 @@ if __name__ == '__main__':
             swing_df = swing_df.rename(columns={'pct': 'percent', }, )
             col_wrap = int(sqrt(swing_df.state.nunique()))
             plot = FacetGrid(col='state', col_order=sorted(states), col_wrap=col_wrap, data=swing_df, hue='answer', )
-            plot_result = plot.map(plt.scatter, 'date', 'percent', )
+            plot_result = plot.map(scatter, 'date', 'percent', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
             for axes in plot.axes.flatten():
@@ -253,7 +254,7 @@ if __name__ == '__main__':
             figure = plt.figure(figsize=figsize)
             for index, rank in enumerate(ranked):
                 logger.info(rank)
-                plt.scatter(x=rank_df.index, y=rank_df.abs_margin, c=rank_df.color, )
+                scatter(x=rank_df.index, y=rank_df.abs_margin, c=rank_df.color, )
             rank_png = './state-rank.png'
             logger.info('saving {} to {}'.format(plot_style, rank_png, ), )
             savefig(rank_png, )
