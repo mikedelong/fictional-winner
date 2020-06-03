@@ -7,11 +7,11 @@ from math import trunc
 from time import time
 
 import matplotlib.pyplot as plt
-from matplotlib.pyplot import locator_params
-from matplotlib.pyplot import subplots
 from matplotlib import dates as mdates
+from matplotlib.pyplot import locator_params
 from matplotlib.pyplot import savefig
 from matplotlib.pyplot import style
+from matplotlib.pyplot import subplots
 from pandas import DataFrame
 from pandas import Timestamp
 from pandas import to_datetime
