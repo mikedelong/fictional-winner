@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
@@ -77,7 +77,7 @@ if __name__ == '__main__':
     electoral_college_df, review_2016_df, data_df, state_abbreviations = get_data(democrat=democrat,
                                                                                   grade_to_filter=grade_filter,
                                                                                   republican=republican, )
-    cutoff_date = Timestamp(datetime.datetime.today())
+    cutoff_date = Timestamp(datetime.today())
     democrat_votes, republican_votes, ranked = get_results(
         arg_df=data_df.copy(deep=True), arg_cutoff_date=cutoff_date, electoral_df=electoral_college_df,
         historical_df=review_2016_df, verbose=0, )
@@ -209,7 +209,7 @@ if __name__ == '__main__':
         elif plot_style == plot_styles[6]:
             states = [state for state in data_df.state.unique() if data_df.state.value_counts()[state] > 8]
             swing_df = data_df[data_df.state.isin(states)].copy(deep=True)
-            swing_df['date'] = [datetime.datetime.date(item) for item in swing_df['date']]
+            swing_df['date'] = [datetime.date(item) for item in swing_df['date']]
             swing_df = swing_df.rename(columns={'pct': 'percent', }, )
             col_wrap = int(sqrt(swing_df.state.nunique()))
             plot = FacetGrid(col='state', col_order=sorted(states), col_wrap=col_wrap, data=swing_df, hue='answer', )
