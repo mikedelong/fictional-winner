@@ -7,6 +7,8 @@ from math import trunc
 from time import time
 
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import locator_params
+from matplotlib.pyplot import subplots
 from matplotlib import dates as mdates
 from matplotlib.pyplot import savefig
 from matplotlib.pyplot import style
@@ -133,7 +135,7 @@ if __name__ == '__main__':
     palette = {democrat: 'b', republican: 'r', }
     rotation = 60
     for plot_style in plot_styles:
-        fig, ax = plt.subplots(figsize=figsize, )
+        fig, ax = subplots(figsize=figsize, )
         if plot_style == plot_styles[0]:
             lineplot(ax=ax, data=lm_df, hue='candidate', palette=palette, sort=True, x='date', y='votes', )
             lineplot_png = './states-lineplot.png'
@@ -156,7 +158,7 @@ if __name__ == '__main__':
         elif plot_style == plot_styles[3]:
             pointplot(ax=ax, data=lm_df, hue='candidate', palette=palette, x='date', y='votes', )
             ax.set_xticklabels(ax.get_xticklabels(), rotation=rotation, )
-            plt.locator_params(axis='x', nbins=10, )
+            locator_params(axis='x', nbins=10, )
             pointplot_png = './states-historical-pointplot.png'
             logger.info('saving {} to {}'.format(plot_style, pointplot_png, ), )
             savefig(pointplot_png, )
