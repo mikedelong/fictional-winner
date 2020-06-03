@@ -6,8 +6,10 @@ from math import sqrt
 from math import trunc
 from time import time
 
-import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
+from matplotlib import dates as mdates
+from matplotlib.pyplot import savefig
+from matplotlib.pyplot import style
 from pandas import DataFrame
 from pandas import Timestamp
 from pandas import to_datetime
@@ -124,7 +126,7 @@ if __name__ == '__main__':
     lm_df['votes'] = lm_df['votes'].astype(float)
     lm_df['date'] = to_datetime(lm_df['date']).dt.date
     set_style('darkgrid')
-    plt.style.use('fivethirtyeight')
+    style.use('fivethirtyeight')
     plot_styles = ['lineplot', 'lmplot', 'matplotlib', 'pointplot', 'regplot', 'stategrid', 'swingstategrid',
                    'staterank', ]
     figsize = (15, 10,)
@@ -136,7 +138,7 @@ if __name__ == '__main__':
             lineplot(ax=ax, data=lm_df, hue='candidate', palette=palette, sort=True, x='date', y='votes', )
             lineplot_png = './states-lineplot.png'
             logger.info('saving {} to {}'.format(plot_style, lineplot_png, ), )
-            plt.savefig(lineplot_png, )
+            savefig(lineplot_png, )
         elif plot_style == plot_styles[1]:
             lm_df['date'] = mdates.date2num(lm_df.date.values, )
             ax = lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='date', y='votes', ).set(
@@ -144,20 +146,20 @@ if __name__ == '__main__':
             ax.set_xticklabels(labels=[mdates.num2date(number, tz=None, ).date() for number in lm_df.date.values], )
             lmplot_png = './states-daily-lmplot.png'
             logger.info('saving {} to {}'.format(plot_style, lmplot_png, ), )
-            plt.savefig(lmplot_png, )
+            savefig(lmplot_png, )
         elif plot_style == plot_styles[2]:
             ax.scatter(c='b', x=graph_df.date, y=graph_df[democrat], )
             ax.scatter(c='r', x=graph_df.date, y=graph_df[republican], )
             matplotlib_png = './states-historical-scatter.png'
             logger.info('saving {} to {}'.format(plot_style, matplotlib_png, ), )
-            plt.savefig(matplotlib_png, )
+            savefig(matplotlib_png, )
         elif plot_style == plot_styles[3]:
             pointplot(ax=ax, data=lm_df, hue='candidate', palette=palette, x='date', y='votes', )
             ax.set_xticklabels(ax.get_xticklabels(), rotation=rotation, )
             plt.locator_params(axis='x', nbins=10, )
             pointplot_png = './states-historical-pointplot.png'
             logger.info('saving {} to {}'.format(plot_style, pointplot_png, ), )
-            plt.savefig(pointplot_png, )
+            savefig(pointplot_png, )
         elif plot_style == plot_styles[4]:
             graph_df['date'] = mdates.date2num(graph_df.date.values, )
             regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, )
@@ -169,7 +171,7 @@ if __name__ == '__main__':
             ax.set_xticklabels(labels=[mdates.num2date(number, tz=None, ).date() for number in lm_df.date.values], )
             regplot_png = './states-daily-regplot.png'
             logger.info('saving {} to {}'.format(plot_style, regplot_png, ), )
-            plt.savefig(regplot_png, )
+            savefig(regplot_png, )
         elif plot_style == plot_styles[5]:
             col_wrap = int(sqrt(data_df.state.nunique(), ), )
             data_df = data_df.rename(columns={'end_date': 'date', 'pct': 'percent', }, )
@@ -183,7 +185,7 @@ if __name__ == '__main__':
             plt.tight_layout()
             state_grid_png = './states-daily-state-grid.png'
             logger.info('saving {} to {}'.format(plot_style, state_grid_png, ), )
-            plt.savefig(state_grid_png, )
+            savefig(state_grid_png, )
             differences = dict()
             for question in data_df['question_id'].unique():
                 difference_df = data_df[data_df['question_id'] == question]
@@ -205,7 +207,7 @@ if __name__ == '__main__':
             plt.tight_layout()
             state_plot_png = './states-daily-state-plot.png'
             logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
-            plt.savefig(state_plot_png, )
+            savefig(state_plot_png, )
         elif plot_style == plot_styles[6]:
             states = [state for state in data_df.state.unique() if data_df.state.value_counts()[state] > 8]
             swing_df = data_df[data_df.state.isin(states)].copy(deep=True)
@@ -221,7 +223,7 @@ if __name__ == '__main__':
             plt.tight_layout()
             swing_state_grid_png = './states-daily-swing-state-grid.png'
             logger.info('saving {} to {}'.format(plot_style, swing_state_grid_png, ), )
-            plt.savefig(swing_state_grid_png, )
+            savefig(swing_state_grid_png, )
             differences = dict()
             for question in swing_df['question_id'].unique():
                 difference_df = swing_df[swing_df['question_id'].isin({question})]
@@ -240,7 +242,7 @@ if __name__ == '__main__':
             plt.tight_layout()
             state_plot_png = './states-daily-swing-plot.png'
             logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
-            plt.savefig(state_plot_png, )
+            savefig(state_plot_png, )
         elif plot_style == plot_styles[7]:
             rank_df = DataFrame([(rank[1], rank[2]) for rank in ranked], columns=['State', 'margin', ], )
             rank_df['abs_margin'] = rank_df['margin'].abs()
@@ -252,19 +254,19 @@ if __name__ == '__main__':
                 plt.scatter(x=rank_df.index, y=rank_df.abs_margin, c=rank_df.color, )
             rank_png = './state-rank.png'
             logger.info('saving {} to {}'.format(plot_style, rank_png, ), )
-            plt.savefig(rank_png, )
+            savefig(rank_png, )
             del figure
             figure = plt.figure(figsize=figsize)
             ax_scatter = scatterplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
             rank_scatterplot_png = './state-rank-scatterplot.png'
             logger.info('saving {} to {}'.format(plot_style, rank_scatterplot_png, ), )
-            plt.savefig(rank_scatterplot_png, )
+            savefig(rank_scatterplot_png, )
             del figure
             figure = plt.figure(figsize=figsize)
             ax_bar = barplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
             rank_barplot_png = './state-rank-barplot.png'
             logger.info('saving {} to {}'.format(plot_style, rank_barplot_png, ), )
-            plt.savefig(rank_barplot_png, )
+            savefig(rank_barplot_png, )
         else:
             raise ValueError('plot style unknown.')
 
