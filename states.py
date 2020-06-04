@@ -6,7 +6,7 @@ from math import sqrt
 from math import trunc
 from time import time
 
-import matplotlib.pyplot as plt
+from matplotlib.pyplot import figure
 from matplotlib.dates import date2num
 from matplotlib.dates import num2date
 from matplotlib.pyplot import locator_params
@@ -254,21 +254,21 @@ if __name__ == '__main__':
             rank_df['abs_margin'] = rank_df['margin'].abs()
             rank_df['color'] = rank_df['margin'].apply(lambda x: 'r' if x <= 0 else 'b')
             rank_df['candidate'] = rank_df['margin'].apply(lambda x: republican if x <= 0 else democrat)
-            figure = plt.figure(figsize=figsize)
+            rank_figure = figure(figsize=figsize)
             for index, rank in enumerate(ranked):
                 logger.info(rank)
                 scatter(x=rank_df.index, y=rank_df.abs_margin, c=rank_df.color, )
             rank_png = './state-rank.png'
             logger.info('saving {} to {}'.format(plot_style, rank_png, ), )
             savefig(rank_png, )
-            del figure
-            figure = plt.figure(figsize=figsize)
+            del rank_figure
+            scatter_figure = figure(figsize=figsize)
             ax_scatter = scatterplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
             rank_scatterplot_png = './state-rank-scatterplot.png'
             logger.info('saving {} to {}'.format(plot_style, rank_scatterplot_png, ), )
             savefig(rank_scatterplot_png, )
-            del figure
-            figure = plt.figure(figsize=figsize)
+            del scatter_figure
+            bar_figure = figure(figsize=figsize)
             ax_bar = barplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
             rank_barplot_png = './state-rank-barplot.png'
             logger.info('saving {} to {}'.format(plot_style, rank_barplot_png, ), )
