@@ -273,6 +273,7 @@ if __name__ == '__main__':
             rank_barplot_png = './state-rank-barplot.png'
             logger.info('saving {} to {}'.format(plot_style, rank_barplot_png, ), )
             savefig(rank_barplot_png, )
+            del bar_figure
         else:
             raise ValueError('plot style unknown.')
 
