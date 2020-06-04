@@ -7,6 +7,7 @@ from math import trunc
 from time import time
 
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import plot as matplotlib_plot
 from matplotlib.dates import date2num
 from matplotlib.dates import num2date
 from matplotlib.pyplot import locator_params
@@ -204,7 +205,7 @@ if __name__ == '__main__':
             grid_df = grid_df[grid_df['state'].isin(states)]
             plot = FacetGrid(col='state', col_order=sorted(grid_df.state.unique()), col_wrap=col_wrap,
                              data=grid_df, )
-            plot_result = plot.map(plt.plot, 'date', 'difference', )
+            plot_result = plot.map(matplotlib_plot, 'date', 'difference', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
             for axes in plot.axes.flatten():
@@ -239,7 +240,7 @@ if __name__ == '__main__':
             grid_df = swing_df[['date', 'question_id', 'state', ]].drop_duplicates()
             grid_df['difference'] = grid_df['question_id'].map(differences)
             plot = FacetGrid(col='state', col_order=sorted(grid_df.state.unique()), col_wrap=col_wrap, data=grid_df, )
-            plot_result = plot.map(plt.plot, 'date', 'difference', )
+            plot_result = plot.map(matplotlib_plot, 'date', 'difference', )
             for axes in plot.axes.flat:
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
             for axes in plot.axes.flatten():
