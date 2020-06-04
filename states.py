@@ -7,6 +7,7 @@ from math import trunc
 from time import time
 
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import tight_layout
 from matplotlib.dates import date2num
 from matplotlib.dates import num2date
 from matplotlib.pyplot import locator_params
@@ -186,7 +187,7 @@ if __name__ == '__main__':
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ), )
-            plt.tight_layout()
+            tight_layout()
             state_grid_png = './states-daily-state-grid.png'
             logger.info('saving {} to {}'.format(plot_style, state_grid_png, ), )
             savefig(state_grid_png, )
@@ -208,7 +209,7 @@ if __name__ == '__main__':
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ))
-            plt.tight_layout()
+            tight_layout()
             state_plot_png = './states-daily-state-plot.png'
             logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
             savefig(state_plot_png, )
@@ -224,7 +225,7 @@ if __name__ == '__main__':
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ))
-            plt.tight_layout()
+            tight_layout()
             swing_state_grid_png = './states-daily-swing-state-grid.png'
             logger.info('saving {} to {}'.format(plot_style, swing_state_grid_png, ), )
             savefig(swing_state_grid_png, )
@@ -243,7 +244,7 @@ if __name__ == '__main__':
                 _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ), )
-            plt.tight_layout()
+            tight_layout()
             state_plot_png = './states-daily-swing-plot.png'
             logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
             savefig(state_plot_png, )
