@@ -7,7 +7,6 @@ from math import trunc
 from time import time
 
 import matplotlib.pyplot as plt
-from matplotlib.pyplot import tight_layout
 from matplotlib.dates import date2num
 from matplotlib.dates import num2date
 from matplotlib.pyplot import locator_params
@@ -15,6 +14,7 @@ from matplotlib.pyplot import savefig
 from matplotlib.pyplot import scatter
 from matplotlib.pyplot import style
 from matplotlib.pyplot import subplots
+from matplotlib.pyplot import tight_layout
 from pandas import DataFrame
 from pandas import Timestamp
 from pandas import to_datetime
