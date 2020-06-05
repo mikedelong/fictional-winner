@@ -59,6 +59,9 @@ if __name__ == '__main__':
         settings = load(fp=settings_fp, )
 
     democrat = settings['democrat'] if 'democrat' in settings.keys() else None
+    if democrat is None:
+        logger.warning('parameter democrat is missing from settings. Quitting.')
+        quit(code=1)
     republican = settings['republican'] if 'republican' in settings.keys() else None
 
     grade_filter = {}
