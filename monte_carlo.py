@@ -15,6 +15,8 @@ from pandas import Timestamp
 
 from get_data import get_data
 
+from json import load
+
 
 def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_democrat, arg_republican):
     polling = {}
@@ -54,8 +56,12 @@ if __name__ == '__main__':
     basicConfig(format='%(asctime)s : %(name)s : %(levelname)s : %(message)s', level=INFO, )
     logger.info('started.', )
 
-    democrat = 'Biden'
-    republican = 'Trump'
+    with open('./settings.json', 'r') as settings_fp:
+        settings = load(fp=settings_fp, )
+
+    democrat = settings['democrat'] if 'democrat' in settings.keys() else None
+    republican = settings['republican'] if 'republican' in settings.keys() else None
+
     grade_filter = {}
     electoral_college_df, review_2016_df, filtered_df, state_abbreviations = get_data(democrat=democrat,
                                                                                       grade_to_filter=grade_filter,
