@@ -55,7 +55,7 @@ if __name__ == '__main__':
     basicConfig(format='%(asctime)s : %(name)s : %(levelname)s : %(message)s', level=INFO, )
     logger.info('started.', )
 
-    with open('./settings.json', 'r') as settings_fp:
+    with open(file='./settings.json', mode='r',) as settings_fp:
         settings = load(fp=settings_fp, )
 
     democrat = settings['democrat'] if 'democrat' in settings.keys() else None
