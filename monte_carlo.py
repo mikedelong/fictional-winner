@@ -1,4 +1,5 @@
 from datetime import datetime
+from json import load
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
@@ -14,8 +15,6 @@ from numpy.random import binomial
 from pandas import Timestamp
 
 from get_data import get_data
-
-from json import load
 
 
 def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_democrat, arg_republican):
