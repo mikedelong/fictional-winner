@@ -55,15 +55,18 @@ if __name__ == '__main__':
     basicConfig(format='%(asctime)s : %(name)s : %(levelname)s : %(message)s', level=INFO, )
     logger.info('started.', )
 
-    with open(file='./settings.json', mode='r',) as settings_fp:
+    with open(file='./settings.json', mode='r', ) as settings_fp:
         settings = load(fp=settings_fp, )
         logger.info('settings: {}'.format(settings))
 
     democrat = settings['democrat'] if 'democrat' in settings.keys() else None
     if democrat is None:
         logger.warning('parameter democrat is missing from settings. Quitting.')
-        quit(code=1)
+        quit(code=1, )
     republican = settings['republican'] if 'republican' in settings.keys() else None
+    if republican is None:
+        logger.warning('parameter republican is missing from settings. Quitting.')
+        quit(code=2, )
 
     grade_filter = {}
     electoral_college_df, review_2016_df, filtered_df, state_abbreviations = get_data(democrat=democrat,
