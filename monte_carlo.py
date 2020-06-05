@@ -57,6 +57,7 @@ if __name__ == '__main__':
 
     with open(file='./settings.json', mode='r',) as settings_fp:
         settings = load(fp=settings_fp, )
+        logger.info('settings: {}'.format(settings))
 
     democrat = settings['democrat'] if 'democrat' in settings.keys() else None
     if democrat is None:
