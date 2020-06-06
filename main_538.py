@@ -13,18 +13,18 @@ import seaborn as sns
 if __name__ == '__main__':
     time_start = time()
     logger = getLogger(__name__)
-    basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=INFO)
-    logger.info('started.')
+    basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=INFO, )
+    logger.info('started.', )
 
     url = 'https://projects.fivethirtyeight.com/polls-page/president_polls.csv'
 
-    df = pd.read_csv(url, parse_dates=['end_date'])
+    df = pd.read_csv(url, parse_dates=['end_date'], )
 
-    logger.info(df.shape)
-    logger.info('\n{}'.format(df.head(5)))
-    logger.info(list(df))
+    logger.info(df.shape, )
+    logger.info('\n{}'.format(df.head(5), ), )
+    logger.info(list(df), )
 
-    national_df = df[df.state.isnull()].copy(deep=True)
+    national_df = df[df.state.isnull()].copy(deep=True, )
     logger.info(national_df.shape)
     bt_df = national_df[national_df.answer.isin(['Biden', 'Trump'])].drop_duplicates()
 
