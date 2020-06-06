@@ -4,13 +4,13 @@ from logging import basicConfig
 from logging import getLogger
 from time import time
 
-from matplotlib.pyplot import savefig
-from matplotlib.pyplot import subplots
 import numpy as np
 import pandas as pd
 import seaborn as sns
 from matplotlib.dates import date2num
 from matplotlib.dates import num2date
+from matplotlib.pyplot import savefig
+from matplotlib.pyplot import subplots
 
 if __name__ == '__main__':
     time_start = time()
