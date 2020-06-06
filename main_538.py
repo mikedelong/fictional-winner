@@ -4,12 +4,12 @@ from logging import basicConfig
 from logging import getLogger
 from time import time
 
-from matplotlib.dates import num2date
-from matplotlib.dates import date2num
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from matplotlib.dates import date2num
+from matplotlib.dates import num2date
 
 if __name__ == '__main__':
     time_start = time()
@@ -52,11 +52,11 @@ if __name__ == '__main__':
     fig0, ax0 = plt.subplots()
     biden_df.set_index('date').plot(ax=ax0, c='blue', label='Biden', style='.', )
     # https://stackoverflow.com/questions/17638137/curve-fitting-to-a-time-series-in-the-format-datetime
-    biden_date_numbers = date2num(biden_df.date.values,)
+    biden_date_numbers = date2num(biden_df.date.values, )
     for degree in range(1, 3):
         biden_fit = np.polyfit(x=biden_date_numbers, y=biden_df.Biden, deg=degree)
         biden_poly = np.poly1d(biden_fit)
-        ax0.plot(num2date(biden_date_numbers,), biden_poly(biden_date_numbers), 'b-')
+        ax0.plot(num2date(biden_date_numbers, ), biden_poly(biden_date_numbers), 'b-')
 
     trump_df.set_index('date').plot(ax=ax0, c='red', label='Trump', style='.', )
     trump_date_numbers = date2num(trump_df.date.values, )
