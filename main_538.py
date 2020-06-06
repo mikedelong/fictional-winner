@@ -4,7 +4,8 @@ from logging import basicConfig
 from logging import getLogger
 from time import time
 
-import matplotlib.pyplot as plt
+from matplotlib.pyplot import savefig
+from matplotlib.pyplot import subplots
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -49,7 +50,7 @@ if __name__ == '__main__':
     for key, value in {'Biden': biden_df, 'Trump': trump_df}.items():
         logger.info('we have {} rows of {} data'.format(len(value), key))
 
-    fig0, ax0 = plt.subplots()
+    fig0, ax0 = subplots()
     biden_df.set_index('date').plot(ax=ax0, c='blue', label='Biden', style='.', )
     # https://stackoverflow.com/questions/17638137/curve-fitting-to-a-time-series-in-the-format-datetime
     biden_date_numbers = date2num(biden_df.date.values, )
@@ -66,8 +67,8 @@ if __name__ == '__main__':
         ax0.plot(num2date(trump_date_numbers), trump_poly(trump_date_numbers), 'r-', )
 
     scatter_png = './biden_trump_scatter.png'
-    plt.savefig(scatter_png)
-    fig1, ax1 = plt.subplots()
+    savefig(scatter_png)
+    fig1, ax1 = subplots()
 
     # todo use mdates to turn this back into a date vs data graph
     biden_df['days'] = biden_df['date'].apply(lambda x: (x.to_pydatetime() - biden_df['date'].min()).days)
@@ -75,6 +76,6 @@ if __name__ == '__main__':
     sns.regplot(ax=ax1, data=biden_df, x='days', y='Biden', )
     sns.regplot(ax=ax1, data=trump_df, x='days', y='Trump', )
     regplot_png = './biden_trump_regplot.png'
-    plt.savefig(regplot_png)
+    savefig(regplot_png)
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
