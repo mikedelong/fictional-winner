@@ -78,6 +78,7 @@ if __name__ == '__main__':
     logger.info('started.', )
     register_matplotlib_converters()
 
+    # todo get these from settings
     democrat = 'Biden'
     republican = 'Trump'
     grade_filter = {'A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', }
