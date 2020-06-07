@@ -4,7 +4,8 @@ from logging import basicConfig
 from logging import getLogger
 from time import time
 
-import numpy as np
+from numpy import polyfit
+from numpy import poly1d
 import pandas as pd
 import seaborn as sns
 from matplotlib.dates import date2num
@@ -55,15 +56,15 @@ if __name__ == '__main__':
     # https://stackoverflow.com/questions/17638137/curve-fitting-to-a-time-series-in-the-format-datetime
     biden_date_numbers = date2num(biden_df.date.values, )
     for degree in range(1, 3):
-        biden_fit = np.polyfit(x=biden_date_numbers, y=biden_df.Biden, deg=degree)
-        biden_poly = np.poly1d(biden_fit)
+        biden_fit = polyfit(x=biden_date_numbers, y=biden_df.Biden, deg=degree)
+        biden_poly = poly1d(biden_fit)
         ax0.plot(num2date(biden_date_numbers, ), biden_poly(biden_date_numbers), 'b-')
 
     trump_df.set_index('date').plot(ax=ax0, c='red', label='Trump', style='.', )
     trump_date_numbers = date2num(trump_df.date.values, )
     for degree in range(1, 3):
-        trump_fit = np.polyfit(x=trump_date_numbers, y=trump_df.Trump, deg=degree)
-        trump_poly = np.poly1d(trump_fit)
+        trump_fit = polyfit(x=trump_date_numbers, y=trump_df.Trump, deg=degree)
+        trump_poly = poly1d(trump_fit)
         ax0.plot(num2date(trump_date_numbers), trump_poly(trump_date_numbers), 'r-', )
 
     scatter_png = './biden_trump_scatter.png'
