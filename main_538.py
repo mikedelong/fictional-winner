@@ -4,7 +4,8 @@ from logging import basicConfig
 from logging import getLogger
 from time import time
 
-import pandas as pd
+from pandas import read_csv
+from pandas import Timestamp
 import seaborn as sns
 from matplotlib.dates import date2num
 from matplotlib.dates import num2date
@@ -21,7 +22,7 @@ if __name__ == '__main__':
 
     url = 'https://projects.fivethirtyeight.com/polls-page/president_polls.csv'
 
-    df = pd.read_csv(url, parse_dates=['end_date'], )
+    df = read_csv(url, parse_dates=['end_date'], )
 
     logger.info(df.shape, )
     logger.info('\n{}'.format(df.head(5), ), )
@@ -32,7 +33,7 @@ if __name__ == '__main__':
     bt_df = national_df[national_df.answer.isin(['Biden', 'Trump'])].drop_duplicates()
 
     # drop data older than some arbitrary threshold
-    bt_df = bt_df[bt_df['end_date'] > pd.Timestamp(datetime.date.today() - datetime.timedelta(weeks=20))]
+    bt_df = bt_df[bt_df['end_date'] > Timestamp(datetime.date.today() - datetime.timedelta(weeks=20))]
     bt_df['poll_id'] = bt_df['poll_id'].astype(int)
     bt_df['question_id'] = bt_df['question_id'].astype(int)
 
