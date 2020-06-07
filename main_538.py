@@ -5,7 +5,7 @@ from logging import basicConfig
 from logging import getLogger
 from time import time
 
-import seaborn as sns
+from seaborn import regplot
 from matplotlib.dates import date2num
 from matplotlib.dates import num2date
 from matplotlib.pyplot import savefig
@@ -76,8 +76,8 @@ if __name__ == '__main__':
     # todo use mdates to turn this back into a date vs data graph
     biden_df['days'] = biden_df['date'].apply(lambda x: (x.to_pydatetime() - biden_df['date'].min()).days)
     trump_df['days'] = trump_df['date'].apply(lambda x: (x.to_pydatetime() - trump_df['date'].min()).days)
-    sns.regplot(ax=ax1, data=biden_df, x='days', y='Biden', )
-    sns.regplot(ax=ax1, data=trump_df, x='days', y='Trump', )
+    regplot(ax=ax1, data=biden_df, x='days', y='Biden', )
+    regplot(ax=ax1, data=trump_df, x='days', y='Trump', )
     regplot_png = './biden_trump_regplot.png'
     savefig(regplot_png)
 
