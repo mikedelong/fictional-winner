@@ -1,8 +1,9 @@
-import datetime
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
 from time import time
+from datetime import date
+from datetime import timedelta
 
 import seaborn as sns
 from matplotlib.dates import date2num
@@ -33,7 +34,7 @@ if __name__ == '__main__':
     bt_df = national_df[national_df.answer.isin(['Biden', 'Trump'])].drop_duplicates()
 
     # drop data older than some arbitrary threshold
-    bt_df = bt_df[bt_df['end_date'] > Timestamp(datetime.date.today() - datetime.timedelta(weeks=20))]
+    bt_df = bt_df[bt_df['end_date'] > Timestamp(date.today() - timedelta(weeks=20))]
     bt_df['poll_id'] = bt_df['poll_id'].astype(int)
     bt_df['question_id'] = bt_df['question_id'].astype(int)
 
