@@ -1,9 +1,9 @@
+from datetime import date
+from datetime import timedelta
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
 from time import time
-from datetime import date
-from datetime import timedelta
 
 import seaborn as sns
 from matplotlib.dates import date2num
