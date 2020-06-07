@@ -4,8 +4,6 @@ from logging import basicConfig
 from logging import getLogger
 from time import time
 
-from pandas import read_csv
-from pandas import Timestamp
 import seaborn as sns
 from matplotlib.dates import date2num
 from matplotlib.dates import num2date
@@ -13,6 +11,8 @@ from matplotlib.pyplot import savefig
 from matplotlib.pyplot import subplots
 from numpy import poly1d
 from numpy import polyfit
+from pandas import Timestamp
+from pandas import read_csv
 
 if __name__ == '__main__':
     time_start = time()
