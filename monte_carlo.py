@@ -80,6 +80,7 @@ if __name__ == '__main__':
     cutoff_date = Timestamp(datetime.today())
     democrat_realizations = list()
     done = False
+    # todo move to settings
     early_exit_limit = 200
     median_results = list()
     realizations = list()
