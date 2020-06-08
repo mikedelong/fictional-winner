@@ -84,6 +84,7 @@ if __name__ == '__main__':
     early_exit_limit = 200
     median_results = list()
     realizations = list()
+    # todo move to settings
     realization_count = 10000
     for index, realization in enumerate(range(realization_count)):
         if not done:
