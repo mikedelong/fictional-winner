@@ -28,6 +28,7 @@ from seaborn import pointplot
 from seaborn import regplot
 from seaborn import scatterplot
 from seaborn import set_style
+from json import load
 
 from get_data import get_data
 
@@ -79,8 +80,18 @@ if __name__ == '__main__':
     register_matplotlib_converters()
 
     # todo get these from settings
-    democrat = 'Biden'
-    republican = 'Trump'
+    with open(file='./settings.json', mode='r', ) as settings_fp:
+        settings = load(fp=settings_fp, )
+        logger.info('settings: {}'.format(settings))
+
+    democrat = settings['democrat'] if 'democrat' in settings.keys() else None
+    if democrat is None:
+        logger.warning('parameter democrat is missing from settings. Quitting.')
+        quit(code=1, )
+    republican = settings['republican'] if 'republican' in settings.keys() else None
+    if republican is None:
+        logger.warning('parameter republican is missing from settings. Quitting.')
+        quit(code=2, )
     grade_filter = {'A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', }
 
     electoral_college_df, review_2016_df, data_df, state_abbreviations = get_data(democrat=democrat,
