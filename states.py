@@ -1,4 +1,5 @@
 from datetime import datetime
+from json import load
 from logging import INFO
 from logging import basicConfig
 from logging import getLogger
@@ -28,7 +29,6 @@ from seaborn import pointplot
 from seaborn import regplot
 from seaborn import scatterplot
 from seaborn import set_style
-from json import load
 
 from get_data import get_data
 
