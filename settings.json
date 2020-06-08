@@ -1,4 +1,14 @@
 {
   "democrat": "Biden",
+  "grade_filter": [
+    "A+",
+    "A",
+    "A-",
+    "A/B",
+    "B",
+    "B-",
+    "B/C",
+    "C"
+  ],
   "republican": "Trump"
 }
