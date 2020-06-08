@@ -93,6 +93,10 @@ if __name__ == '__main__':
         logger.warning('parameter republican is missing from settings. Quitting.')
         quit(code=2, )
     grade_filter = {'A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', }
+    grade_filter = settings['grade_filter'] if 'grade_filter' in settings.keys() else list()
+    grade_filter = set(grade_filter)
+    if len(grade_filter) == 0:
+        logger.warning('grade filter is empty; using all polls')
 
     electoral_college_df, review_2016_df, data_df, state_abbreviations = get_data(democrat=democrat,
                                                                                   grade_to_filter=grade_filter,
