@@ -91,7 +91,6 @@ if __name__ == '__main__':
     if republican is None:
         logger.warning('parameter republican is missing from settings. Quitting.')
         quit(code=2, )
-    grade_filter = {'A+', 'A', 'A-', 'A/B', 'B', 'B-', 'B/C', 'C', }
     grade_filter = settings['grade_filter'] if 'grade_filter' in settings.keys() else list()
     grade_filter = set(grade_filter)
     if len(grade_filter) == 0:
