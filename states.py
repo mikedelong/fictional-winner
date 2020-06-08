@@ -79,7 +79,6 @@ if __name__ == '__main__':
     logger.info('started.', )
     register_matplotlib_converters()
 
-    # todo get these from settings
     with open(file='./settings.json', mode='r', ) as settings_fp:
         settings = load(fp=settings_fp, )
         logger.info('settings: {}'.format(settings))
