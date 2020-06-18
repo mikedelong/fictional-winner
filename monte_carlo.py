@@ -63,10 +63,6 @@ if __name__ == '__main__':
     if democrat is None:
         logger.warning('parameter democrat is missing from settings. Quitting.')
         quit(code=1, )
-    republican = settings['republican'] if 'republican' in settings.keys() else None
-    if republican is None:
-        logger.warning('parameter republican is missing from settings. Quitting.')
-        quit(code=2, )
     grade_filter = settings['grade_filter'] if 'grade_filter' in settings.keys() else list()
     grade_filter = set(grade_filter)
     if len(grade_filter) == 0:
@@ -76,6 +72,10 @@ if __name__ == '__main__':
         logger.info('realization count: {}'.format(realization_count))
     else:
         logger.warning('using default realization count: {}'.format(realization_count))
+    republican = settings['republican'] if 'republican' in settings.keys() else None
+    if republican is None:
+        logger.warning('parameter republican is missing from settings. Quitting.')
+        quit(code=2, )
 
     electoral_college_df, review_2016_df, filtered_df, state_abbreviations = get_data(democrat=democrat,
                                                                                       grade_to_filter=grade_filter,
