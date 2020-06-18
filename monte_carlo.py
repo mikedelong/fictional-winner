@@ -71,6 +71,11 @@ if __name__ == '__main__':
     grade_filter = set(grade_filter)
     if len(grade_filter) == 0:
         logger.warning('grade filter is empty; using all polls')
+    realization_count = settings['realization_count'] if 'realization_count' in settings.keys() else 1000
+    if 'realization_count' in settings.keys():
+        logger.info('realization count: {}'.format(realization_count))
+    else:
+        logger.warning('using default realization count: {}'.format(realization_count))
 
     electoral_college_df, review_2016_df, filtered_df, state_abbreviations = get_data(democrat=democrat,
                                                                                       grade_to_filter=grade_filter,
