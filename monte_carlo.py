@@ -49,6 +49,7 @@ def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_de
     return result_democrat_votes, result_republican_votes
 
 
+# todo add historical calculation of the Monte Carlo median
 if __name__ == '__main__':
     time_start = time()
     logger = getLogger(__name__)
