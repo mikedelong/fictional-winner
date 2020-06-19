@@ -89,11 +89,12 @@ if __name__ == '__main__':
     early_exit_limit = 200
     median_results = list()
     realizations = list()
+    realization_margin = 10.1
     for index, realization in enumerate(range(realization_count)):
         if not done:
             realization_democrat, realization_republican = \
                 get_realization(arg_cutoff_date=cutoff_date, arg_democrat=democrat,
-                                arg_df=filtered_df.copy(deep=True, ), arg_margin=10.1,
+                                arg_df=filtered_df.copy(deep=True, ), arg_margin=realization_margin,
                                 arg_republican=republican, electoral_df=electoral_college_df,
                                 historical_df=review_2016_df, )
             count_democrat += 1 if realization_democrat > realization_republican else 0
