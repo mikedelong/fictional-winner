@@ -66,9 +66,9 @@ if __name__ == '__main__':
         quit(code=1, )
     early_exit_limit = settings['early_exit_limit'] if 'early_exit_limit' in settings.leys() else 100
     if 'early_exit_limit' not in settings.keys():
-        logger.warning('early exit limit not in settings; using default value {}'.format(early_exit_limit))
+        logger.warning('early exit limit not in settings; using default value {}'.format(early_exit_limit, ))
     else:
-        logger.info('early exit limit: {}'.format(early_exit_limit))
+        logger.info('early exit limit: {}'.format(early_exit_limit, ))
     grade_filter = settings['grade_filter'] if 'grade_filter' in settings.keys() else list()
     grade_filter = set(grade_filter)
     if len(grade_filter) == 0:
@@ -91,7 +91,6 @@ if __name__ == '__main__':
     cutoff_date = Timestamp(datetime.today())
     democrat_realizations = list()
     done = False
-    # todo move to settings
     median_results = list()
     realizations = list()
     # todo move to settings
@@ -130,7 +129,7 @@ if __name__ == '__main__':
     format_string = '{} mean outcome: {:5.2f} median outcome: {:.0f}-{:.0f}'
     realization_mean = array(democrat_realizations).mean()
     realization_median = median(array(democrat_realizations))
-    logger.info(format_string.format(democrat, realization_mean, realization_median, 538-realization_median), )
+    logger.info(format_string.format(democrat, realization_mean, realization_median, 538 - realization_median), )
     style.use('fivethirtyeight')
     hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
     hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
