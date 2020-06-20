@@ -64,6 +64,7 @@ if __name__ == '__main__':
     if democrat is None:
         logger.warning('parameter democrat is missing from settings. Quitting.')
         quit(code=1, )
+    early_exit_limit = 200
     grade_filter = settings['grade_filter'] if 'grade_filter' in settings.keys() else list()
     grade_filter = set(grade_filter)
     if len(grade_filter) == 0:
@@ -87,7 +88,6 @@ if __name__ == '__main__':
     democrat_realizations = list()
     done = False
     # todo move to settings
-    early_exit_limit = 200
     median_results = list()
     realizations = list()
     # todo move to settings
