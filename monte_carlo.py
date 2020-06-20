@@ -78,6 +78,8 @@ if __name__ == '__main__':
         logger.info('realization count: {}'.format(realization_count))
     else:
         logger.warning('using default realization count: {}'.format(realization_count))
+    # todo move to settings
+    realization_margin = 10.1
     republican = settings['republican'] if 'republican' in settings.keys() else None
     if republican is None:
         logger.warning('parameter republican is missing from settings. Quitting.')
@@ -93,8 +95,6 @@ if __name__ == '__main__':
     done = False
     median_results = list()
     realizations = list()
-    # todo move to settings
-    realization_margin = 10.1
     for index, realization in enumerate(range(realization_count)):
         if not done:
             realization_democrat, realization_republican = \
