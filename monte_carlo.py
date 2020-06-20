@@ -65,6 +65,11 @@ if __name__ == '__main__':
         logger.warning('parameter democrat is missing from settings. Quitting.')
         quit(code=1, )
     early_exit_limit = 200
+    early_exit_limit = settings['early_exit_limit'] if 'early_exit_limit' in settings.leys() else 100
+    if 'early_exit_limit' not in settings.keys():
+        logger.warning('early exit limit not in settings; using default value {}'.format(early_exit_limit))
+    else:
+        logger.info('early exit limit: {}'.format(early_exit_limit))
     grade_filter = settings['grade_filter'] if 'grade_filter' in settings.keys() else list()
     grade_filter = set(grade_filter)
     if len(grade_filter) == 0:
