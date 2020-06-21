@@ -80,6 +80,11 @@ if __name__ == '__main__':
         logger.warning('using default realization count: {}'.format(realization_count))
     # todo move to settings
     realization_margin = 10.1
+    realization_margin = settings['realization_margin'] if 'realization_margin' in settings.keys() else 10.0
+    if 'realization_margin' not in settings.keys():
+        logger.warning('realization margin not in settings; using default value {}'.format(realization_margin))
+    else:
+        logger.info('realization margin: {}'.format(realization_margin))
     republican = settings['republican'] if 'republican' in settings.keys() else None
     if republican is None:
         logger.warning('parameter republican is missing from settings. Quitting.')
