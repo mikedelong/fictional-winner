@@ -35,7 +35,7 @@ def get_data(democrat, republican, grade_to_filter=None):
     df = df[~df.state.isnull()]
     # remove unrated pollsters
     df = df[~df.fte_grade.isnull()]
-    logger.info(sorted(df.state.unique(), ), )
+    logger.info('unique states: {}'.format(sorted(df.state.unique(), ), ), )
     logger.info('polling data has {} unique states'.format(df.state.nunique(), ), )
     polls_no_electoral_college = [state for state in sorted(df.state.unique(), ) if
                                   state not in electoral_college.keys()]
