@@ -78,8 +78,6 @@ if __name__ == '__main__':
         logger.info('realization count: {}'.format(realization_count))
     else:
         logger.warning('using default realization count: {}'.format(realization_count))
-    # todo move to settings
-    realization_margin = 10.1
     realization_margin = settings['realization_margin'] if 'realization_margin' in settings.keys() else 10.0
     if 'realization_margin' not in settings.keys():
         logger.warning('realization margin not in settings; using default value {}'.format(realization_margin))
