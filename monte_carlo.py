@@ -127,10 +127,11 @@ if __name__ == '__main__':
         bin_count = max(democrat_realizations) - min(democrat_realizations) + 1
         democrat_win_realizations = [item for item in democrat_realizations if item >= 270]
         democrat_lose_realizations = [item for item in democrat_realizations if item < 270]
-        logger.info('{} simulated wins: {} out of {} realizations'.format(democrat, len(democrat_win_realizations),
-                                                                          len(democrat_realizations),
-                                                                          len(democrat_win_realizations) / len(
-                                                                              democrat_realizations), ))
+        logger.info('{} {} simulated wins: {} out of {} realizations'.format(cutoff_date, democrat,
+                                                                             len(democrat_win_realizations),
+                                                                             len(democrat_realizations),
+                                                                             len(democrat_win_realizations) / len(
+                                                                                 democrat_realizations), ), )
         format_string = '{} mean outcome: {:5.2f} median outcome: {:.0f}-{:.0f}'
         realization_mean = array(democrat_realizations).mean()
         realization_median = median(array(democrat_realizations))
