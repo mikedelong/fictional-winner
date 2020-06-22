@@ -109,7 +109,7 @@ if __name__ == '__main__':
                                     electoral_df=electoral_college_df, historical_df=review_2016_df, )
                 count_democrat += 1 if realization_democrat > realization_republican else 0
                 count_republican += 1 if realization_democrat < realization_republican else 0
-                format_string = '{} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
+                format_string = '{} {} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
                 democrat_realizations = [item[0] for item in realizations]
                 if len(democrat_realizations):
                     median_result = int(median(array(democrat_realizations)), )
@@ -117,9 +117,9 @@ if __name__ == '__main__':
                         median_results = list()
                     median_results.append(median_result)
                     logger.info(
-                        format_string.format(index, democrat, realization_democrat, republican, realization_republican,
-                                             democrat, count_democrat, republican, count_republican,
-                                             count_democrat / (count_democrat + count_republican),
+                        format_string.format(cutoff_date.date(), index, democrat, realization_democrat, republican,
+                                             realization_republican, democrat, count_democrat, republican,
+                                             count_republican, count_democrat / (count_democrat + count_republican),
                                              array(democrat_realizations).mean(), median_result,
                                              len(median_results), ), )
                 realizations.append((realization_democrat, realization_republican,))
