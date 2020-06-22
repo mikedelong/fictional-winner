@@ -99,6 +99,7 @@ if __name__ == '__main__':
     done = False
     median_results = list()
     realizations = list()
+    instance_format = '{} {} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
     for cutoff_date in cutoff_dates:
         for index, realization in enumerate(range(realization_count)):
             if not done:
@@ -109,7 +110,6 @@ if __name__ == '__main__':
                                     electoral_df=electoral_college_df, historical_df=review_2016_df, )
                 count_democrat += 1 if realization_democrat > realization_republican else 0
                 count_republican += 1 if realization_democrat < realization_republican else 0
-                format_string = '{} {} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
                 democrat_realizations = [item[0] for item in realizations]
                 if len(democrat_realizations):
                     median_result = int(median(array(democrat_realizations)), )
@@ -117,11 +117,11 @@ if __name__ == '__main__':
                         median_results = list()
                     median_results.append(median_result)
                     logger.info(
-                        format_string.format(cutoff_date.date(), index, democrat, realization_democrat, republican,
-                                             realization_republican, democrat, count_democrat, republican,
-                                             count_republican, count_democrat / (count_democrat + count_republican),
-                                             array(democrat_realizations).mean(), median_result,
-                                             len(median_results), ), )
+                        instance_format.format(cutoff_date.date(), index, democrat, realization_democrat, republican,
+                                               realization_republican, democrat, count_democrat, republican,
+                                               count_republican, count_democrat / (count_democrat + count_republican),
+                                               array(democrat_realizations).mean(), median_result,
+                                               len(median_results), ), )
                 realizations.append((realization_democrat, realization_republican,))
                 done = len(median_results) > early_exit_limit
         bin_count = max(democrat_realizations) - min(democrat_realizations) + 1
@@ -132,10 +132,10 @@ if __name__ == '__main__':
                                                                              len(democrat_realizations),
                                                                              len(democrat_win_realizations) / len(
                                                                                  democrat_realizations), ), )
-        format_string = '{} mean outcome: {:5.2f} median outcome: {:.0f}-{:.0f}'
+        instance_format = '{} mean outcome: {:5.2f} median outcome: {:.0f}-{:.0f}'
         realization_mean = array(democrat_realizations).mean()
         realization_median = median(array(democrat_realizations))
-        logger.info(format_string.format(democrat, realization_mean, realization_median, 538 - realization_median), )
+        logger.info(instance_format.format(democrat, realization_mean, realization_median, 538 - realization_median), )
         style.use('fivethirtyeight')
         hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
         hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
