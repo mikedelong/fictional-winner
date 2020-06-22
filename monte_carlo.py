@@ -92,16 +92,16 @@ if __name__ == '__main__':
     electoral_college_df, review_2016_df, filtered_df, state_abbreviations = get_data(democrat=democrat,
                                                                                       grade_to_filter=grade_filter,
                                                                                       republican=republican, )
-    count_democrat = 0
-    count_republican = 0
     cutoff_dates = [Timestamp(datetime.today())]
-    democrat_realizations = list()
-    done = False
     instance_format = '{} {} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
-    median_results = list()
-    realizations = list()
     wins_format = '{} {} simulated wins: {} out of {} realizations'
     for cutoff_date in cutoff_dates:
+        count_democrat = 0
+        count_republican = 0
+        democrat_realizations = list()
+        done = False
+        median_results = list()
+        realizations = list()
         for index, realization in enumerate(range(realization_count)):
             if not done:
                 realization_democrat, realization_republican = \
