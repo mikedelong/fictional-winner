@@ -94,6 +94,7 @@ if __name__ == '__main__':
                                                                                       republican=republican, )
     cutoff_dates = [Timestamp(datetime.today())]
     instance_format = '{} {} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
+    outcome_format = '{} mean outcome: {:5.2f} median outcome: {:.0f}-{:.0f}'
     wins_format = '{} {} simulated wins: {} out of {} realizations'
     for cutoff_date in cutoff_dates:
         count_democrat = 0
@@ -131,10 +132,9 @@ if __name__ == '__main__':
         logger.info(
             wins_format.format(cutoff_date, democrat, len(democrat_win_realizations), len(democrat_realizations),
                                len(democrat_win_realizations) / len(democrat_realizations), ), )
-        instance_format = '{} mean outcome: {:5.2f} median outcome: {:.0f}-{:.0f}'
         realization_mean = array(democrat_realizations).mean()
         realization_median = median(array(democrat_realizations))
-        logger.info(instance_format.format(democrat, realization_mean, realization_median, 538 - realization_median), )
+        logger.info(outcome_format.format(democrat, realization_mean, realization_median, 538 - realization_median), )
         style.use('fivethirtyeight')
         hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
         hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
