@@ -139,6 +139,6 @@ if __name__ == '__main__':
         style.use('fivethirtyeight')
         hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
         hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
-        savefig('./{}-histogram.png'.format(democrat.lower(), ), )
+        savefig('./{}-{}-histogram.png'.format(democrat.lower(), cutoff_date.date(), ), )
 
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
