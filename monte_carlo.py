@@ -17,7 +17,8 @@ from pandas import Timestamp
 from get_data import get_data
 
 
-def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_democrat, arg_republican, arg_margin, ):
+def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_democrat, arg_republican, arg_margin,
+                    arg_logger):
     polling = {}
     arg_df = arg_df[arg_df.end_date <= arg_cutoff_date]
     for state in arg_df.state.unique():
@@ -45,7 +46,7 @@ def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_de
             result_democrat_votes += historical_df[historical_df.State == state].electoralDem.values[0]
             result_republican_votes += historical_df[historical_df.State == state].electoralRep.values[0]
         else:
-            logger.warning('missing state: {}'.format(state), )
+            arg_logger.warning('missing state: {}'.format(state), )
     return result_democrat_votes, result_republican_votes
 
 
@@ -102,9 +103,9 @@ if __name__ == '__main__':
         if not done:
             realization_democrat, realization_republican = \
                 get_realization(arg_cutoff_date=cutoff_date, arg_democrat=democrat,
-                                arg_df=filtered_df.copy(deep=True, ), arg_margin=realization_margin,
-                                arg_republican=republican, electoral_df=electoral_college_df,
-                                historical_df=review_2016_df, )
+                                arg_df=filtered_df.copy(deep=True, ), arg_logger=logger,
+                                arg_margin=realization_margin, arg_republican=republican,
+                                electoral_df=electoral_college_df, historical_df=review_2016_df, )
             count_democrat += 1 if realization_democrat > realization_republican else 0
             count_republican += 1 if realization_democrat < realization_republican else 0
             format_string = '{} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
