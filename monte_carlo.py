@@ -97,9 +97,10 @@ if __name__ == '__main__':
     cutoff_dates = [Timestamp(datetime.today())]
     democrat_realizations = list()
     done = False
+    instance_format = '{} {} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
     median_results = list()
     realizations = list()
-    instance_format = '{} {} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
+    wins_format = '{} {} simulated wins: {} out of {} realizations'
     for cutoff_date in cutoff_dates:
         for index, realization in enumerate(range(realization_count)):
             if not done:
@@ -127,11 +128,9 @@ if __name__ == '__main__':
         bin_count = max(democrat_realizations) - min(democrat_realizations) + 1
         democrat_win_realizations = [item for item in democrat_realizations if item >= 270]
         democrat_lose_realizations = [item for item in democrat_realizations if item < 270]
-        logger.info('{} {} simulated wins: {} out of {} realizations'.format(cutoff_date, democrat,
-                                                                             len(democrat_win_realizations),
-                                                                             len(democrat_realizations),
-                                                                             len(democrat_win_realizations) / len(
-                                                                                 democrat_realizations), ), )
+        logger.info(
+            wins_format.format(cutoff_date, democrat, len(democrat_win_realizations), len(democrat_realizations),
+                               len(democrat_win_realizations) / len(democrat_realizations), ), )
         instance_format = '{} mean outcome: {:5.2f} median outcome: {:.0f}-{:.0f}'
         realization_mean = array(democrat_realizations).mean()
         realization_median = median(array(democrat_realizations))
