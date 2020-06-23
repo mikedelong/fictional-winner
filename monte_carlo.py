@@ -61,6 +61,11 @@ if __name__ == '__main__':
         settings = load(fp=settings_fp, )
         logger.info('settings: {}'.format(settings))
 
+    date_range = settings['date_range'] if 'date_range' in settings.keys() else 'one'
+    if 'date_range' not in settings.keys():
+        logger.warning('date range not in settings; using default [{}]'.format(date_range))
+    else:
+        logger.info('date range: [{}]'.format(date_range))
     democrat = settings['democrat'] if 'democrat' in settings.keys() else None
     if democrat is None:
         logger.warning('parameter democrat is missing from settings. Quitting.')
