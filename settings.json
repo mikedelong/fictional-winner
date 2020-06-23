@@ -1,6 +1,11 @@
 {
+  "date_range": "one",
+  "date_ranges": [
+    "one",
+    "all"
+  ],
   "democrat": "Biden",
-  "early_exit_limit" : 200,
+  "early_exit_limit": 200,
   "grade_filter": [
     "A+",
     "A",
@@ -12,6 +17,6 @@
     "C"
   ],
   "realization_count": 10000,
-  "realization_margin" : 10.1,
+  "realization_margin": 10.1,
   "republican": "Trump"
 }
