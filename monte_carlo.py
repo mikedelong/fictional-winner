@@ -111,7 +111,11 @@ if __name__ == '__main__':
     electoral_college_df, review_2016_df, filtered_df, state_abbreviations = get_data(democrat=democrat,
                                                                                       grade_to_filter=grade_filter,
                                                                                       republican=republican, )
-    cutoff_dates = [Timestamp(datetime.today())]
+    cutoff_dates = list()
+    if date_range == 'one':
+        cutoff_dates = [Timestamp(datetime.today())]
+    elif date_range == 'all':
+        cutoff_dates = sorted(filtered_df['end_date'].unique())
     instance_format = '{} {} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
     outcome_format = '{} mean outcome: {:5.2f} median outcome: {:.0f}-{:.0f}'
     wins_format = '{} {} simulated wins: {} out of {} realizations'
