@@ -63,21 +63,27 @@ if __name__ == '__main__':
 
     date_range = settings['date_range'] if 'date_range' in settings.keys() else 'one'
     if 'date_range' not in settings.keys():
-        logger.warning('date range not in settings; using default [{}]'.format(date_range))
+        logger.warning('date range not in settings; using default [{}]'.format(date_range, ), )
     else:
-        logger.info('date range: [{}]'.format(date_range))
+        logger.info('date range: [{}]'.format(date_range, ), )
 
     date_ranges = settings['date_ranges'] if 'date_ranges' in settings.keys() else list()
     if 'date_ranges' not in settings.keys():
-        logger.warning('date ranges not in settings; quitting.')
+        logger.warning('date ranges not in settings; quitting.', )
         quit(code=1, )
     else:
-        logger.info('date ranges: [{}]'.format(date_range))
+        logger.info('date ranges: [{}]'.format(date_range, ), )
+    # check the date range against the possible choices
+    if date_range in date_ranges:
+        logger.info('date range {} is in possible date ranges {}'.format(date_range, date_ranges, ))
+    else:
+        logger.warning('date range {} not in possible date ranges {}; quitting.'.format(date_range, date_ranges, ))
+        quit(code=2, )
 
     democrat = settings['democrat'] if 'democrat' in settings.keys() else None
     if democrat is None:
         logger.warning('parameter democrat is missing from settings. Quitting.')
-        quit(code=2, )
+        quit(code=3, )
     early_exit_limit = settings['early_exit_limit'] if 'early_exit_limit' in settings.keys() else 100
     if 'early_exit_limit' not in settings.keys():
         logger.warning('early exit limit not in settings; using default value {}'.format(early_exit_limit, ))
@@ -100,7 +106,7 @@ if __name__ == '__main__':
     republican = settings['republican'] if 'republican' in settings.keys() else None
     if republican is None:
         logger.warning('parameter republican is missing from settings. Quitting.')
-        quit(code=3, )
+        quit(code=4, )
 
     electoral_college_df, review_2016_df, filtered_df, state_abbreviations = get_data(democrat=democrat,
                                                                                       grade_to_filter=grade_filter,
