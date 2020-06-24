@@ -115,7 +115,7 @@ if __name__ == '__main__':
     if date_range == 'one':
         cutoff_dates = [Timestamp(datetime.today())]
     elif date_range == 'all':
-        cutoff_dates = sorted(filtered_df['end_date'].unique())
+        cutoff_dates = [Timestamp(item) for item in sorted(filtered_df['end_date'].unique())]
     else:
         logger.warning('unexpected date range [{}]; quitting.'.format(date_range))
         quit(code=5, )
