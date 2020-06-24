@@ -119,6 +119,7 @@ if __name__ == '__main__':
     else:
         logger.warning('unexpected date range [{}]; quitting.'.format(date_range))
         quit(code=5, )
+    median_map = dict()
     instance_format = '{} {} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
     outcome_format = '{} mean outcome: {:5.2f} median outcome: {:.0f}-{:.0f}'
     wins_format = '{} {} simulated wins: {} out of {} realizations'
@@ -165,5 +166,8 @@ if __name__ == '__main__':
         hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
         hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
         savefig('./{}-{}-histogram.png'.format(democrat.lower(), cutoff_date.date(), ), )
+        median_map[cutoff_date] = realization_median
 
+    if len(median_map) > 1:
+        logger.info(median_map)
     logger.info('total time: {:5.2f}s'.format(time() - time_start))
