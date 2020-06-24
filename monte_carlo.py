@@ -116,6 +116,9 @@ if __name__ == '__main__':
         cutoff_dates = [Timestamp(datetime.today())]
     elif date_range == 'all':
         cutoff_dates = sorted(filtered_df['end_date'].unique())
+    else:
+        logger.warning('unexpected date range [{}]; quitting.'.format(date_range))
+        quit(code=5, )
     instance_format = '{} {} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
     outcome_format = '{} mean outcome: {:5.2f} median outcome: {:.0f}-{:.0f}'
     wins_format = '{} {} simulated wins: {} out of {} realizations'
