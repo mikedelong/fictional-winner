@@ -167,6 +167,7 @@ if __name__ == '__main__':
         hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
         savefig('./{}-{}-histogram.png'.format(democrat.lower(), cutoff_date.date(), ), )
         median_map[cutoff_date] = realization_median
+        # todo plot the median map after each update
 
     if len(median_map) > 1:
         logger.info(median_map)
