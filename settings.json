@@ -1,5 +1,5 @@
 {
-  "date_range": "one",
+  "date_range": "all",
   "date_ranges": [
     "one",
     "all"
