@@ -6,7 +6,7 @@ from logging import getLogger
 from math import copysign
 from time import time
 
-from matplotlib.pyplot import figure
+from matplotlib.pyplot import clf
 from matplotlib.pyplot import hist
 from matplotlib.pyplot import savefig
 from matplotlib.pyplot import style
@@ -164,11 +164,10 @@ if __name__ == '__main__':
         realization_median = median(array(democrat_realizations))
         logger.info(outcome_format.format(democrat, realization_mean, realization_median, 538 - realization_median), )
         style.use('fivethirtyeight')
-        hist_figure = figure()
         hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
         hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
         savefig('./{}-{}-histogram.png'.format(democrat.lower(), cutoff_date.date(), ), )
-        del hist_figure
+        clf()
         median_map[cutoff_date] = realization_median
         # todo plot the median map after each update
 
