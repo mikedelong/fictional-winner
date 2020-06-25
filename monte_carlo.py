@@ -110,6 +110,7 @@ if __name__ == '__main__':
         logger.warning('parameter republican is missing from settings. Quitting.')
         quit(code=4, )
 
+    output_folder = './output/'
     electoral_college_df, review_2016_df, filtered_df, state_abbreviations = get_data(democrat=democrat,
                                                                                       grade_to_filter=grade_filter,
                                                                                       republican=republican, )
@@ -167,7 +168,7 @@ if __name__ == '__main__':
         style.use('fivethirtyeight')
         hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
         hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
-        savefig('./{}-{}-histogram.png'.format(democrat.lower(), cutoff_date.date(), ), )
+        savefig('{}{}-{}-histogram.png'.format(output_folder, democrat.lower(), cutoff_date.date(), ), )
         clf()
         median_map[cutoff_date] = realization_median
         # todo plot the median map after each update
