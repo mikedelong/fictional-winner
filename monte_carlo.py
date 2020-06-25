@@ -11,6 +11,7 @@ from matplotlib.pyplot import hist
 from matplotlib.pyplot import savefig
 from matplotlib.pyplot import scatter
 from matplotlib.pyplot import style
+from matplotlib.pyplot import xticks
 from numpy import array
 from numpy import median
 from numpy.random import binomial
@@ -175,6 +176,7 @@ if __name__ == '__main__':
         # todo plot the median map after each update
         if len(median_map) > 1:
             scatter(x=sorted(list(median_map.keys())), y=[median_map[key] for key in sorted(list(median_map.keys()))], )
+            xticks(rotation=45, )
             savefig('{}median.png'.format(output_folder), )
             clf()
 
