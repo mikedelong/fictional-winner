@@ -72,6 +72,7 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, )
     return result_democrat, result_republican, result_ranked
 
 
+# todo use clf() instead of figure/del figure
 if __name__ == '__main__':
     time_start = time()
     logger = getLogger(__name__)
