@@ -9,6 +9,7 @@ from time import time
 from matplotlib.pyplot import clf
 from matplotlib.pyplot import hist
 from matplotlib.pyplot import savefig
+from matplotlib.pyplot import scatter
 from matplotlib.pyplot import style
 from numpy import array
 from numpy import median
@@ -172,6 +173,10 @@ if __name__ == '__main__':
         clf()
         median_map[cutoff_date] = realization_median
         # todo plot the median map after each update
+        if len(median_map) > 1:
+            scatter(x=sorted(list(median_map.keys())), y=[median_map[key] for key in sorted(list(median_map.keys()))], )
+            savefig('{}median.png'.format(output_folder), )
+            clf()
 
     if len(median_map) > 1:
         logger.info(median_map)
