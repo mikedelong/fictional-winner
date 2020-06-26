@@ -174,7 +174,6 @@ if __name__ == '__main__':
         savefig('{}{}-{}-histogram.png'.format(output_folder, democrat.lower(), cutoff_date.date(), ), )
         clf()
         median_map[cutoff_date] = realization_median
-        # todo plot the median map after each update
         if len(median_map) > 1:
             scatter(x=sorted(list(median_map.keys())), y=[median_map[key] for key in sorted(list(median_map.keys()))], )
             xticks(rotation=45, )
