@@ -183,6 +183,13 @@ if __name__ == '__main__':
             savefig('{}median.png'.format(output_folder), )
             tight_layout()
             clf()
+            margin_ys = [2 * y - 538 for y in ys]
+            margin_colors = ['b' if y > 0 else 'r' for y in margin_ys]
+            scatter(c=colors, x=xs, y=ys, )
+            xticks(rotation=45, )
+            savefig('{}margin.png'.format(output_folder), )
+            tight_layout()
+            clf()
 
     if len(median_map) > 1:
         logger.info(median_map)
