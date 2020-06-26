@@ -176,7 +176,9 @@ if __name__ == '__main__':
         median_map[cutoff_date] = realization_median
         if len(median_map) > 1:
             xs = sorted(list(median_map.keys()))
-            scatter(x=xs, y=[median_map[key] for key in xs], )
+            ys = [median_map[key] for key in xs]
+            colors = ['b' if y > 269 else 'r' for y in ys]
+            scatter(c=colors, x=xs, y=ys, )
             xticks(rotation=45, )
             savefig('{}median.png'.format(output_folder), )
             tight_layout()
