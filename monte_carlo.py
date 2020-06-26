@@ -175,7 +175,8 @@ if __name__ == '__main__':
         clf()
         median_map[cutoff_date] = realization_median
         if len(median_map) > 1:
-            scatter(x=sorted(list(median_map.keys())), y=[median_map[key] for key in sorted(list(median_map.keys()))], )
+            xs = sorted(list(median_map.keys()))
+            scatter(x=xs, y=[median_map[key] for key in xs], )
             xticks(rotation=45, )
             savefig('{}median.png'.format(output_folder), )
             tight_layout()
