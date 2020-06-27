@@ -179,6 +179,7 @@ if __name__ == '__main__':
             ys = [median_map[key] for key in xs]
             colors = ['b' if y > 269 else 'r' for y in ys]
             scatter(c=colors, x=xs, y=ys, )
+            # todo factor out the rotation value as a variable
             xticks(rotation=45, )
             savefig('{}median.png'.format(output_folder), )
             tight_layout()
@@ -190,6 +191,8 @@ if __name__ == '__main__':
             savefig('{}margin.png'.format(output_folder), )
             tight_layout()
             clf()
+            logger.info('{} totals: {}'.format(democrat, ys, ), )
+            logger.info('margin values: {}'.format(margin_ys, ), )
 
     if len(median_map) > 1:
         logger.info(median_map)
