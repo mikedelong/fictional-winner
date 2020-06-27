@@ -129,6 +129,7 @@ if __name__ == '__main__':
     instance_format = '{} {} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
     outcome_format = '{} mean outcome: {:5.2f} median outcome: {:.0f}-{:.0f}'
     wins_format = '{} {} simulated wins: {} out of {} realizations'
+    rotation = 45
     for cutoff_date in cutoff_dates:
         count_democrat = 0
         count_republican = 0
@@ -180,14 +181,14 @@ if __name__ == '__main__':
             colors = ['b' if y > 269 else 'r' for y in ys]
             scatter(c=colors, x=xs, y=ys, )
             # todo factor out the rotation value as a variable
-            xticks(rotation=45, )
+            xticks(rotation=rotation, )
             savefig('{}median.png'.format(output_folder), )
             tight_layout()
             clf()
             margin_ys = [2 * y - 538 for y in ys]
             margin_colors = ['b' if y > 0 else 'r' for y in margin_ys]
             scatter(c=margin_colors, x=xs, y=margin_ys, )
-            xticks(rotation=45, )
+            xticks(rotation=rotation, )
             savefig('{}margin.png'.format(output_folder), )
             tight_layout()
             clf()
