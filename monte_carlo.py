@@ -180,7 +180,6 @@ if __name__ == '__main__':
             ys = [median_map[key] for key in xs]
             colors = ['b' if y > 269 else 'r' for y in ys]
             scatter(c=colors, x=xs, y=ys, )
-            # todo factor out the rotation value as a variable
             xticks(rotation=rotation, )
             savefig('{}median.png'.format(output_folder), )
             tight_layout()
