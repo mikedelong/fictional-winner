@@ -5,7 +5,7 @@
     "all"
   ],
   "democrat": "Biden",
-  "early_exit_limit": 150,
+  "early_exit_limit": 75,
   "grade_filter": [
     "A+",
     "A",
