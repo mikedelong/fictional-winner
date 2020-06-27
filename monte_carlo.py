@@ -161,7 +161,7 @@ if __name__ == '__main__':
                 realizations.append((realization_democrat, realization_republican,))
                 done = len(median_results) > early_exit_limit
         bin_count = max(democrat_realizations) - min(democrat_realizations) + 1
-        democrat_win_realizations = [item for item in democrat_realizations if item >= 270]
+        democrat_win_realizations = [item for item in democrat_realizations if item > 270]
         democrat_lose_realizations = [item for item in democrat_realizations if item < 270]
         logger.info(
             wins_format.format(cutoff_date, democrat, len(democrat_win_realizations), len(democrat_realizations),
