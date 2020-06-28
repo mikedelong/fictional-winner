@@ -4,6 +4,7 @@ from logging import INFO
 from logging import basicConfig
 from logging import getLogger
 from math import copysign
+from pathlib import Path
 from time import time
 
 from matplotlib.pyplot import clf
@@ -19,7 +20,6 @@ from numpy.random import binomial
 from pandas import Timestamp
 
 from get_data import get_data
-from pathlib import Path
 
 
 def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_democrat, arg_republican, arg_margin,
