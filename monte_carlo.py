@@ -19,6 +19,7 @@ from numpy.random import binomial
 from pandas import Timestamp
 
 from get_data import get_data
+from pathlib import Path
 
 
 def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_democrat, arg_republican, arg_margin,
@@ -97,23 +98,27 @@ if __name__ == '__main__':
     grade_filter = set(grade_filter)
     if len(grade_filter) == 0:
         logger.warning('grade filter is empty; using all polls')
+
     output_folder = settings['output_folder'] if 'output_folder' in settings.keys() else None
     if 'output_folder' in settings.keys():
         logger.info('output folder: {}'.format(output_folder))
     else:
         logger.warning('parameter output folder is missing from settings. Quitting.')
         quit(code=4, )
+    Path(output_folder).mkdir(parents=True, exist_ok=True)
 
     realization_count = settings['realization_count'] if 'realization_count' in settings.keys() else 1000
     if 'realization_count' in settings.keys():
         logger.info('realization count: {}'.format(realization_count))
     else:
         logger.warning('using default realization count: {}'.format(realization_count))
+
     realization_margin = settings['realization_margin'] if 'realization_margin' in settings.keys() else 10.0
     if 'realization_margin' not in settings.keys():
         logger.warning('realization margin not in settings; using default value {}'.format(realization_margin))
     else:
         logger.info('realization margin: {}'.format(realization_margin))
+
     republican = settings['republican'] if 'republican' in settings.keys() else None
     if republican is None:
         logger.warning('parameter republican is missing from settings. Quitting.')
