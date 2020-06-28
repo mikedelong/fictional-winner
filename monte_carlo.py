@@ -97,6 +97,13 @@ if __name__ == '__main__':
     grade_filter = set(grade_filter)
     if len(grade_filter) == 0:
         logger.warning('grade filter is empty; using all polls')
+    output_folder = settings['output_folder'] if 'output_folder' in settings.keys() else None
+    if 'output_folder' in settings.keys():
+        logger.info('output folder: {}'.format(output_folder))
+    else:
+        logger.warning('parameter output folder is missing from settings. Quitting.')
+        quit(code=4, )
+
     realization_count = settings['realization_count'] if 'realization_count' in settings.keys() else 1000
     if 'realization_count' in settings.keys():
         logger.info('realization count: {}'.format(realization_count))
@@ -110,9 +117,8 @@ if __name__ == '__main__':
     republican = settings['republican'] if 'republican' in settings.keys() else None
     if republican is None:
         logger.warning('parameter republican is missing from settings. Quitting.')
-        quit(code=4, )
+        quit(code=5, )
 
-    output_folder = './output/'
     electoral_college_df, review_2016_df, filtered_df, state_abbreviations = get_data(democrat=democrat,
                                                                                       grade_to_filter=grade_filter,
                                                                                       republican=republican, )
