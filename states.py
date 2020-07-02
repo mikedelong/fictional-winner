@@ -74,6 +74,8 @@ def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, )
 
 
 # todo use clf() instead of figure/del figure
+# todo put the output figures in an output folder
+
 if __name__ == '__main__':
     time_start = time()
     logger = getLogger(__name__)
