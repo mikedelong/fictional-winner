@@ -9,6 +9,7 @@ from time import time
 
 from matplotlib.dates import date2num
 from matplotlib.dates import num2date
+from matplotlib.pyplot import clf
 from matplotlib.pyplot import figure
 from matplotlib.pyplot import locator_params
 from matplotlib.pyplot import plot as matplotlib_plot
@@ -276,7 +277,7 @@ if __name__ == '__main__':
             rank_png = './state-rank.png'
             logger.info('saving {} to {}'.format(plot_style, rank_png, ), )
             savefig(rank_png, )
-            del rank_figure
+            clf()
             scatter_figure = figure(figsize=figsize)
             ax_scatter = scatterplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
             rank_scatterplot_png = './state-rank-scatterplot.png'
