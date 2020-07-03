@@ -10,7 +10,6 @@ from time import time
 from matplotlib.dates import date2num
 from matplotlib.dates import num2date
 from matplotlib.pyplot import clf
-from matplotlib.pyplot import figure
 from matplotlib.pyplot import locator_params
 from matplotlib.pyplot import plot as matplotlib_plot
 from matplotlib.pyplot import savefig
