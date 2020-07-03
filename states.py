@@ -285,12 +285,11 @@ if __name__ == '__main__':
             logger.info('saving {} to {}'.format(plot_style, rank_scatterplot_png, ), )
             savefig(rank_scatterplot_png, )
             clf()
-            bar_figure = figure(figsize=figsize)
             ax_bar = barplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
             rank_barplot_png = './state-rank-barplot.png'
             logger.info('saving {} to {}'.format(plot_style, rank_barplot_png, ), )
             savefig(rank_barplot_png, )
-            del bar_figure
+            clf()
         else:
             raise ValueError('plot style unknown.')
 
