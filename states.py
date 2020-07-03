@@ -280,12 +280,11 @@ if __name__ == '__main__':
             logger.info('saving {} to {}'.format(plot_style, rank_png, ), )
             savefig(rank_png, )
             clf()
-            scatter_figure = figure(figsize=figsize)
             ax_scatter = scatterplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
             rank_scatterplot_png = './state-rank-scatterplot.png'
             logger.info('saving {} to {}'.format(plot_style, rank_scatterplot_png, ), )
             savefig(rank_scatterplot_png, )
-            del scatter_figure
+            clf()
             bar_figure = figure(figsize=figsize)
             ax_bar = barplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
             rank_barplot_png = './state-rank-barplot.png'
