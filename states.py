@@ -162,6 +162,7 @@ if __name__ == '__main__':
             lineplot_png = './states-lineplot.png'
             logger.info('saving {} to {}'.format(plot_style, lineplot_png, ), )
             savefig(lineplot_png, )
+            clf()
         elif plot_style == plot_styles[1]:
             lm_df['date'] = date2num(lm_df.date.values, )
             ax = lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='date', y='votes', ).set(
@@ -170,12 +171,14 @@ if __name__ == '__main__':
             lmplot_png = './states-daily-lmplot.png'
             logger.info('saving {} to {}'.format(plot_style, lmplot_png, ), )
             savefig(lmplot_png, )
+            clf()
         elif plot_style == plot_styles[2]:
             ax.scatter(c='b', x=graph_df.date, y=graph_df[democrat], )
             ax.scatter(c='r', x=graph_df.date, y=graph_df[republican], )
             matplotlib_png = './states-historical-scatter.png'
             logger.info('saving {} to {}'.format(plot_style, matplotlib_png, ), )
             savefig(matplotlib_png, )
+            clf()
         elif plot_style == plot_styles[3]:
             pointplot(ax=ax, data=lm_df, hue='candidate', palette=palette, x='date', y='votes', )
             ax.set_xticklabels(ax.get_xticklabels(), rotation=rotation, )
@@ -183,6 +186,7 @@ if __name__ == '__main__':
             pointplot_png = './states-historical-pointplot.png'
             logger.info('saving {} to {}'.format(plot_style, pointplot_png, ), )
             savefig(pointplot_png, )
+            clf()
         elif plot_style == plot_styles[4]:
             graph_df['date'] = date2num(graph_df.date.values, )
             regplot(ax=ax, color='b', data=graph_df, x='date', y=democrat, )
@@ -195,6 +199,7 @@ if __name__ == '__main__':
             regplot_png = './states-daily-regplot.png'
             logger.info('saving {} to {}'.format(plot_style, regplot_png, ), )
             savefig(regplot_png, )
+            clf()
         elif plot_style == plot_styles[5]:
             col_wrap = int(sqrt(data_df.state.nunique(), ), )
             data_df = data_df.rename(columns={'end_date': 'date', 'pct': 'percent', }, )
@@ -209,6 +214,7 @@ if __name__ == '__main__':
             state_grid_png = './states-daily-state-grid.png'
             logger.info('saving {} to {}'.format(plot_style, state_grid_png, ), )
             savefig(state_grid_png, )
+            clf()
             differences = dict()
             for question in data_df['question_id'].unique():
                 difference_df = data_df[data_df['question_id'] == question]
@@ -231,6 +237,7 @@ if __name__ == '__main__':
             state_plot_png = './states-daily-state-plot.png'
             logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
             savefig(state_plot_png, )
+            clf()
         elif plot_style == plot_styles[6]:
             states = [state for state in data_df.state.unique() if data_df.state.value_counts()[state] > 8]
             swing_df = data_df[data_df.state.isin(states)].copy(deep=True)
@@ -247,6 +254,7 @@ if __name__ == '__main__':
             swing_state_grid_png = './states-daily-swing-state-grid.png'
             logger.info('saving {} to {}'.format(plot_style, swing_state_grid_png, ), )
             savefig(swing_state_grid_png, )
+            clf()
             differences = dict()
             for question in swing_df['question_id'].unique():
                 difference_df = swing_df[swing_df['question_id'].isin({question})]
@@ -266,6 +274,7 @@ if __name__ == '__main__':
             state_plot_png = './states-daily-swing-plot.png'
             logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
             savefig(state_plot_png, )
+            clf()
         elif plot_style == plot_styles[7]:
             rank_df = DataFrame([(rank[1], rank[2]) for rank in ranked], columns=['State', 'margin', ], )
             rank_df['abs_margin'] = rank_df['margin'].abs()
