@@ -94,6 +94,7 @@ if __name__ == '__main__':
         logger.warning('early exit limit not in settings; using default value {}'.format(early_exit_limit, ))
     else:
         logger.info('early exit limit: {}'.format(early_exit_limit, ))
+
     grade_filter = settings['grade_filter'] if 'grade_filter' in settings.keys() else list()
     grade_filter = set(grade_filter)
     if len(grade_filter) == 0:
