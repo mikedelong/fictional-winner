@@ -31,6 +31,8 @@ from seaborn import scatterplot
 from seaborn import set_style
 
 from get_data import get_data
+from pathlib import Path
+
 
 
 def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, ):
@@ -98,6 +100,8 @@ if __name__ == '__main__':
         logger.warning('grade filter is empty; using all polls')
 
     output_folder = 'states_output'
+    Path(output_folder).mkdir(parents=True, exist_ok=True)
+
 
     electoral_college_df, review_2016_df, data_df, state_abbreviations = get_data(democrat=democrat,
                                                                                   grade_to_filter=grade_filter,
