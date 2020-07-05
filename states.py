@@ -185,7 +185,7 @@ if __name__ == '__main__':
             pointplot(ax=ax, data=lm_df, hue='candidate', palette=palette, x='date', y='votes', )
             ax.set_xticklabels(ax.get_xticklabels(), rotation=rotation, )
             locator_params(axis='x', nbins=10, )
-            pointplot_png = './states-historical-pointplot.png'
+            pointplot_png = '{}historical-pointplot.png'.format(output_folder)
             logger.info('saving {} to {}'.format(plot_style, pointplot_png, ), )
             savefig(pointplot_png, )
             clf()
