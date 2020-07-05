@@ -161,7 +161,7 @@ if __name__ == '__main__':
         fig, ax = subplots(figsize=figsize, )
         if plot_style == plot_styles[0]:
             lineplot(ax=ax, data=lm_df, hue='candidate', palette=palette, sort=True, x='date', y='votes', )
-            lineplot_png = './states-lineplot.png'
+            lineplot_png = '{}lineplot.png'.format(output_folder)
             logger.info('saving {} to {}'.format(plot_style, lineplot_png, ), )
             savefig(lineplot_png, )
             clf()
