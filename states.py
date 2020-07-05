@@ -170,7 +170,7 @@ if __name__ == '__main__':
             ax = lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='date', y='votes', ).set(
                 xlim=(lm_df.date.min() - 100, lm_df.date.max() + 100,), ylim=(100, 450,), )
             ax.set_xticklabels(labels=[num2date(number, tz=None, ).date() for number in lm_df.date.values], )
-            lmplot_png = './states-daily-lmplot.png'
+            lmplot_png = '{}daily-lmplot.png'.format(output_folder)
             logger.info('saving {} to {}'.format(plot_style, lmplot_png, ), )
             savefig(lmplot_png, )
             clf()
