@@ -177,7 +177,7 @@ if __name__ == '__main__':
         elif plot_style == plot_styles[2]:
             ax.scatter(c='b', x=graph_df.date, y=graph_df[democrat], )
             ax.scatter(c='r', x=graph_df.date, y=graph_df[republican], )
-            matplotlib_png = './states-historical-scatter.png'
+            matplotlib_png = '{}historical-scatter.png'.format(output_folder)
             logger.info('saving {} to {}'.format(plot_style, matplotlib_png, ), )
             savefig(matplotlib_png, )
             clf()
