@@ -198,6 +198,7 @@ if __name__ == '__main__':
             regplot(ax=ax, color='r', data=graph_df, lowess=True, x='date', y=republican, scatter=False, )
             regplot(ax=ax, color='r', data=graph_df, logx=True, x='date', y=republican, scatter=False, )
             ax.set_xticklabels(labels=[num2date(number, tz=None, ).date() for number in lm_df.date.values], )
+            # todo use output folder
             regplot_png = './states-daily-regplot.png'
             logger.info('saving {} to {}'.format(plot_style, regplot_png, ), )
             savefig(regplot_png, )
@@ -213,6 +214,7 @@ if __name__ == '__main__':
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ), )
             tight_layout()
+            # todo use output folder
             state_grid_png = './states-daily-state-grid.png'
             logger.info('saving {} to {}'.format(plot_style, state_grid_png, ), )
             savefig(state_grid_png, )
@@ -236,6 +238,7 @@ if __name__ == '__main__':
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ))
             tight_layout()
+            # todo use output folder
             state_plot_png = './states-daily-state-plot.png'
             logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
             savefig(state_plot_png, )
@@ -253,6 +256,7 @@ if __name__ == '__main__':
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ))
             tight_layout()
+            # todo use output folder
             swing_state_grid_png = './states-daily-swing-state-grid.png'
             logger.info('saving {} to {}'.format(plot_style, swing_state_grid_png, ), )
             savefig(swing_state_grid_png, )
@@ -273,6 +277,7 @@ if __name__ == '__main__':
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ), )
             tight_layout()
+            # todo use output folder
             state_plot_png = './states-daily-swing-plot.png'
             logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
             savefig(state_plot_png, )
@@ -285,16 +290,19 @@ if __name__ == '__main__':
             for index, rank in enumerate(ranked):
                 logger.info(rank)
                 scatter(x=rank_df.index, y=rank_df.abs_margin, c=rank_df.color, )
+            # todo use output folder
             rank_png = './state-rank.png'
             logger.info('saving {} to {}'.format(plot_style, rank_png, ), )
             savefig(rank_png, )
             clf()
             ax_scatter = scatterplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
+            # todo use output folder
             rank_scatterplot_png = './state-rank-scatterplot.png'
             logger.info('saving {} to {}'.format(plot_style, rank_scatterplot_png, ), )
             savefig(rank_scatterplot_png, )
             clf()
             ax_bar = barplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
+            # todo use output folder
             rank_barplot_png = './state-rank-barplot.png'
             logger.info('saving {} to {}'.format(plot_style, rank_barplot_png, ), )
             savefig(rank_barplot_png, )
