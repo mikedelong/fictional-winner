@@ -98,6 +98,7 @@ if __name__ == '__main__':
     if len(grade_filter) == 0:
         logger.warning('grade filter is empty; using all polls')
 
+    # todo get this value from the settings
     output_folder = './states_output/'
     Path(output_folder).mkdir(parents=True, exist_ok=True)
 
