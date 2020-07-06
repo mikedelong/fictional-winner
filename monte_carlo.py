@@ -183,6 +183,7 @@ if __name__ == '__main__':
         style.use('fivethirtyeight')
         hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
         hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
+        # todo set the minimum and maximum values on the X-axis
         savefig('{}{}-{}-histogram.png'.format(output_folder, democrat.lower(), cutoff_date.date(), ), )
         clf()
         median_map[cutoff_date] = realization_median
