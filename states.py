@@ -214,7 +214,7 @@ if __name__ == '__main__':
                 axes.set_title(axes.get_title().replace('state = ', '', ), )
             tight_layout()
             # todo use output folder
-            state_grid_png = './states-daily-state-grid.png'
+            state_grid_png = '{}daily-state-grid.png'.format(output_folder)
             logger.info('saving {} to {}'.format(plot_style, state_grid_png, ), )
             savefig(state_grid_png, )
             clf()
