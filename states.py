@@ -198,7 +198,6 @@ if __name__ == '__main__':
             regplot(ax=ax, color='r', data=graph_df, lowess=True, x='date', y=republican, scatter=False, )
             regplot(ax=ax, color='r', data=graph_df, logx=True, x='date', y=republican, scatter=False, )
             ax.set_xticklabels(labels=[num2date(number, tz=None, ).date() for number in lm_df.date.values], )
-            # todo use output folder
             regplot_png = '{}daily-regplot.png'.format(output_folder)
             logger.info('saving {} to {}'.format(plot_style, regplot_png, ), )
             savefig(regplot_png, )
