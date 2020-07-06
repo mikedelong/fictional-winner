@@ -168,10 +168,13 @@ if __name__ == '__main__':
         elif plot_style == plot_styles[1]:
             # todo rotate x-axis labels
             lm_df['date'] = date2num(lm_df.date.values, )
-            ax = lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='date', y='votes', ).set(
+            plot = lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='date', y='votes', ).set(
                 xlim=(lm_df.date.min() - 100, lm_df.date.max() + 100,), ylim=(100, 450,), )
-            ax.set_xticklabels(labels=[num2date(number, tz=None, ).date() for number in lm_df.date.values], )
+            plot.set_xticklabels(labels=[num2date(number, tz=None, ).date() for number in lm_df.date.values], )
             lmplot_png = '{}daily-lmplot.png'.format(output_folder)
+            for axes in plot.axes.flat:
+                _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=rotation, )
+            tight_layout()
             logger.info('saving {} to {}'.format(plot_style, lmplot_png, ), )
             savefig(lmplot_png, )
             clf()
