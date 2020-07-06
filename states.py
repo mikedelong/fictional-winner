@@ -166,6 +166,7 @@ if __name__ == '__main__':
             savefig(lineplot_png, )
             clf()
         elif plot_style == plot_styles[1]:
+            # todo rotate x-axis labels
             lm_df['date'] = date2num(lm_df.date.values, )
             ax = lmplot(data=lm_df, hue='candidate', order=3, palette=palette, x='date', y='votes', ).set(
                 xlim=(lm_df.date.min() - 100, lm_df.date.max() + 100,), ylim=(100, 450,), )
