@@ -169,6 +169,7 @@ if __name__ == '__main__':
             lm_df['date'] = date2num(lm_df.date.values, )
             plot = lmplot(aspect=1.6, data=lm_df, height=10, hue='candidate', order=3, palette=palette, x='date',
                           y='votes', ).set(xlim=(lm_df.date.min() - 100, lm_df.date.max() + 100,), ylim=(100, 450,), )
+            # todo look at these
             plot.set_xticklabels(labels=[num2date(number, tz=None, ).date() for number in lm_df.date.values], )
             lmplot_png = '{}daily-lmplot.png'.format(output_folder)
             for axes in plot.axes.flat:
