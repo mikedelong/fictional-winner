@@ -99,7 +99,13 @@ if __name__ == '__main__':
         logger.warning('grade filter is empty; using all polls')
 
     # todo get this value from the settings
-    output_folder = './states_output/'
+    output_folder = settings['states_output_folder'] if 'states_output_folder' in settings.keys() else None
+    if 'states_output_folder' in settings.keys():
+        logger.info('output folder: {}'.format(output_folder))
+    else:
+        logger.warning('parameter output folder is missing from settings. Quitting.')
+        quit(code=4, )
+
     Path(output_folder).mkdir(parents=True, exist_ok=True)
 
     electoral_college_df, review_2016_df, data_df, state_abbreviations = get_data(democrat=democrat,
