@@ -100,9 +100,9 @@ if __name__ == '__main__':
     if len(grade_filter) == 0:
         logger.warning('grade filter is empty; using all polls')
 
-    output_folder = settings['output_folder'] if 'output_folder' in settings.keys() else None
-    if 'output_folder' in settings.keys():
-        logger.info('output folder: {}'.format(output_folder))
+    output_folder = settings['monte_carlo_output_folder'] if 'monte_carlo_output_folder' in settings.keys() else None
+    if 'monte_carlo_output_folder' in settings.keys():
+        logger.info('Monte Carlo output folder: {}'.format(output_folder))
     else:
         logger.warning('parameter output folder is missing from settings. Quitting.')
         quit(code=4, )
