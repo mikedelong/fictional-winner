@@ -16,7 +16,7 @@
     "B/C",
     "C"
   ],
-  "monte_carlo_output_folder": "./output/",
+  "monte_carlo_output_folder": "./monte_carlo_output/",
   "realization_count": 10000,
   "realization_margin": 10.1,
   "republican": "Trump",
