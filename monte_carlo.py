@@ -200,8 +200,8 @@ if __name__ == '__main__':
             margin_colors = ['b' if y > 0 else 'r' for y in margin_ys]
             scatter(c=margin_colors, x=xs, y=margin_ys, )
             xticks(rotation=rotation, )
-            savefig('{}margin.png'.format(output_folder), )
             tight_layout()
+            savefig('{}margin.png'.format(output_folder), )
             clf()
             logger.info('{} totals: {}'.format(democrat, ys, ), )
             logger.info('margin values: {}'.format(margin_ys, ), )
