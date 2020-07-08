@@ -204,6 +204,7 @@ if __name__ == '__main__':
             scatter(c=margin_colors, x=xs, y=margin_ys, )
             xticks(rotation=rotation, )
             tight_layout()
+            # todo factor this file name out as a variable and log it
             savefig('{}margin.png'.format(output_folder), )
             clf()
             logger.info('{} totals: {}'.format(democrat, ys, ), )
