@@ -193,8 +193,8 @@ if __name__ == '__main__':
             colors = ['b' if y > 269 else 'r' for y in ys]
             scatter(c=colors, x=xs, y=ys, )
             xticks(rotation=rotation, )
-            savefig('{}median.png'.format(output_folder), )
             tight_layout()
+            savefig('{}median.png'.format(output_folder), )
             clf()
             margin_ys = [2 * y - 538 for y in ys]
             margin_colors = ['b' if y > 0 else 'r' for y in margin_ys]
