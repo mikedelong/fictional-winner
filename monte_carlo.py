@@ -197,6 +197,7 @@ if __name__ == '__main__':
             scatter(c=colors, x=xs, y=ys, )
             xticks(rotation=rotation, )
             tight_layout()
+            # todo factor this file name out as a variable and log it
             savefig('{}median.png'.format(output_folder), )
             clf()
             margin_ys = [2 * y - 538 for y in ys]
