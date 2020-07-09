@@ -204,7 +204,9 @@ if __name__ == '__main__':
             xticks(rotation=rotation, )
             tight_layout()
             # todo factor this file name out as a variable and log it
-            savefig('{}median.png'.format(output_folder), )
+            median_file_name = '{}median.png'.format(output_folder)
+            logger.info('writing updated median data to {}'.format(median_file_name, ), )
+            savefig(median_file_name, )
             clf()
             margin_ys = [2 * y - 538 for y in ys]
             margin_colors = ['b' if y > 0 else 'r' for y in margin_ys]
