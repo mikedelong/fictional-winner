@@ -212,7 +212,6 @@ if __name__ == '__main__':
             scatter(c=margin_colors, x=xs, y=margin_ys, )
             xticks(rotation=rotation, )
             tight_layout()
-            # todo factor this file name out as a variable and log it
             margin_file_name = '{}margin.png'.format(output_folder, )
             logger.info('writing updated margin data to {}'.format(margin_file_name, ), )
             savefig(margin_file_name, )
