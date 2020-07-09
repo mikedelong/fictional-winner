@@ -203,7 +203,6 @@ if __name__ == '__main__':
             scatter(c=colors, x=xs, y=ys, )
             xticks(rotation=rotation, )
             tight_layout()
-            # todo factor this file name out as a variable and log it
             median_file_name = '{}median.png'.format(output_folder)
             logger.info('writing updated median data to {}'.format(median_file_name, ), )
             savefig(median_file_name, )
