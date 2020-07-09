@@ -188,9 +188,8 @@ if __name__ == '__main__':
             range_ = (min(democrat_win_realizations), max(democrat_win_realizations))
         else:
             range_ = (min(democrat_lose_realizations), max(democrat_win_realizations))
-        hist(bins=bin_count, color='blue', range=range_,             x=democrat_win_realizations, )
-        hist(bins=bin_count, color='red', range=range_,             x=democrat_lose_realizations, )
-        # todo set the minimum and maximum values on the X-axis
+        hist(bins=bin_count, color='blue', range=range_, x=democrat_win_realizations, )
+        hist(bins=bin_count, color='red', range=range_, x=democrat_lose_realizations, )
         tight_layout()
         output_file = '{}{}-{}-histogram.png'.format(output_folder, democrat.lower(), cutoff_date.date(), )
         logger.info('writing {} histogram to {}'.format(cutoff_date.date(), output_file, ), )
