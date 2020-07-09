@@ -181,8 +181,15 @@ if __name__ == '__main__':
         realization_median = median(array(democrat_realizations))
         logger.info(outcome_format.format(democrat, realization_mean, realization_median, 538 - realization_median), )
         style.use('fivethirtyeight')
-        hist(x=democrat_win_realizations, bins=bin_count, color='blue', )
-        hist(x=democrat_lose_realizations, bins=bin_count, color='red', )
+        range_ = (0, 0)
+        if len(democrat_win_realizations) == 0:
+            range_ = (min(democrat_lose_realizations), max(democrat_lose_realizations))
+        elif len(democrat_lose_realizations) == 0:
+            range_ = (min(democrat_win_realizations), max(democrat_win_realizations))
+        else:
+            range_ = (min(democrat_lose_realizations), max(democrat_win_realizations))
+        hist(bins=bin_count, color='blue', range=range_,             x=democrat_win_realizations, )
+        hist(bins=bin_count, color='red', range=range_,             x=democrat_lose_realizations, )
         # todo set the minimum and maximum values on the X-axis
         tight_layout()
         output_file = '{}{}-{}-histogram.png'.format(output_folder, democrat.lower(), cutoff_date.date(), )
