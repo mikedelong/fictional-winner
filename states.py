@@ -246,7 +246,6 @@ if __name__ == '__main__':
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ))
             tight_layout()
-            # todo use output folder
             state_plot_png = '{}daily-state-plot.png'.format(output_folder)
             logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
             savefig(state_plot_png, )
