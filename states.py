@@ -284,7 +284,7 @@ if __name__ == '__main__':
                 axes.set_title(axes.get_title().replace('state = ', '', ), )
             tight_layout()
             # todo use output folder
-            state_plot_png = './states-daily-swing-plot.png'
+            state_plot_png = '{}states-daily-swing-plot.png'.format(output_folder)
             logger.info('saving {} to {}'.format(plot_style, state_plot_png, ), )
             savefig(state_plot_png, )
             clf()
