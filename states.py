@@ -263,7 +263,6 @@ if __name__ == '__main__':
             for axes in plot.axes.flatten():
                 axes.set_title(axes.get_title().replace('state = ', '', ))
             tight_layout()
-            # todo use output folder
             swing_state_grid_png = '{}daily-swing-state-grid.png'.format(output_folder)
             logger.info('saving {} to {}'.format(plot_style, swing_state_grid_png, ), )
             savefig(swing_state_grid_png, )
