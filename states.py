@@ -251,7 +251,9 @@ if __name__ == '__main__':
             savefig(state_plot_png, )
             clf()
         elif plot_style == plot_styles[6]:
-            states = [state for state in data_df.state.unique() if data_df.state.value_counts()[state] > 8]
+            # todo think about factoring this threshold out as a setting
+            # todo think about finding a better way to limit the number of swing states
+            states = [state for state in data_df.state.unique() if data_df.state.value_counts()[state] > 10]
             swing_df = data_df[data_df.state.isin(states)].copy(deep=True)
             swing_df['date'] = [datetime.date(item) for item in swing_df['date']]
             swing_df = swing_df.rename(columns={'pct': 'percent', }, )
@@ -296,7 +298,7 @@ if __name__ == '__main__':
                 logger.info(rank)
                 scatter(x=rank_df.index, y=rank_df.abs_margin, c=rank_df.color, )
             # todo use output folder
-            rank_png = './state-rank.png'
+            rank_png = '{}state-rank.png'.format(output_folder)
             logger.info('saving {} to {}'.format(plot_style, rank_png, ), )
             savefig(rank_png, )
             clf()
