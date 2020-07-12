@@ -307,7 +307,6 @@ if __name__ == '__main__':
             savefig(rank_scatterplot_png, )
             clf()
             ax_bar = barplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
-            # todo use output folder
             rank_barplot_png = '{}rank-barplot.png'.format(output_folder)
             logger.info('saving {} to {}'.format(plot_style, rank_barplot_png, ), )
             savefig(rank_barplot_png, )
