@@ -303,7 +303,7 @@ if __name__ == '__main__':
             clf()
             ax_scatter = scatterplot(data=rank_df, hue='candidate', x='State', y='abs_margin', )
             # todo use output folder
-            rank_scatterplot_png = './state-rank-scatterplot.png'
+            rank_scatterplot_png = '{}rank-scatterplot.png'.format(output_folder)
             logger.info('saving {} to {}'.format(plot_style, rank_scatterplot_png, ), )
             savefig(rank_scatterplot_png, )
             clf()
