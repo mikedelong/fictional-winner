@@ -297,7 +297,7 @@ if __name__ == '__main__':
             for index, rank in enumerate(ranked):
                 logger.info(rank)
                 scatter(x=rank_df.index, y=rank_df.abs_margin, c=rank_df.color, )
-            rank_png = '{}state-rank.png'.format(output_folder)
+            rank_png = '{}rank.png'.format(output_folder)
             logger.info('saving {} to {}'.format(plot_style, rank_png, ), )
             savefig(rank_png, )
             clf()
