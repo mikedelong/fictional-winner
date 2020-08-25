@@ -18,6 +18,7 @@ from numpy import array
 from numpy import median
 from numpy.random import binomial
 from pandas import Timestamp
+from pandas import to_datetime
 
 from get_data import get_data
 
@@ -133,6 +134,9 @@ if __name__ == '__main__':
         cutoff_dates = [Timestamp(datetime.today())]
     elif date_range == 'all':
         cutoff_dates = [Timestamp(item) for item in sorted(filtered_df['end_date'].unique())]
+    elif date_range == '2020-01-01':
+        cutoff_dates = [Timestamp(item) for item in sorted(filtered_df['end_date'].unique()) if
+                        to_datetime(item) > datetime.strptime('2019-12-31 23:59:59', '%Y-%m-%d %H:%M:%S', )]
     else:
         logger.warning('unexpected date range [{}]; quitting.'.format(date_range))
         quit(code=5, )
