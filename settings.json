@@ -1,8 +1,9 @@
 {
-  "date_range": "all",
+  "date_range": "2020-01-01",
   "date_ranges": [
     "one",
-    "all"
+    "all",
+    "2020-01-01"
   ],
   "democrat": "Biden",
   "early_exit_limit": 20,
