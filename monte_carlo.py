@@ -19,6 +19,7 @@ from numpy import median
 from numpy.random import binomial
 from pandas import Timestamp
 from pandas import to_datetime
+from pandas import DataFrame
 
 from get_data import get_data
 
@@ -223,6 +224,7 @@ if __name__ == '__main__':
             clf()
             logger.info('{} totals: {}'.format(democrat, ys, ), )
             logger.info('margin values: {}'.format(margin_ys, ), )
+            median_df = DataFrame(data={'date': median_map.keys(), 'median': median_map.values(), 'margin': margin_ys})
 
     if len(median_map) > 1:
         logger.info(median_map)
