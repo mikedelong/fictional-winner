@@ -225,6 +225,7 @@ if __name__ == '__main__':
             logger.info('{} totals: {}'.format(democrat, ys, ), )
             logger.info('margin values: {}'.format(margin_ys, ), )
             median_df = DataFrame(data={'date': median_map.keys(), 'median': median_map.values(), 'margin': margin_ys})
+            median_df.to_csv(path_or_buf='./monte_carlo.csv',)
 
     if len(median_map) > 1:
         logger.info(median_map)
