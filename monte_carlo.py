@@ -224,7 +224,8 @@ if __name__ == '__main__':
             clf()
             logger.info('{} totals: {}'.format(democrat, ys, ), )
             logger.info('margin values: {}'.format(margin_ys, ), )
-            median_df = DataFrame(data={'date': median_map.keys(), 'median': median_map.values(), 'margin': margin_ys})
+            median_df = DataFrame(
+                data={'date': list(median_map.keys()), 'median': list(median_map.values()), 'margin': margin_ys})
             median_csv = './monte_carlo.csv'
             logger.info('writing current state data to {}'.format(median_csv))
             median_df.to_csv(index=True, header=True, path_or_buf=median_csv, )
