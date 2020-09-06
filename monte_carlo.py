@@ -128,6 +128,8 @@ if __name__ == '__main__':
         logger.warning('parameter republican is missing from settings. Quitting.')
         quit(code=5, )
 
+    use_historical = settings['use_historical'] if 'use_historical' in settings.keys() else False
+
     electoral_college_df, review_2016_df, filtered_df, state_abbreviations = get_data(democrat=democrat,
                                                                                       grade_to_filter=grade_filter,
                                                                                       republican=republican, )
