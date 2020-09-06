@@ -21,5 +21,6 @@
   "realization_count": 10000,
   "realization_margin": 10.1,
   "republican": "Trump",
-  "states_output_folder": "./states_output/"
+  "states_output_folder": "./states_output/",
+  "use_historical": true
 }
