@@ -17,9 +17,9 @@ from matplotlib.pyplot import xticks
 from numpy import array
 from numpy import median
 from numpy.random import binomial
+from pandas import DataFrame
 from pandas import Timestamp
 from pandas import to_datetime
-from pandas import DataFrame
 
 from get_data import get_data
 
