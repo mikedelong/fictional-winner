@@ -5,6 +5,7 @@ from logging import basicConfig
 from logging import getLogger
 from math import sqrt
 from math import trunc
+from pathlib import Path
 from time import time
 
 from matplotlib.dates import date2num
@@ -31,7 +32,6 @@ from seaborn import scatterplot
 from seaborn import set_style
 
 from get_data import get_data
-from pathlib import Path
 
 
 def get_results(arg_df, arg_cutoff_date, electoral_df, historical_df, verbose, ):
