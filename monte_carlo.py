@@ -20,6 +20,7 @@ from numpy.random import binomial
 from pandas import DataFrame
 from pandas import Timestamp
 from pandas import to_datetime
+from pandas import read_csv
 
 from get_data import get_data
 
@@ -133,6 +134,11 @@ if __name__ == '__main__':
     electoral_college_df, review_2016_df, filtered_df, state_abbreviations = get_data(democrat=democrat,
                                                                                       grade_to_filter=grade_filter,
                                                                                       republican=republican, )
+    median_csv = './monte_carlo.csv'
+    if use_historical:
+        already_df = read_csv(filepath_or_buffer=median_csv)
+        logger.info('loaded {} rows from {}'.format(len(already_df), median_csv))
+
     cutoff_dates = list()
     if date_range == 'one':
         cutoff_dates = [Timestamp(datetime.today())]
@@ -228,7 +234,6 @@ if __name__ == '__main__':
             logger.info('margin values: {}'.format(margin_ys, ), )
             median_df = DataFrame(
                 data={'date': list(median_map.keys()), 'median': list(median_map.values()), 'margin': margin_ys})
-            median_csv = './monte_carlo.csv'
             logger.info('writing current state data to {}'.format(median_csv))
             median_df.to_csv(index=True, header=True, path_or_buf=median_csv, )
 
