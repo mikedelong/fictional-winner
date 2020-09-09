@@ -141,6 +141,7 @@ if __name__ == '__main__':
     else:
         already_df = None
 
+    historical_dates = list()
     cutoff_dates = list()
     if date_range == 'one':
         cutoff_dates = [Timestamp(datetime.today())]
@@ -156,11 +157,18 @@ if __name__ == '__main__':
         historical_dates = historical_dates[:-5]
         cutoff_dates = [Timestamp(item) for item in sorted(filtered_df['end_date'].unique()) if
                         Timestamp(item).date() not in historical_dates]
-        quit(code=6, )
     else:
         logger.warning('unexpected date range [{}]; quitting.'.format(date_range))
         quit(code=5, )
+    # we need to create/re-create the median map
     median_map = dict()
+    if date_range == 'update':
+        for index, row in already_df.iterrows():
+            date = row['date']
+            median = row['median']
+            if datetime.strptime(date, '%Y-%m-%d', ).date() in historical_dates:
+                median_map[date] = median
+
     instance_format = '{} {} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
     outcome_format = '{} mean outcome: {:5.2f} median outcome: {:.0f}-{:.0f}'
     wins_format = '{} {} simulated wins: {} out of {} realizations'
