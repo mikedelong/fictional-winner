@@ -165,9 +165,8 @@ if __name__ == '__main__':
     if date_range == 'update':
         for index, row in already_df.iterrows():
             date = row['date']
-            value = row['median']
             if datetime.strptime(date, '%Y-%m-%d', ).date() in historical_dates:
-                median_map[Timestamp(date)] = value
+                median_map[Timestamp(date)] = int(row['median'])
 
     instance_format = '{} {} {}: {} {}: {} {}: {} {}: {} ratio: {:5.4f} mean: {:5.1f} median: {} streak: {}'
     outcome_format = '{} mean outcome: {:5.2f} median outcome: {:.0f}-{:.0f}'
