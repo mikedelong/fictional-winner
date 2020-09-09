@@ -138,6 +138,8 @@ if __name__ == '__main__':
     if use_historical:
         already_df = read_csv(filepath_or_buffer=median_csv)
         logger.info('loaded {} rows from {}'.format(len(already_df), median_csv))
+    else:
+        already_df = None
 
     cutoff_dates = list()
     if date_range == 'one':
@@ -147,6 +149,14 @@ if __name__ == '__main__':
     elif date_range == '2020-01-01':
         cutoff_dates = [Timestamp(item) for item in sorted(filtered_df['end_date'].unique()) if
                         to_datetime(item) > datetime.strptime('2019-12-31 23:59:59', '%Y-%m-%d %H:%M:%S', )]
+    elif date_range == 'update':
+        historical_dates = sorted(already_df['date'].values)
+        historical_dates = [datetime.strptime(item, '%Y-%m-%d', ).date() for item in historical_dates]
+        # drop off the last five dates somewhat arbitrarily
+        historical_dates = historical_dates[:-5]
+        cutoff_dates = [Timestamp(item) for item in sorted(filtered_df['end_date'].unique()) if
+                        Timestamp(item).date() not in historical_dates]
+        quit(code=6, )
     else:
         logger.warning('unexpected date range [{}]; quitting.'.format(date_range))
         quit(code=5, )
