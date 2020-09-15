@@ -55,7 +55,7 @@ def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_de
             result_republican_votes += historical_df[historical_df.State == state].electoralRep.values[0]
         else:
             arg_logger.warning('missing state: {}'.format(state), )
-    return result_democrat_votes, result_republican_votes
+    return int(result_democrat_votes), int(result_republican_votes)
 
 
 # todo refactor this so it produces a data file of realizations and lets us calculate forward from the most recent
@@ -209,10 +209,9 @@ if __name__ == '__main__':
             wins_format.format(cutoff_date, democrat, len(democrat_win_realizations), len(democrat_realizations),
                                len(democrat_win_realizations) / len(democrat_realizations), ), )
         realization_mean = array(democrat_realizations).mean()
-        realization_median = median(array(democrat_realizations))
+        realization_median = int(median(array(democrat_realizations)))
         logger.info(outcome_format.format(democrat, realization_mean, realization_median, 538 - realization_median), )
         style.use('fivethirtyeight')
-        range_ = (0, 0)
         if len(democrat_win_realizations) == 0:
             range_ = (min(democrat_lose_realizations), max(democrat_lose_realizations))
         elif len(democrat_lose_realizations) == 0:
