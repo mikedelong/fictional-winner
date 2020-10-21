@@ -154,7 +154,7 @@ if __name__ == '__main__':
         historical_dates = sorted(already_df['date'].values)
         historical_dates = [datetime.strptime(item, '%Y-%m-%d', ).date() for item in historical_dates]
         # drop off the last five dates somewhat arbitrarily
-        historical_dates = historical_dates[:-5]
+        historical_dates = historical_dates[:-10]
         cutoff_dates = [Timestamp(item) for item in sorted(filtered_df['end_date'].unique()) if
                         Timestamp(item).date() not in historical_dates]
     else:
