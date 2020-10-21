@@ -8,7 +8,7 @@
     "update"
   ],
   "democrat": "Biden",
-  "early_exit_limit": 30,
+  "early_exit_limit": 100,
   "grade_filter": [
     "A+",
     "A",
