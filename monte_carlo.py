@@ -58,7 +58,6 @@ def get_realization(arg_df, arg_cutoff_date, electoral_df, historical_df, arg_de
     return int(result_democrat_votes), int(result_republican_votes)
 
 
-# todo refactor this so it produces a data file of realizations and lets us calculate forward from the most recent
 if __name__ == '__main__':
     time_start = time()
     logger = getLogger(__name__)
